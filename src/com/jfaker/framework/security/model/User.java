@@ -51,6 +51,14 @@ public class User extends Model<User> {
 		return User.dao.findFirst("select u.*,o.name as orgName from sec_user u left join sec_org o on u.org=o.id where u.id=?", id);
 	}
 	
+	public List<User> getByOrg(Integer orgId) {
+		String sql = "select u.*,o.name as orgName from sec_user u left join sec_org o on u.org=o.id ";
+		if(orgId != null && orgId > 0) {
+			sql += " where u.org=" + orgId;
+		}
+		return User.dao.find(sql);
+	}
+	
 	public List<Role> getRoles(Long id) {
 		return Role.dao.find("select r.* from sec_role r "
 				+ "LEFT JOIN sec_role_user ru ON r.id=ru.role_id "

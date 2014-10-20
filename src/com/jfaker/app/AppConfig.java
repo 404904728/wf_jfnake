@@ -22,6 +22,7 @@ import com.jfaker.framework.security.web.MenuController;
 import com.jfaker.framework.security.web.OrgController;
 import com.jfaker.framework.security.web.ResourceController;
 import com.jfaker.framework.security.web.RoleController;
+import com.jfaker.framework.security.web.SecurityTreeController;
 import com.jfaker.framework.security.web.UserController;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -64,6 +65,7 @@ public class AppConfig extends JFinalConfig {
 		me.add("/security/role", RoleController.class, "/security");
 		me.add("/security/resource", ResourceController.class, "/security");
 		me.add("/security/menu", MenuController.class, "/security");
+		me.add("/security/tree", SecurityTreeController.class);
 		
 		me.add("/config/dict", DictController.class, "/config");
 		
