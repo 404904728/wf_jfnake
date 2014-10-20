@@ -5,6 +5,7 @@ import org.snaker.jfinal.plugin.SnakerPlugin;
 import com.jfaker.app.flow.web.ProcessController;
 import com.jfaker.app.flow.web.SnakerController;
 import com.jfaker.app.flow.web.SurrogateController;
+import com.jfaker.app.modules.web.LeaveController;
 import com.jfaker.app.web.CommonController;
 import com.jfaker.framework.dict.model.Dict;
 import com.jfaker.framework.dict.model.DictItem;
@@ -69,6 +70,8 @@ public class AppConfig extends JFinalConfig {
 		me.add("/snaker/process", ProcessController.class, "/snaker");
 		me.add("/snaker/surrogate", SurrogateController.class, "/snaker");
 		me.add("/snaker/task", SnakerController.class, "/snaker");
+		
+		me.add("/flow/leave", LeaveController.class, "/flow/leave");
 	}
 	
 	/**

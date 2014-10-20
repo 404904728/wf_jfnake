@@ -7,14 +7,12 @@
 		<title>请假流程</title>
 		<%@ include file="/common/meta.jsp"%>
 		<link rel="stylesheet" href="${ctx}/styles/css/style.css" type="text/css" media="all" />
-		<link rel="stylesheet" type="text/css" href="${ctx}/styles/wbox/wbox/wbox.css" />
 		<script src="${ctx}/styles/js/jquery-1.8.3.min.js" type="text/javascript"></script>
-		<script type="text/javascript" src="${ctx}/styles/wbox/wbox.js"></script>
 	</head>
 
 	<body>
-		<form id="inputForm" action="${ctx }/" method="post">
-			<input type="hidden" name="authority.id" id="id" value="${authority.id }"/>
+		<form id="inputForm" action="${ctx }/flow/leave/applySave" method="post">
+		<input type="hidden" name="processId" value="${processId }" />
 		<table width="100%" border="0" align="center" cellpadding="0"
 				class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
@@ -25,32 +23,22 @@
 		</table>
 		<table class="table_all" align="center" border="0" cellpadding="0"
 			cellspacing="0" style="margin-top: 0px">
-				<c:if test="${not empty nameMsg }">
 				<tr>
-					<td class="td_table_1">
-						<span>错误信息：</span>
-					</td>
+					<td class="td_table_1"><span>请假人名称：</span></td>
 					<td class="td_table_2" colspan="3">
-						<font color="red">${nameMsg }</font>
-					</td>
-				</tr>
-				</c:if>
-				<tr>
-					<td class="td_table_1">
-						<span>权限名称：</span>
-					</td>
-					<td class="td_table_2" colspan="3">
-						<input type="text" class="input_240" id="name" name="authority.name"
-							value="${authority.name }" />
+						<input type="text" class="input_240" readonly="readonly" value="${variable_apply['apply.operator'] != null ? variable_apply['apply.operator'] : operator  }" />
 					</td>
 				</tr>
 				<tr>
-					<td class="td_table_1">
-						<span>权限描述：</span>
-					</td>
+					<td class="td_table_1"><span>请假理由：</span></td>
 					<td class="td_table_2" colspan="3">
-						<input type="text" class="input_240" id="description" name="authority.description"
-							value="${authority.description }" />
+						<textarea class="input_textarea_320" id="reason" name="reason">${variable_apply['reason'] }</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td class="td_table_1"><span>请假天数：</span></td>
+					<td class="td_table_2" colspan="3">
+						<input type="text" class="input_240" id="day" name="day" value="${variable_apply['day'] }" />天
 					</td>
 				</tr>
 			</table>
