@@ -5,18 +5,17 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.jfaker.app.flow.SnakerEngineFacets;
 import com.jfaker.app.flow.SnakerInterceptor;
+import com.jfaker.app.flow.web.SnakerController;
 import com.jfaker.framework.security.shiro.ShiroUtils;
 import com.jfinal.aop.Before;
-import com.jfinal.core.Controller;
 
 /**
  * 请假流程Controller
  * @author yuqs
  * @since 0.1
  */
-public class LeaveController extends Controller {
+public class LeaveController extends SnakerController {
 	@Before(SnakerInterceptor.class)
 	public void apply() {
 		render("apply.jsp");
@@ -46,9 +45,9 @@ public class LeaveController extends Controller {
 		args.put("approveDept.operator", ShiroUtils.getUsername());
 		args.put("approveBoss.operator", ShiroUtils.getUsername());
         if(StringUtils.isEmpty(orderId) && StringUtils.isEmpty(taskId)) {
-        	SnakerEngineFacets.facets.startAndExecute(processId, ShiroUtils.getUsername(), args);
+        	startAndExecute(processId, ShiroUtils.getUsername(), args);
         } else {
-        	SnakerEngineFacets.facets.execute(taskId, ShiroUtils.getUsername(), args);
+        	execute(taskId, ShiroUtils.getUsername(), args);
         }
 		redirect("/snaker/task/active");
 	}
@@ -68,16 +67,16 @@ public class LeaveController extends Controller {
 		args.put("ccOperatorName", getPara("ccOperatorName"));
 		String departmentResult = getPara("departmentResult");
 		if(departmentResult.equals("-1")) {
-			SnakerEngineFacets.facets.executeAndJump(taskId, ShiroUtils.getUsername(), args, null);
+			executeAndJump(taskId, ShiroUtils.getUsername(), args, null);
 		} else if(departmentResult.equals("2")) {
 			String nextOperator = getPara("nextOperator");
-			SnakerEngineFacets.facets.transfer(taskId, ShiroUtils.getUsername(), nextOperator.split(","));
+			transfer(taskId, ShiroUtils.getUsername(), nextOperator.split(","));
 		} else {
-			SnakerEngineFacets.facets.execute(getPara("taskId"), ShiroUtils.getUsername(), args);
+			execute(getPara("taskId"), ShiroUtils.getUsername(), args);
 		}
 		String ccOperator = getPara("ccOperator");
 		if(StringUtils.isNotEmpty(ccOperator)) {
-			SnakerEngineFacets.facets.getEngine().order().createCCOrder(orderId, ccOperator.split(","));
+			getEngine().order().createCCOrder(orderId, ccOperator.split(","));
 		}
 		
 		redirect("/snaker/task/active");
@@ -92,9 +91,9 @@ public class LeaveController extends Controller {
 		args.put("approveBoss.suggest", getPara("approveBoss.suggest"));
         String bossResult = getPara("bossResult");
         if(bossResult.equals("-1")) {
-        	SnakerEngineFacets.facets.executeAndJump(taskId, ShiroUtils.getUsername(), args, null);
+        	executeAndJump(taskId, ShiroUtils.getUsername(), args, null);
         } else {
-        	SnakerEngineFacets.facets.execute(taskId, ShiroUtils.getUsername(), args);
+        	execute(taskId, ShiroUtils.getUsername(), args);
         }
         redirect("/snaker/task/active");
 	}

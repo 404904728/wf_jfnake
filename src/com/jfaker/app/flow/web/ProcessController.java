@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.snaker.engine.SnakerEngine;
 import org.snaker.engine.access.Page;
 import org.snaker.engine.access.QueryFilter;
 import org.snaker.engine.entity.HistoryOrder;
@@ -21,10 +20,8 @@ import org.snaker.engine.helper.StreamHelper;
 import org.snaker.engine.helper.StringHelper;
 import org.snaker.engine.model.ProcessModel;
 
-import com.jfaker.app.flow.SnakerEngineFacets;
 import com.jfaker.app.flow.SnakerHelper;
 import com.jfaker.framework.security.shiro.ShiroUtils;
-import com.jfinal.core.Controller;
 import com.jfinal.upload.UploadFile;
 
 /**
@@ -32,10 +29,7 @@ import com.jfinal.upload.UploadFile;
  * @author yuqs
  * @since 0.1
  */
-public class ProcessController extends Controller {
-	private SnakerEngine getEngine() {
-		return SnakerEngineFacets.facets.getEngine();
-	}
+public class ProcessController extends SnakerController {
 	/**
 	 * 流程定义查询列表
 	 */
@@ -47,7 +41,7 @@ public class ProcessController extends Controller {
 		}
 		Page<Process> page = new Page<Process>();
 		page.setPageNo(getParaToInt("pageNo", 1));
-		getEngine().process().getProcesss(page, filter);
+		engine.process().getProcesss(page, filter);
 		setAttr("page", page);
 		render("processList.jsp");
 	}
@@ -56,7 +50,7 @@ public class ProcessController extends Controller {
 	 * 初始化流程定义
 	 */
 	public void init() {
-		SnakerEngineFacets.facets.initFlows();
+		initFlows();
 		redirect("/snaker/process");
 	}
 	
@@ -80,7 +74,7 @@ public class ProcessController extends Controller {
 	public void designer() {
 		String processId = getPara("processId");
 		if(StringUtils.isNotEmpty(processId)) {
-			Process process = getEngine().process().getProcessById(processId);
+			Process process = engine.process().getProcessById(processId);
 			AssertHelper.notNull(process);
 			ProcessModel processModel = process.getModel();
 			if(processModel != null) {
@@ -96,7 +90,7 @@ public class ProcessController extends Controller {
 	 * 编辑流程定义
 	 */
 	public void edit() {
-		Process process = getEngine().process().getProcessById(getPara());
+		Process process = engine.process().getProcessById(getPara());
 		setAttr("process", process);
 		if(process.getDBContent() != null) {
             try {
@@ -112,7 +106,7 @@ public class ProcessController extends Controller {
 	 * 根据流程定义ID，删除流程定义
 	 */
 	public void delete() {
-		getEngine().process().undeploy(getPara());
+		engine.process().undeploy(getPara());
 		redirect("/snaker/process");
 	}
 	
@@ -126,9 +120,9 @@ public class ProcessController extends Controller {
 			UploadFile file = getFile("snakerFile");
 			input = new FileInputStream(file.getFile());
 			if(StringUtils.isNotEmpty(id)) {
-				getEngine().process().redeploy(id, input);
+				engine.process().redeploy(id, input);
 			} else {
-				getEngine().process().deploy(input);
+				engine.process().deploy(input);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -157,9 +151,9 @@ public class ProcessController extends Controller {
 			String id = getPara("id");
 			input = StreamHelper.getStreamFromString(xml);
 			if(StringUtils.isNotEmpty(id)) {
-				getEngine().process().redeploy(id, input);
+				engine.process().redeploy(id, input);
 			} else {
-				getEngine().process().deploy(input);
+				engine.process().deploy(input);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -177,15 +171,15 @@ public class ProcessController extends Controller {
 	}
 	
 	public void processStart() {
-		SnakerEngineFacets.facets.startInstanceByName(getPara("processName"), null, ShiroUtils.getUsername(), null);
+		startInstanceByName(getPara("processName"), null, ShiroUtils.getUsername(), null);
 		redirect("/snaker/process");
 	}
 	
 	public void json() {
 		String orderId = getPara("orderId");
-		HistoryOrder order = getEngine().query().getHistOrder(orderId);
-		List<Task> tasks = getEngine().query().getActiveTasks(new QueryFilter().setOrderId(orderId));
-		Process process = getEngine().process().getProcessById(order.getProcessId());
+		HistoryOrder order = engine.query().getHistOrder(orderId);
+		List<Task> tasks = engine.query().getActiveTasks(new QueryFilter().setOrderId(orderId));
+		Process process = engine.process().getProcessById(order.getProcessId());
 		AssertHelper.notNull(process);
 		ProcessModel model = process.getModel();
 		Map<String, String> jsonMap = new HashMap<String, String>();
@@ -202,9 +196,9 @@ public class ProcessController extends Controller {
 	
 	public void display() {
 		String orderId = getPara("orderId");
-		HistoryOrder order = getEngine().query().getHistOrder(orderId);
+		HistoryOrder order = engine.query().getHistOrder(orderId);
 		setAttr("order", order);
-		List<HistoryTask> tasks = getEngine().query().getHistoryTasks(new QueryFilter().setOrderId(orderId));
+		List<HistoryTask> tasks = engine.query().getHistoryTasks(new QueryFilter().setOrderId(orderId));
 		setAttr("tasks", tasks);
 		render("processView.jsp");
 	}
