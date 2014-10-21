@@ -12,10 +12,8 @@ import com.jfinal.core.Controller;
  */
 public class OrgController extends Controller {
 	public void index() {
-		String name = getPara("name");
-		setAttr("page", Org.dao.paginate(getParaToInt("pageNo", 1), 10, name));
-		setAttr("lookup", getPara("lookup"));
-		setAttr("name", name);
+		keepPara();
+		setAttr("page", Org.dao.paginate(getParaToInt("pageNo", 1), 10, getPara("name")));
 		render("orgList.jsp");
 	}
 	

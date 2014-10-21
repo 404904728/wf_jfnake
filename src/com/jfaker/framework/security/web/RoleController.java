@@ -16,9 +16,8 @@ import com.jfinal.plugin.activerecord.tx.Tx;
  */
 public class RoleController extends Controller {
 	public void index() {
-		String name = getPara("name");
-		setAttr("name", name);
-		setAttr("page", Role.dao.paginate(getParaToInt("pageNo", 1), 10, name));
+		keepPara();
+		setAttr("page", Role.dao.paginate(getParaToInt("pageNo", 1), 10, getPara("name")));
 		render("roleList.jsp");
 	}
 	

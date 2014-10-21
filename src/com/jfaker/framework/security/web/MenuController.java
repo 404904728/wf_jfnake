@@ -12,10 +12,8 @@ import com.jfinal.core.Controller;
  */
 public class MenuController extends Controller {
 	public void index() {
-		String name = getPara("name");
-		setAttr("name", name);
-		setAttr("page", Menu.dao.paginate(getParaToInt("pageNo", 1), 10, name));
-		setAttr("lookup", getPara("lookup"));
+		keepPara();
+		setAttr("page", Menu.dao.paginate(getParaToInt("pageNo", 1), 10, getPara("name")));
 		render("menuList.jsp");
 	}
 	

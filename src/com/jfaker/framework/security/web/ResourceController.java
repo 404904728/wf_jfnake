@@ -12,9 +12,8 @@ import com.jfinal.core.Controller;
  */
 public class ResourceController extends Controller {
 	public void index() {
-		String name = getPara("name");
-		setAttr("name", name);
-		setAttr("page", Resource.dao.paginate(getParaToInt("pageNo", 1), 10, name));
+		keepPara();
+		setAttr("page", Resource.dao.paginate(getParaToInt("pageNo", 1), 10, getPara("name")));
 		render("resourceList.jsp");
 	}
 	
