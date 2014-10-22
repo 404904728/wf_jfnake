@@ -2,6 +2,7 @@ package com.jfaker.app;
 
 import org.snaker.jfinal.plugin.SnakerPlugin;
 
+import com.jfaker.app.flow.web.FlowController;
 import com.jfaker.app.flow.web.ProcessController;
 import com.jfaker.app.flow.web.TaskController;
 import com.jfaker.app.flow.web.SurrogateController;
@@ -72,6 +73,7 @@ public class AppConfig extends JFinalConfig {
 		me.add("/snaker/process", ProcessController.class, "/snaker");
 		me.add("/snaker/surrogate", SurrogateController.class, "/snaker");
 		me.add("/snaker/task", TaskController.class, "/snaker");
+		me.add("/snaker/flow", FlowController.class, "/snaker");
 		
 		me.add("/flow/leave", LeaveController.class, "/flow/leave");
 	}
@@ -83,6 +85,9 @@ public class AppConfig extends JFinalConfig {
 		// 配置C3p0数据库连接池插件
 		C3p0Plugin c3p0Plugin = new C3p0Plugin(getProperty("jdbcUrl"), getProperty("user"), getProperty("password").trim());
 		me.add(c3p0Plugin);
+		
+		ScriptsPlugin scriptsPlugin = new ScriptsPlugin(c3p0Plugin);
+		me.add(scriptsPlugin);
 		
 		// 配置ActiveRecord插件
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(c3p0Plugin);
