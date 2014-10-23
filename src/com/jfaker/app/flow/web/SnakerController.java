@@ -83,8 +83,14 @@ public class SnakerController extends Controller {
 		return engine.executeAndJumpTask(taskId, operator, args, nodeName);
 	}
 	
-	public List<Task> transfer(String taskId, String operator, String... actors) {
+	public List<Task> transferMajor(String taskId, String operator, String... actors) {
 		List<Task> tasks = engine.task().createNewTask(taskId, TaskType.Major.ordinal(), actors);
+		engine.task().complete(taskId, operator);
+		return tasks;
+	}
+	
+	public List<Task> transferAidant(String taskId, String operator, String... actors) {
+		List<Task> tasks = engine.task().createNewTask(taskId, TaskType.Aidant.ordinal(), actors);
 		engine.task().complete(taskId, operator);
 		return tasks;
 	}
