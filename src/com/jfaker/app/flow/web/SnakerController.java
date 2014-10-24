@@ -18,6 +18,7 @@ import org.snaker.jfinal.plugin.SnakerPlugin;
 import com.jfinal.core.Controller;
 
 public class SnakerController extends Controller {
+	public static final String URL_ACTIVETASK = "/snaker/task/active";
 	protected SnakerEngine engine = SnakerPlugin.getEngine();
 	public void initFlows() {
 		engine.process().deploy(StreamHelper.getStreamFromClasspath("flows/actorall.snaker"));
@@ -26,6 +27,10 @@ public class SnakerController extends Controller {
 		engine.process().deploy(StreamHelper.getStreamFromClasspath("flows/forkjoin.snaker"));
 		engine.process().deploy(StreamHelper.getStreamFromClasspath("flows/custom.snaker"));
 		engine.process().deploy(StreamHelper.getStreamFromClasspath("flows/free.snaker"));
+	}
+	
+	public void redirectActiveTask() {
+		redirect(URL_ACTIVETASK);
 	}
 	
 	public SnakerEngine getEngine() {

@@ -2,9 +2,12 @@ package com.jfaker.app.flow.web;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.snaker.engine.entity.Process;
+import org.snaker.engine.model.WorkModel;
 
 import com.jfaker.framework.security.shiro.ShiroUtils;
 
@@ -96,11 +99,40 @@ public class FlowController extends SnakerController {
 		if(StringUtils.isNotEmpty(ccOperator)) {
 			engine.order().createCCOrder(orderId, ccOperator.split(","));
 		}
-		redirect("/snaker/task/active");
+		redirectActiveTask();
+	}
+	
+	public void all() {
+		keepPara();
+		String processId = getPara(PARA_PROCESSID);
+		String orderId = getPara(PARA_ORDERID);
+		String taskId = getPara(PARA_TASKID);
+		Process process = engine.process().getProcessById(processId);
+		if(StringUtils.isNotEmpty(orderId)) {
+			setAttr("order", engine.query().getOrder(orderId));
+		}
+		if(StringUtils.isNotEmpty(taskId)) {
+			setAttr("task", engine.query().getTask(taskId));
+		}
+		
+		setAttr("process", process);
+		render("all.jsp");
+	}
+	
+	public void node() {
+		String processId = getPara(PARA_PROCESSID);
+		Process process = engine.process().getProcessById(processId);
+		List<WorkModel> models = process.getModel().getWorkModels();
+		renderJson(models);
 	}
 	
 	public void approval() {
+		keepPara();
+		render("approval.jsp");
+	}
+	
+	public void doApproval() {
 		
-		redirect("/snaker/task/active");
+		redirectActiveTask();
 	}
 }

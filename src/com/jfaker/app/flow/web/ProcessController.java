@@ -202,4 +202,11 @@ public class ProcessController extends SnakerController {
 		setAttr("tasks", tasks);
 		render("processView.jsp");
 	}
+	
+	public void diagram() {
+		String orderId = getPara("orderId");
+		HistoryOrder order = engine.query().getHistOrder(orderId);
+		setAttr("order", order);
+		render("diagram.jsp");
+	}
 }
