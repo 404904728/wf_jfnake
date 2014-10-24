@@ -100,7 +100,9 @@ create index IDX_SURROGATE_OPERATOR on wf_surrogate (operator);
 create table wf_cc_order (
     order_Id        varchar(100) COMMENT '流程实例ID',
     actor_Id        varchar(100) COMMENT '参与者ID',
-    status          TINYINT(1)  COMMENT '状态'
+    status          TINYINT(1)  COMMENT '状态',
+    createTime      varchar(50) comment '创建时间',
+    finishTime      varchar(50) comment '完成时间',
 )comment='抄送实例表';
 create index IDX_CCORDER_ORDER on wf_cc_order (order_Id);
 
