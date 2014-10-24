@@ -12,18 +12,10 @@
 	</head>
 
 	<body>
-		<form id="inputForm" action="${ctx }/flow/leave/approveDeptSave" method="post">
+		<form id="inputForm" action="${ctx }/snaker/flow/process" method="post" target="mainFrame">
 			<input type="hidden" name="processId" value="${processId }" />
 			<input type="hidden" name="orderId" value="${orderId }" />
 			<input type="hidden" name="taskId" value="${taskId }" />
-			<table width="100%" border="0" align="center" cellpadding="0"
-					class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
-				<tr>
-					<td class="td_table_top" align="center">
-						部门经理审批
-					</td>
-				</tr>
-			</table>
 			<table class="table_all" align="center" border="0" cellpadding="0"
 				cellspacing="0" style="margin-top: 0px">
 				<tr>
@@ -31,9 +23,9 @@
 						<span>部门经理审批结果：</span>
 					</td>
 					<td class="td_table_2" colspan="3">
-						<input type="radio" name="departmentResult" value="1" checked="checked" onclick="transfer('1')"/>同意
-						<input type="radio" name="departmentResult" value="-1" onclick="transfer('-1')"/>不同意
-						<input type="radio" name="departmentResult" value="2" onclick="transfer('2')"/>转派
+						<input type="radio" name="method" value="0" checked="checked" onclick="transfer('1')"/>同意
+						<input type="radio" name="method" value="-1" onclick="transfer('-1')"/>不同意
+						<input type="radio" name="method" value="1" onclick="transfer('2')"/>转派
 					</td>
 				</tr>
 				<tr>
@@ -76,5 +68,14 @@
 				</tr>
 			</table>
 		</form>
+<script type="text/javascript">
+	function transfer(flag) {
+		if(flag == '2') {
+			document.all['transferDIV'].style.display = "block";
+		} else {
+			document.all['transferDIV'].style.display = "none";
+		}
+	}
+</script>
 	</body>
 </html>

@@ -12,18 +12,10 @@
 	</head>
 
 	<body>
-		<form id="inputForm" action="${ctx }/flow/leave/approveBossSave" method="post">
+		<form id="inputForm" action="${ctx }/snaker/flow/process" method="post" target="mainFrame">
 			<input type="hidden" name="processId" value="${processId }" />
 			<input type="hidden" name="orderId" value="${orderId }" />
 			<input type="hidden" name="taskId" value="${taskId }" />
-			<table width="100%" border="0" align="center" cellpadding="0"
-					class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
-				<tr>
-					<td class="td_table_top" align="center">
-						总经理审批
-					</td>
-				</tr>
-			</table>
 			<table class="table_all" align="center" border="0" cellpadding="0"
 				cellspacing="0" style="margin-top: 0px">
 			<tr>
@@ -31,8 +23,8 @@
 					<span>总经理审批结果：</span>
 				</td>
 				<td class="td_table_2" colspan="3">
-					<input type="radio" name="bossResult" value="1" checked="checked"/>同意
-					<input type="radio" name="bossResult" value="-1" />不同意
+					<input type="radio" name="method" value="0" checked="checked"/>同意
+					<input type="radio" name="method" value="-1" />不同意
 				</td>
 			</tr>
 			<tr>
