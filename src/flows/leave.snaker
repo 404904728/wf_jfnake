@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<process displayName="请假流程测试" instanceUrl="/flow/leave/apply" name="leave">
+<process displayName="请假流程测试" instanceUrl="/snaker/flow/all" name="leave">
 <start displayName="start1" layout="24,124,-1,-1" name="start1">
 <transition g="" name="transition1" offset="0,0" to="apply"/>
 </start>
 <end displayName="end1" layout="570,124,-1,-1" name="end1"/>
-<task displayName="请假申请" form="/flow/leave/apply" layout="117,122,-1,-1" name="apply" performType="ANY">
+<task assignee="apply.operator" displayName="请假申请" form="/flow/leave/apply" layout="117,122,-1,-1" name="apply" performType="ANY">
 <transition g="" name="transition2" offset="0,0" to="approveDept"/>
 </task>
 <task assignee="approveDept.operator" displayName="部门经理审批" form="/flow/leave/approveDept" layout="272,122,-1,-1" name="approveDept" performType="ANY">
