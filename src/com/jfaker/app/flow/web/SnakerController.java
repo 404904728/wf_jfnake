@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.snaker.engine.SnakerEngine;
 import org.snaker.engine.access.Page;
 import org.snaker.engine.access.QueryFilter;
+import org.snaker.engine.entity.HistoryTask;
 import org.snaker.engine.entity.Order;
 import org.snaker.engine.entity.Process;
 import org.snaker.engine.entity.Surrogate;
@@ -18,6 +20,13 @@ import org.snaker.jfinal.plugin.SnakerPlugin;
 import com.jfinal.core.Controller;
 
 public class SnakerController extends Controller {
+	public static final String PARA_PROCESSID = "processId";
+	public static final String PARA_ORDERID = "orderId";
+	public static final String PARA_TASKID = "taskId";
+	public static final String PARA_METHOD = "method";
+	public static final String PARA_NEXTOPERATOR = "nextOperator";
+	public static final String PARA_NODENAME = "nodeName";
+	public static final String PARA_CCOPERATOR = "ccOperator";
 	public static final String URL_ACTIVETASK = "/snaker/task/active";
 	protected SnakerEngine engine = SnakerPlugin.getEngine();
 	public void initFlows() {
@@ -31,6 +40,21 @@ public class SnakerController extends Controller {
 	
 	public void redirectActiveTask() {
 		redirect(URL_ACTIVETASK);
+	}
+	
+	protected void flowData(String orderId, String taskName) {
+		if (StringUtils.isNotEmpty(orderId) && StringUtils.isNotEmpty(taskName)) {
+			List<HistoryTask> histTasks = engine.query()
+					.getHistoryTasks(
+							new QueryFilter().setOrderId(orderId).setName(
+									taskName));
+			List<Map<String, Object>> vars = new ArrayList<Map<String,Object>>();
+			for(HistoryTask hist : histTasks) {
+				vars.add(hist.getVariableMap());
+			}
+			setAttr("vars", vars);
+			setAttr("histTasks", histTasks);
+		}
 	}
 	
 	public SnakerEngine getEngine() {

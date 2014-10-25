@@ -72,7 +72,7 @@ public class ProcessController extends SnakerController {
 	 * 新建流程定义[web流程设计器]
 	 */
 	public void designer() {
-		String processId = getPara("processId");
+		String processId = getPara(PARA_PROCESSID);
 		if(StringUtils.isNotEmpty(processId)) {
 			Process process = engine.process().getProcessById(processId);
 			AssertHelper.notNull(process);
@@ -176,10 +176,13 @@ public class ProcessController extends SnakerController {
 	}
 	
 	public void json() {
-		String orderId = getPara("orderId");
-		HistoryOrder order = engine.query().getHistOrder(orderId);
-		List<Task> tasks = engine.query().getActiveTasks(new QueryFilter().setOrderId(orderId));
-		Process process = engine.process().getProcessById(order.getProcessId());
+		String processId = getPara(PARA_PROCESSID);
+		String orderId = getPara(PARA_ORDERID);
+		List<Task> tasks = null;
+		if(StringUtils.isNotEmpty(orderId)) {
+			tasks = engine.query().getActiveTasks(new QueryFilter().setOrderId(orderId));
+		}
+		Process process = engine.process().getProcessById(processId);
 		AssertHelper.notNull(process);
 		ProcessModel model = process.getModel();
 		Map<String, String> jsonMap = new HashMap<String, String>();
@@ -195,7 +198,8 @@ public class ProcessController extends SnakerController {
 	}
 	
 	public void display() {
-		String orderId = getPara("orderId");
+		keepPara();
+		String orderId = getPara(PARA_ORDERID);
 		HistoryOrder order = engine.query().getHistOrder(orderId);
 		setAttr("order", order);
 		List<HistoryTask> tasks = engine.query().getHistoryTasks(new QueryFilter().setOrderId(orderId));
@@ -204,9 +208,7 @@ public class ProcessController extends SnakerController {
 	}
 	
 	public void diagram() {
-		String orderId = getPara("orderId");
-		HistoryOrder order = engine.query().getHistOrder(orderId);
-		setAttr("order", order);
+		keepPara();
 		render("diagram.jsp");
 	}
 }

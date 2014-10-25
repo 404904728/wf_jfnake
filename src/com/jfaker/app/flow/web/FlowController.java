@@ -12,14 +12,6 @@ import org.snaker.engine.model.WorkModel;
 import com.jfaker.framework.security.shiro.ShiroUtils;
 
 public class FlowController extends SnakerController {
-	public static final String PARA_PROCESSID = "processId";
-	public static final String PARA_ORDERID = "orderId";
-	public static final String PARA_TASKID = "taskId";
-	public static final String PARA_METHOD = "method";
-	public static final String PARA_NEXTOPERATOR = "nextOperator";
-	public static final String PARA_NODENAME = "nodeName";
-	public static final String PARA_CCOPERATOR = "ccOperator";
-	
 	/**
 	 * 处理流程启动或任务执行，并且将表单数据保存至实例、任务变量中
 	 * 变量类型根据表单字段的首字母决定，类型分别为:S字符型,I整形,L常整形,B布尔型,D日期型,N浮点型
@@ -107,7 +99,9 @@ public class FlowController extends SnakerController {
 		String processId = getPara(PARA_PROCESSID);
 		String orderId = getPara(PARA_ORDERID);
 		String taskId = getPara(PARA_TASKID);
-		Process process = engine.process().getProcessById(processId);
+		if(StringUtils.isNotEmpty(processId)) {
+			setAttr("process", engine.process().getProcessById(processId));
+		}
 		if(StringUtils.isNotEmpty(orderId)) {
 			setAttr("order", engine.query().getOrder(orderId));
 		}
@@ -115,7 +109,6 @@ public class FlowController extends SnakerController {
 			setAttr("task", engine.query().getTask(taskId));
 		}
 		
-		setAttr("process", process);
 		render("all.jsp");
 	}
 	
