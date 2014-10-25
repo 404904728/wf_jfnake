@@ -33,7 +33,7 @@
 						<span>部门经理审批意见：</span>
 					</td>
 					<td class="td_table_2" colspan="3">
-						<textarea class="input_textarea_320" id="departmentDesc" name="approveDept.suggest">${variable_approveDept['approveDept.suggest'] }</textarea>
+						<textarea class="input_textarea_320" id="departmentDesc" name="approveDept.suggest"></textarea>
 					</td>
 				</tr>
 				<tr id="transferDIV" style="display: none">
@@ -41,8 +41,8 @@
 						<span>转派给：</span>
 					</td>
 					<td class="td_table_2" colspan="3">
-						<input type="hidden" id="nextOperator" name="nextOperator" value="${variable_approveDept['nextOperator'] }">
-						<input type="text" id="nextOperatorName" readonly="readonly" name="nextOperatorName" class="input_520" value="${variable_approveDept['nextOperatorName'] }">
+						<input type="hidden" id="nextOperator" name="nextOperator" value="">
+						<input type="text" id="nextOperatorName" readonly="readonly" name="nextOperatorName" class="input_520" value="">
 						<input type='button' class='button_70px' value='选择部门' id="selectOrgBtn" onclick="selectOrg('${ctx}', 'nextOperator', 'nextOperatorName')"/>
 						<!-- <input type="text" class="input_240" id="nextOperator" name="nextOperator" value="${variable_approveDept['nextOperator'] }"/> -->
 					</td>
@@ -50,8 +50,8 @@
 				<tr>
 					<td class="td_table_1"><span>抄送给：</span></td>
 					<td class="td_table_2" colspan="3">
-						<input type="hidden" id="ccOperator" name="ccOperator" value="${variable_approveDept['ccOperator'] }">
-						<input type="text" id="ccOperatorName" readonly="readonly" name="ccOperatorName" class="input_520" value="${variable_approveDept['ccOperatorName'] }">
+						<input type="hidden" id="ccOperator" name="ccOperator" value="">
+						<input type="text" id="ccOperatorName" readonly="readonly" name="ccOperatorName" class="input_520" value="">
 						<input type='button' class='button_70px' value='选择部门' onclick="selectOrg('${ctx}', 'ccOperator', 'ccOperatorName')"/>
 					</td>
 				</tr>

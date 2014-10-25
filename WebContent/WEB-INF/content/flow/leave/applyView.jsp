@@ -12,52 +12,43 @@
 	</head>
 
 	<body>
-		<form id="inputForm" action="${ctx }/snaker/flow/process" method="post" target="mainFrame">
+		<form id="inputForm" action="" method="post" target="mainFrame">
 			<input type="hidden" name="processId" value="${processId }" />
 			<input type="hidden" name="orderId" value="${orderId }" />
 			<input type="hidden" name="taskId" value="${taskId }" />
+			<c:forEach items="${vars}" var="item">
 			<table class="table_all" align="center" border="0" cellpadding="0"
 			cellspacing="0" style="margin-top: 0px">
 				<tr>
 					<td class="td_table_1"><span>请假人名称：</span></td>
 					<td class="td_table_2" colspan="3">
-						<input type="text" class="input_240" readonly="readonly" name="S_apply.operator" value="${operator  }" />
+						&nbsp;${item['apply.operator']}
 					</td>
 				</tr>
 				<tr>
 					<td class="td_table_1"><span>请假理由：</span></td>
 					<td class="td_table_2" colspan="3">
-						<textarea class="input_textarea_320" id="reason" name="S_reason"></textarea>
+						&nbsp;${item['reason'] }
 					</td>
 				</tr>
 				<tr>
 					<td class="td_table_1"><span>请假天数：</span></td>
 					<td class="td_table_2" colspan="3">
-						<input type="text" class="input_240" id="day" name="I_day" value="" />天
+						&nbsp;${item['day'] }天
 					</td>
 				</tr>
 				<tr>
 					<td class="td_table_1"><span>部门经理：</span></td>
 					<td class="td_table_2">
-						<input type="text" class="input_240" name="S_approveDept.operator" value="${operator }" />
+						&nbsp;${item['approveDept.operator']}
 					</td>
 					<td class="td_table_1"><span>总经理：</span></td>
 					<td class="td_table_2">
-						<input type="text" class="input_240" name="S_approveBoss.operator" value="${operator }" />
+						&nbsp;${item['approveBoss.operator']}
 					</td>
 				</tr>
 			</table>
-			<table align="center" border="0" cellpadding="0"
-				cellspacing="0">
-				<tr align="left">
-					<td colspan="1">
-						<input type="submit" class="button_70px" name="submit" value="提交">
-						&nbsp;&nbsp;
-						<input type="button" class="button_70px" name="reback" value="返回"
-							onclick="history.back()">
-					</td>
-				</tr>
-			</table>
+			</c:forEach>
 		</form>
 	</body>
 </html>

@@ -12,10 +12,11 @@
 	</head>
 
 	<body>
-		<form id="inputForm" action="${ctx }/snaker/flow/process" method="post" target="mainFrame">
+		<form id="inputForm" action="" method="post" target="mainFrame">
 			<input type="hidden" name="processId" value="${processId }" />
 			<input type="hidden" name="orderId" value="${orderId }" />
 			<input type="hidden" name="taskId" value="${taskId }" />
+			<c:forEach items="${vars}" var="item">
 			<table class="table_all" align="center" border="0" cellpadding="0"
 				cellspacing="0" style="margin-top: 0px">
 			<tr>
@@ -23,8 +24,7 @@
 					<span>总经理审批结果：</span>
 				</td>
 				<td class="td_table_2" colspan="3">
-					<input type="radio" name="method" value="0" checked="checked"/>同意
-					<input type="radio" name="method" value="-1" />不同意
+					&nbsp;${item['method'] == '0' ? '同意' : '' }${item['method'] == '-1' ? '不同意' : '' }
 				</td>
 			</tr>
 			<tr>
@@ -32,21 +32,11 @@
 					<span>总经理审批意见：</span>
 				</td>
 				<td class="td_table_2" colspan="3">
-					<textarea class="input_textarea_320" id="approveBoss_suggest" name="approveBoss.suggest"></textarea>
+					&nbsp;${item['approveBoss.suggest'] }
 				</td>
 			</tr>
 			</table>
-			<table align="center" border="0" cellpadding="0"
-				cellspacing="0">
-				<tr align="left">
-					<td colspan="1">
-						<input type="submit" class="button_70px" name="submit" value="提交">
-						&nbsp;&nbsp;
-						<input type="button" class="button_70px" name="reback" value="返回"
-							onclick="history.back()">
-					</td>
-				</tr>
-			</table>
+			</c:forEach>
 		</form>
 	</body>
 </html>
