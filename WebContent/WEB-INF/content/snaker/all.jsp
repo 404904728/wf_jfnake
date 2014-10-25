@@ -20,11 +20,16 @@
             $(window).bind('resize', function () {
                 tabs.resizePanelContainer();
             });
-
+            var diagramTab = tabs.add({
+            	url: '${ctx}/snaker/process/diagram?processId=${processId}&orderId=${orderId}',
+            	label: '流程图',
+            	locked: true
+            });
+            diagramTab.activate();
             $.ajax({
 				type:'GET',
 				url:"${ctx}/snaker/flow/node",
-				data:"processId=${process.id}",
+				data:"processId=${processId}",
 				async: false,
 				globle:false,
 				error: function(){
@@ -33,15 +38,24 @@
 				},
 				success: function(data) {
 					var curTab;
+					var iscurrent = false;
 					for(var i = 0; i < data.length; i++) {
 						var node = data[i];
+						var iframeUrl = '${ctx }' + node.form + '?processId=${processId}&orderId=${orderId}&taskName=' + node.name;
+						if(taskName == node.name || (taskName == '' && i == 0)) {
+							iscurrent = true;
+							iframeUrl += '&taskId=${taskId}&readonly=1';
+						} else {
+							iscurrent = false;
+							iframeUrl += '&readonly=0';
+						}
 			            var tab = tabs.add({
-			                url: '${ctx }' + node.form + '?processId=${processId}&orderId=${orderId}&taskId=${taskId}',
+			                url: iframeUrl,
 			                label: node.displayName,
 			                locked: true
 			            });
 			            tab.activate();
-			            if(taskName == node.name || (taskName == '' && i == 0)) {
+			            if(iscurrent) {
 			            	curTab = tab;
 			            	tab.mark();
 			            }
@@ -49,11 +63,6 @@
 					if(curTab) curTab.activate();
 				}
 			});
-            tabs.add({
-            	url: '${ctx}/snaker/process/diagram?orderId=${order.id}',
-            	label: '流程图',
-            	locked: true
-            });
         });
     	</script>
 	</head>

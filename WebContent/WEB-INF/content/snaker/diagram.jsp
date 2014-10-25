@@ -17,7 +17,7 @@
 
 <script type="text/javascript">
     function addTaskActor(taskName) {
-        var url = '${ctx}/snaker/task/actor/add?orderId=${order.id}&taskName=' + taskName;
+        var url = '${ctx}/snaker/task/actor/add?orderId=${orderId}&taskName=' + taskName;
         var returnValue = window.showModalDialog(url,window,'dialogWidth:1000px;dialogHeight:600px');
         if(returnValue) {
             $('#currentActorDIV').append(',' + returnValue);
@@ -28,7 +28,7 @@
 		$('#snakerflow').snakerflow($.extend(true,{
 			basePath : "${ctx}/styles/js/snaker/",
             ctxPath : "${ctx}",
-            orderId : "${order.id}",
+            orderId : "${orderId}",
 			restore : eval("(" + process + ")")
 			,
 			editable : false
@@ -39,14 +39,14 @@
 </head>
 	<body>
 		<table class="properties_all" align="center" border="1" cellpadding="0" cellspacing="0" style="margin-top: 0px">
-			<div id="snakerflow" style="border: 1px solid #d2dde2; margin-top:10px; margin-left:10px; width:98%;">
+			<div id="snakerflow" style="border: 1px solid #d2dde2; margin-top:10px; margin-left:10px; margin-bottom:10px; width:98%;">
 			</div>
 		</table>
 		<script type="text/javascript">
 		$.ajax({
 				type:'GET',
 				url:"${ctx}/snaker/process/json",
-				data:"orderId=${order.id}",
+				data:"processId=${processId}&orderId=${orderId}",
 				async: false,
 				globle:false,
 				error: function(){
