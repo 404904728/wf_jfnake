@@ -23,6 +23,7 @@ public class SnakerController extends Controller {
 	public static final String PARA_PROCESSID = "processId";
 	public static final String PARA_ORDERID = "orderId";
 	public static final String PARA_TASKID = "taskId";
+	public static final String PARA_TASKNAME = "taskName";
 	public static final String PARA_METHOD = "method";
 	public static final String PARA_NEXTOPERATOR = "nextOperator";
 	public static final String PARA_NODENAME = "nodeName";
@@ -30,12 +31,8 @@ public class SnakerController extends Controller {
 	public static final String URL_ACTIVETASK = "/snaker/task/active";
 	protected SnakerEngine engine = SnakerPlugin.getEngine();
 	public void initFlows() {
-		engine.process().deploy(StreamHelper.getStreamFromClasspath("flows/actorall.snaker"));
-		engine.process().deploy(StreamHelper.getStreamFromClasspath("flows/group.snaker"));
 		engine.process().deploy(StreamHelper.getStreamFromClasspath("flows/leave.snaker"));
-		engine.process().deploy(StreamHelper.getStreamFromClasspath("flows/forkjoin.snaker"));
-		engine.process().deploy(StreamHelper.getStreamFromClasspath("flows/custom.snaker"));
-		engine.process().deploy(StreamHelper.getStreamFromClasspath("flows/free.snaker"));
+		engine.process().deploy(StreamHelper.getStreamFromClasspath("flows/borrow.snaker"));
 	}
 	
 	public void redirectActiveTask() {
