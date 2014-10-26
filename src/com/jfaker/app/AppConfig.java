@@ -2,10 +2,13 @@ package com.jfaker.app;
 
 import org.snaker.jfinal.plugin.SnakerPlugin;
 
+import com.jfaker.app.flow.model.Approval;
 import com.jfaker.app.flow.web.FlowController;
 import com.jfaker.app.flow.web.ProcessController;
 import com.jfaker.app.flow.web.TaskController;
 import com.jfaker.app.flow.web.SurrogateController;
+import com.jfaker.app.modules.model.Borrow;
+import com.jfaker.app.modules.web.BorrowController;
 import com.jfaker.app.modules.web.LeaveController;
 import com.jfaker.app.web.CommonController;
 import com.jfaker.framework.dict.model.Dict;
@@ -76,6 +79,7 @@ public class AppConfig extends JFinalConfig {
 		me.add("/snaker/flow", FlowController.class, "/snaker");
 		
 		me.add("/flow/leave", LeaveController.class, "/flow/leave");
+		me.add("/flow/borrow", BorrowController.class, "/flow/borrow");
 	}
 	
 	/**
@@ -101,6 +105,9 @@ public class AppConfig extends JFinalConfig {
 		
 		arp.addMapping("conf_dictionary", Dict.class);
 		arp.addMapping("conf_dictitem", DictItem.class);
+		
+		arp.addMapping("flow_approval", Approval.class);
+		arp.addMapping("flow_borrow", Borrow.class);
 		
 		// 配置Snaker插件
 		SnakerPlugin snakerPlugin = new SnakerPlugin(c3p0Plugin);
