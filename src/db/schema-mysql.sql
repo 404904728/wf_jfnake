@@ -290,3 +290,24 @@ CREATE TABLE df_form_table (
   form_id BIGINT(20) NOT NULL,
   table_id BIGINT(20) NOT NULL
 );
+
+CREATE TABLE flow_approval (
+  id BIGINT(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  operator VARCHAR(50) NOT NULL,
+  operateTime VARCHAR(50),
+  result VARCHAR(50),
+  description VARCHAR(500) DEFAULT NULL,
+  orderId VARCHAR(50),
+  taskId VARCHAR(50),
+  taskName VARCHAR(100)
+);
+
+CREATE TABLE flow_borrow (
+  id BIGINT(20) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  operator VARCHAR(50) NOT NULL,
+  description VARCHAR(500) DEFAULT NULL,
+  amount DOUBLE,
+  operateTime VARCHAR(50),
+  repaymentDate VARCHAR(50),
+  orderId VARCHAR(50)
+);
