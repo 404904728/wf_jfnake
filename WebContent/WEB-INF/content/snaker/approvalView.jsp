@@ -17,15 +17,29 @@
 			<input type="hidden" name="orderId" value="${orderId }" />
 			<input type="hidden" name="taskId" value="${taskId }" />
 			<input type="hidden" name="taskName" value="${taskName }" />
+			<c:forEach items="${approvals}" var="item">
 			<table class="table_all" align="center" border="0" cellpadding="0"
 				cellspacing="0" style="margin-top: 0px">
+				<tr>
+					<td class="td_table_1">
+						<span>审批人：</span>
+					</td>
+					<td class="td_table_2">
+						&nbsp;${item.operator }
+					</td>
+					<td class="td_table_1">
+						<span>审批时间：</span>
+					</td>
+					<td class="td_table_2">
+						&nbsp;${item.operateTime }
+					</td>
+				</tr>
 				<tr>
 					<td class="td_table_1">
 						<span>审批结果：</span>
 					</td>
 					<td class="td_table_2" colspan="3">
-						<input type="radio" name="approval.result" value="agree" checked="checked"/>同意
-						<input type="radio" name="approval.result" value="disagree"/>不同意
+						&nbsp;${item.result == 'agree' ? '同意' : '不同意' }
 					</td>
 				</tr>
 				<tr>
@@ -33,21 +47,11 @@
 						<span>审批意见：</span>
 					</td>
 					<td class="td_table_2" colspan="3">
-						<textarea class="input_textarea_320" id="description" name="approval.description"></textarea>
+						&nbsp;${item.description }
 					</td>
 				</tr>
 			</table>
-			<table align="center" border="0" cellpadding="0"
-				cellspacing="0">
-				<tr align="left">
-					<td colspan="1">
-						<input type="submit" class="button_70px" name="submit" value="提交">
-						&nbsp;&nbsp;
-						<input type="button" class="button_70px" name="reback" value="返回"
-							onclick="history.back()">
-					</td>
-				</tr>
-			</table>
+			</c:forEach>
 		</form>
 	</body>
 </html>

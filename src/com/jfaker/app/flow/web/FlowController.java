@@ -6,11 +6,21 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.joda.time.DateTime;
 import org.snaker.engine.entity.Process;
 import org.snaker.engine.model.WorkModel;
 
+import com.jfaker.app.flow.model.Approval;
 import com.jfaker.framework.security.shiro.ShiroUtils;
 
+/**
+ * 通用流程controller类，主要有以下方法：
+ * 1、通用的all视图路由
+ * 2、通用的流程启动、任务执行方法
+ * 3、通用的审批视图路由及审批处理
+ * @author yuqs
+ * @since 1.0
+ */
 public class FlowController extends SnakerController {
 	/**
 	 * 处理流程启动或任务执行，并且将表单数据保存至实例、任务变量中
@@ -94,6 +104,10 @@ public class FlowController extends SnakerController {
 		redirectActiveTask();
 	}
 	
+	/**
+	 * 通用的流程展现页面入口
+	 * 将流程中的各环节表单以tab+iframe方式展现
+	 */
 	public void all() {
 		keepPara();
 		String processId = getPara(PARA_PROCESSID);
@@ -112,6 +126,10 @@ public class FlowController extends SnakerController {
 		render("all.jsp");
 	}
 	
+	/**
+	 * 节点信息以json格式返回
+	 * all页面以节点信息构造tab及加载iframe
+	 */
 	public void node() {
 		String processId = getPara(PARA_PROCESSID);
 		Process process = engine.process().getProcessById(processId);
@@ -119,13 +137,41 @@ public class FlowController extends SnakerController {
 		renderJson(models);
 	}
 	
+	/**
+	 * 由于审批类流程在各业务系统中经常出现，至此本方法是统一审批的url
+	 * 如果审批环节能够统一，建议使用该方法返回统一审批页面
+	 */
 	public void approval() {
 		keepPara();
-		render("approval.jsp");
+		String orderId = getPara(PARA_ORDERID);
+		String taskId = getPara(PARA_TASKID);
+		if(StringUtils.isNotEmpty(taskId)) {
+			render("approval.jsp");
+		} else {
+			setAttr("approvals", Approval.dao.findByFlow(orderId, getPara(PARA_TASKNAME)));
+			render("approvalView.jsp");
+		}
 	}
 	
+	/**
+	 * 审批环节的提交处理
+	 * 其中审批表可根据具体审批的业务进行定制，此处仅仅是举例
+	 */
 	public void doApproval() {
+		String orderId = getPara(PARA_ORDERID);
+		String taskId = getPara(PARA_TASKID);
+		String taskName = getPara(PARA_TASKNAME);
+		Approval model = getModel(Approval.class);
+		model.set("operateTime", new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
+		model.set("operator", ShiroUtils.getUsername());
+		model.set("orderId", orderId);
+		model.set("taskId", taskId);
+		model.set("taskName", taskName);
+		model.save();
 		
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("result", model.get("result"));
+		execute(taskId, ShiroUtils.getUsername(), params);
 		redirectActiveTask();
 	}
 }
