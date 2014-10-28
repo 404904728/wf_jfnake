@@ -7,6 +7,9 @@ import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
+import org.snaker.engine.access.Page;
+import org.snaker.engine.access.QueryFilter;
+import org.snaker.engine.entity.HistoryOrder;
 import org.snaker.engine.entity.Process;
 import org.snaker.engine.model.WorkModel;
 
@@ -22,6 +25,32 @@ import com.jfaker.framework.security.shiro.ShiroUtils;
  * @since 1.0
  */
 public class FlowController extends SnakerController {
+	/**
+	 * 流程实例查询
+	 * @param model
+	 * @param page
+	 * @return
+	 */
+	public void order() {
+		Page<HistoryOrder> page = new Page<HistoryOrder>();
+		page.setPageNo(getParaToInt("pageNo", 1));
+		engine.query().getHistoryOrders(page, new QueryFilter());
+		setAttr("page", page);
+		render("order.jsp");
+	}
+	
+	/**
+	 * 抄送实例已读
+	 */
+	public void ccread() {
+		List<String> list = ShiroUtils.getGroups();
+		list.add(ShiroUtils.getUsername());
+		String[] assignees = new String[list.size()];
+		list.toArray(assignees);
+		engine.order().updateCCStatus(getPara("id"), assignees);
+		redirect(getPara("url"));
+	}
+	
 	/**
 	 * 处理流程启动或任务执行，并且将表单数据保存至实例、任务变量中
 	 * 变量类型根据表单字段的首字母决定，类型分别为:S字符型,I整形,L常整形,B布尔型,D日期型,N浮点型
