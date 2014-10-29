@@ -10,6 +10,7 @@ import javax.servlet.ServletContext;
 import org.apache.commons.lang.StringUtils;
 
 import com.jfaker.framework.security.model.Menu;
+import com.jfaker.framework.security.shiro.ShiroUtils;
 import com.jfaker.framework.web.TagBuilder;
 import com.jfaker.framework.web.TagDTO;
 
@@ -69,7 +70,7 @@ public class MenuTagBuilder implements TagBuilder {
 	 * @return
 	 */
 	private List<Menu> getAllowedAccessMenu() {
-		return Menu.dao.getAllowedAccessMenus(1L);//TODO
+		return Menu.dao.getAllowedAccessMenus(ShiroUtils.getUserId());
 	}
 
 	/**
