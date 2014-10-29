@@ -71,7 +71,7 @@ public class AppConfig extends JFinalConfig {
 		me.add("/security/menu", MenuController.class, "/security");
 		me.add("/security/tree", SecurityTreeController.class);
 		
-		me.add("/config/dict", DictController.class, "/config");
+		me.add("/config/dictionary", DictController.class, "/config");
 		
 		me.add("/snaker/process", ProcessController.class, "/snaker");
 		me.add("/snaker/surrogate", SurrogateController.class, "/snaker");
