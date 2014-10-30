@@ -29,7 +29,7 @@ public class Role extends Model<Role> {
 		return paginate(pageNumber, pageSize, "select *", sql);
 	}
 	
-	public List<Authority> getAuthorities(Long id) {
+	public List<Authority> getAuthorities(Integer id) {
 		return Authority.dao.find("select a.* from sec_authority a "
 				+ "LEFT JOIN sec_role_authority ra ON a.id=ra.authority_id "
 				+ "LEFT JOIN sec_role r ON r.id=ra.role_id "
@@ -40,11 +40,11 @@ public class Role extends Model<Role> {
 		return Role.dao.find("select * from sec_role");
 	}
 	
-	public void insertCascade(Long id, Integer authorityId) {
+	public void insertCascade(Integer id, Integer authorityId) {
 		Db.update("insert into sec_role_authority (role_id, authority_id) values (?,?)", id, authorityId);
 	}
 	
-	public void deleteCascade(Long id) {
+	public void deleteCascade(Integer id) {
 		Db.update("delete from sec_role_authority where role_id = ?", id);
 	}
 }

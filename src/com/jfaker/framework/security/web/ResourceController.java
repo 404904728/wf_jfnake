@@ -22,12 +22,12 @@ public class ResourceController extends Controller {
 	}
 	
 	public void edit() {
-		setAttr("resource", Resource.dao.get(getParaToLong()));
+		setAttr("resource", Resource.dao.get(getParaToInt()));
 		render("resourceEdit.jsp");
 	}
 	
 	public void view() {
-		setAttr("resource", Resource.dao.get(getParaToLong()));
+		setAttr("resource", Resource.dao.get(getParaToInt()));
 		render("resourceView.jsp");
 	}
 	

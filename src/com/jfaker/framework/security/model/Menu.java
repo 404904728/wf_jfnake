@@ -19,7 +19,7 @@ public class Menu extends Model<Menu> {
 	private static final long serialVersionUID = -8781209142247805658L;
 	public static final Menu dao = new Menu();
 	//菜单资源的根菜单标识为0
-	public static final Long ROOT_MENU = 0L;
+	public static final Integer ROOT_MENU = 0;
 	public Page<Menu> paginate (int pageNumber, int pageSize, String name) {
 		String sql = "from sec_menu m left join sec_menu pm on m.parent_menu=pm.id";
 		if(StringUtils.isNotEmpty(name)) {
@@ -37,7 +37,7 @@ public class Menu extends Model<Menu> {
 		return Menu.dao.findFirst("select m.*,pm.id as parentId, pm.name as parentName from sec_menu m inner join sec_menu pm on m.parent_menu=pm.id where m.id=?", id);
 	}
 	
-	public List<Menu> getAllowedAccessMenus(Long userId) {
+	public List<Menu> getAllowedAccessMenus(Integer userId) {
 		StringBuffer sqlBuffer = new StringBuffer();
 		sqlBuffer.append("select * from (");
 		//获取Sec_Menu表中定义且未关联资源表Sec_Resource的所有菜单列表

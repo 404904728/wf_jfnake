@@ -21,7 +21,7 @@ INSERT INTO sec_menu (ID, DESCRIPTION, NAME, PARENT_MENU, ORDERBY) VALUES (45, '
 INSERT INTO sec_menu (ID, DESCRIPTION, NAME, PARENT_MENU, ORDERBY) VALUES (46, '', '菜单管理', 4, 6);
 
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (101, '待办任务', '/snaker/task/active', 11);
-INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (102, '流程实例', '/snaker/order', 12);
+INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (102, '流程实例', '/snaker/flow/order', 12);
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (103, '历史任务', '/snaker/task/history', 13);
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (104, '流程定义', '/snaker/process/list', 14);
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (105, '流程部署', '/snaker/process/deploy/**;/snaker/process/add/**', NULL);

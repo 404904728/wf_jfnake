@@ -29,10 +29,10 @@ public class RoleController extends Controller {
 	public void edit() {
 		setAttr("role", Role.dao.findById(getParaToInt()));
 		List<Authority> authorities = Authority.dao.getAll();
-		List<Authority> auths = Role.dao.getAuthorities(getParaToLong());
+		List<Authority> auths = Role.dao.getAuthorities(getParaToInt());
 		for(Authority auth : authorities) {
 			for(Authority sels : auths) {
-				if(auth.getLong("id").longValue() == sels.getLong("id").longValue())
+				if(auth.getInt("id").intValue() == sels.getInt("id").intValue())
 				{
 					auth.put("selected", 1);
 				}
@@ -47,8 +47,8 @@ public class RoleController extends Controller {
 	}
 	
 	public void view() {
-		setAttr("role", Role.dao.findById(getParaToLong()));
-		setAttr("authorities", Role.dao.getAuthorities(getParaToLong()));
+		setAttr("role", Role.dao.findById(getParaToInt()));
+		setAttr("authorities", Role.dao.getAuthorities(getParaToInt()));
 		render("roleView.jsp");
 	}
 	
@@ -58,7 +58,7 @@ public class RoleController extends Controller {
 		Role model = getModel(Role.class);
 		model.save();
 		for(Integer orderIndex : orderIndexs) {
-			Role.dao.insertCascade(model.getLong("id"), orderIndex);
+			Role.dao.insertCascade(model.getInt("id"), orderIndex);
 		}
 		redirect("/security/role");
 	}
@@ -71,8 +71,8 @@ public class RoleController extends Controller {
 	
 	@Before(Tx.class)
 	public void delete() {
-		Role.dao.deleteCascade(getParaToLong());
-		Role.dao.deleteById(getParaToLong());
+		Role.dao.deleteCascade(getParaToInt());
+		Role.dao.deleteById(getParaToInt());
 		redirect("/security/role");
 	}
 }

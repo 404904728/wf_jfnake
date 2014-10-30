@@ -18,10 +18,10 @@ public class ShiroUtils {
 	 * 返回当前登录的认证实体ID
 	 * @return
 	 */
-	public static Long getUserId() {
+	public static Integer getUserId() {
 		ShiroPrincipal principal = getPrincipal();
 		if(principal != null) return principal.getId();
-		return -1L;
+		return -1;
 	}
 	
 	public static User getUser() {
@@ -34,10 +34,11 @@ public class ShiroUtils {
 	 * 返回当前登录的认证实体部门ID
 	 * @return
 	 */
-	public static Long getOrgId() {
+	public static Integer getOrgId() {
 		User user = getUser();
-		if(user != null && user.get("org") != null) return user.get("org");
-		return -1L;
+		Integer org = user.getInt("org");
+		if(user != null && org != null) return org;
+		return -1;
 	}
 	
 	/**
@@ -55,7 +56,7 @@ public class ShiroUtils {
 	 */
 	public static List<String> getGroups() {
 		List<String> groups = new ArrayList<String>();
-		Long orgId = getOrgId();
+		Integer orgId = getOrgId();
 		ShiroPrincipal principal = getPrincipal();
 		if(principal != null) {
 			groups.addAll(principal.getRoles());

@@ -47,7 +47,7 @@ public class User extends Model<User> {
 		return User.dao.findFirst("select u.*,o.name as orgName from sec_user u left join sec_org o on u.org=o.id where u.username=?", name);
 	}
 	
-	public User get(Long id) {
+	public User get(Integer id) {
 		return User.dao.findFirst("select u.*,o.name as orgName from sec_user u left join sec_org o on u.org=o.id where u.id=?", id);
 	}
 	
@@ -59,18 +59,18 @@ public class User extends Model<User> {
 		return User.dao.find(sql);
 	}
 	
-	public List<Role> getRoles(Long id) {
+	public List<Role> getRoles(Integer id) {
 		return Role.dao.find("select r.* from sec_role r "
 				+ "LEFT JOIN sec_role_user ru ON r.id=ru.role_id "
 				+ "LEFT JOIN sec_user u ON u.id=ru.user_id "
 				+ "WHERE u.id=?", id);
 	}
 	
-	public void insertCascade(Long id, Integer roleId) {
+	public void insertCascade(Integer id, Integer roleId) {
 		Db.update("insert into sec_role_user (user_id, role_id) values (?,?)", id, roleId);
 	}
 	
-	public void deleteCascade(Long id) {
+	public void deleteCascade(Integer id) {
 		Db.update("delete from sec_role_user where user_id = ?", id);
 	}
 	
@@ -79,7 +79,7 @@ public class User extends Model<User> {
 	 * @param userId
 	 * @return
 	 */
-	public List<String> getAuthoritiesName(Long userId) {
+	public List<String> getAuthoritiesName(Integer userId) {
 		String sql = "select a.name from sec_user u " + 
 					" left outer join sec_role_user ru on u.id=ru.user_id " + 
 					" left outer join sec_role r on ru.role_id=r.id " + 
@@ -94,7 +94,7 @@ public class User extends Model<User> {
 	 * @param userId
 	 * @return
 	 */
-	public List<String> getRolesName(Long userId) {
+	public List<String> getRolesName(Integer userId) {
 		String sql = "select r.name from sec_user u " + 
 					" left outer join sec_role_user ru on u.id=ru.user_id " + 
 					" left outer join sec_role r on ru.role_id=r.id " + 

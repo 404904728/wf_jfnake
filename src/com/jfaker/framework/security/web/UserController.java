@@ -38,12 +38,12 @@ public class UserController extends Controller {
 	}
 	
 	public void edit() {
-		setAttr("user", User.dao.get(getParaToLong()));
+		setAttr("user", User.dao.get(getParaToInt()));
 		List<Role> roles = Role.dao.getAll();
-		List<Role> rs = User.dao.getRoles(getParaToLong());
+		List<Role> rs = User.dao.getRoles(getParaToInt());
 		for(Role role : roles) {
 			for(Role r : rs) {
-				if(role.getLong("id").longValue() == r.getLong("id").longValue())
+				if(role.getInt("id").intValue() == r.getInt("id").intValue())
 				{
 					role.put("selected", 1);
 				}
@@ -58,8 +58,8 @@ public class UserController extends Controller {
 	}
 	
 	public void view() {
-		setAttr("user", User.dao.get(getParaToLong()));
-		setAttr("roles", User.dao.getRoles(getParaToLong()));
+		setAttr("user", User.dao.get(getParaToInt()));
+		setAttr("roles", User.dao.getRoles(getParaToInt()));
 		render("userView.jsp");
 	}
 	
@@ -71,8 +71,10 @@ public class UserController extends Controller {
 			model.entryptPassword(model);
 		}
 		model.save();
-		for(Integer orderIndex : orderIndexs) {
-			User.dao.insertCascade(model.getLong("id"), orderIndex);
+		if(orderIndexs != null) {
+			for(Integer orderIndex : orderIndexs) {
+				User.dao.insertCascade(model.getInt("id"), orderIndex);
+			}
 		}
 		redirect("/security/user");
 	}
@@ -85,17 +87,19 @@ public class UserController extends Controller {
 			model.entryptPassword(model);
 		}
 		model.update();
-		User.dao.deleteCascade(model.getLong("id"));
-		for(Integer orderIndex : orderIndexs) {
-			User.dao.insertCascade(model.getLong("id"), orderIndex);
+		User.dao.deleteCascade(model.getInt("id"));
+		if(orderIndexs != null) {
+			for(Integer orderIndex : orderIndexs) {
+				User.dao.insertCascade(model.getInt("id"), orderIndex);
+			}
 		}
 		redirect("/security/user");
 	}
 	
 	@Before(Tx.class)
 	public void delete() {
-		User.dao.deleteCascade(getParaToLong());
-		User.dao.deleteById(getParaToLong());
+		User.dao.deleteCascade(getParaToInt());
+		User.dao.deleteById(getParaToInt());
 		redirect("/security/user");
 	}
 	
@@ -124,6 +128,7 @@ public class UserController extends Controller {
 				token.clear();
 				error = "登录失败，密码不匹配";
 			} catch(RuntimeException re) {
+				re.printStackTrace();
 				token.clear();
 				error = "登录失败";
 			}

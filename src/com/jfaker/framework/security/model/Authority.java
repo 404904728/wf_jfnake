@@ -33,18 +33,18 @@ public class Authority extends Model<Authority> {
 		return Authority.dao.find("select * from sec_authority");
 	}
 	
-	public List<Resource> getResources(Long id) {
+	public List<Resource> getResources(Integer id) {
 		return Resource.dao.find("select r.* from sec_resource r "
 				+ "LEFT JOIN sec_authority_resource ar ON r.id=ar.resource_id "
 				+ "LEFT JOIN sec_authority a ON a.id=ar.authority_id "
 				+ "WHERE a.id=?", id);
 	}
 	
-	public void insertCascade(Long id, Integer resourceId) {
+	public void insertCascade(Integer id, Integer resourceId) {
 		Db.update("insert into sec_authority_resource (authority_id, resource_id) values (?,?)", id, resourceId);
 	}
 	
-	public void deleteCascade(Long id) {
+	public void deleteCascade(Integer id) {
 		Db.update("delete from sec_authority_resource where authority_id = ?", id);
 	}
 }

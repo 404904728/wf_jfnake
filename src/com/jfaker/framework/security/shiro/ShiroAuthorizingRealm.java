@@ -50,7 +50,7 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
 		//获取当前登录的用户名
 		ShiroPrincipal subject = (ShiroPrincipal)super.getAvailablePrincipal(principals);
 		String username = subject.getUsername();
-		Long userId = subject.getId();
+		Integer userId = subject.getId();
 		try {
 			if(!subject.isAuthorized()) {
 				//根据用户名称，获取该用户所有的权限列表
@@ -101,8 +101,8 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
 		log.info("用户【" + username + "】登录成功");
 		byte[] salt = EncodeUtils.hexDecode(user.getStr("salt"));
 		ShiroPrincipal subject = new ShiroPrincipal(user);
-		List<String> authorities = User.dao.getAuthoritiesName(user.getLong("id"));
-		List<String> rolelist = User.dao.getRolesName(user.getLong("id"));
+		List<String> authorities = User.dao.getAuthoritiesName(user.getInt("id"));
+		List<String> rolelist = User.dao.getRolesName(user.getInt("id"));
 		subject.setAuthorities(authorities);
 		subject.setRoles(rolelist);
 		subject.setAuthorized(true);

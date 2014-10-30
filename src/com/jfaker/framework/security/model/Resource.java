@@ -28,7 +28,7 @@ public class Resource extends Model<Resource> {
 		return paginate(pageNumber, pageSize, "select r.*,m.name as menuName", sql);
 	}
 	
-	public Resource get(Long id) {
+	public Resource get(Integer id) {
 		return Resource.dao.findFirst("select r.*,m.name as menuName from sec_resource r left join sec_menu m on r.menu=m.id where r.id=?", id);
 	}
 	

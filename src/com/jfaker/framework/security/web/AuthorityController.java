@@ -29,10 +29,10 @@ public class AuthorityController extends Controller {
 	public void edit() {
 		setAttr("authority", Authority.dao.findById(getParaToInt()));
 		List<Resource> resources = Resource.dao.getAll();
-		List<Resource> resss = Authority.dao.getResources(getParaToLong());
+		List<Resource> resss = Authority.dao.getResources(getParaToInt());
 		for(Resource res : resources) {
 			for(Resource selRes : resss) {
-				if(res.getLong("id").longValue() == selRes.getLong("id").longValue())
+				if(res.getInt("id").intValue() == selRes.getInt("id").intValue())
 				{
 					res.put("selected", 1);
 				}
@@ -47,8 +47,8 @@ public class AuthorityController extends Controller {
 	}
 	
 	public void view() {
-		setAttr("authority", Authority.dao.findById(getParaToLong()));
-		setAttr("resources", Authority.dao.getResources(getParaToLong()));
+		setAttr("authority", Authority.dao.findById(getParaToInt()));
+		setAttr("resources", Authority.dao.getResources(getParaToInt()));
 		render("authorityView.jsp");
 	}
 	
@@ -58,7 +58,7 @@ public class AuthorityController extends Controller {
 		Authority model = getModel(Authority.class);
 		model.save();
 		for(Integer orderIndex : orderIndexs) {
-			Authority.dao.insertCascade(model.getLong("id"), orderIndex);
+			Authority.dao.insertCascade(model.getInt("id"), orderIndex);
 		}
 		redirect("/security/authority");
 	}
@@ -71,8 +71,8 @@ public class AuthorityController extends Controller {
 	
 	@Before(Tx.class)
 	public void delete() {
-		Authority.dao.deleteCascade(getParaToLong());
-		Authority.dao.deleteById(getParaToLong());
+		Authority.dao.deleteCascade(getParaToInt());
+		Authority.dao.deleteById(getParaToInt());
 		redirect("/security/authority");
 	}
 }

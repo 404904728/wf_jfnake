@@ -1,9 +1,9 @@
 package com.jfaker.framework.security.model;
 
 public class TreeNode {
-	private Long id;
+	private Integer id;
 
-	private Long pId;
+	private Integer pId;
 
 	private String name;
 
@@ -19,19 +19,19 @@ public class TreeNode {
 
 	private boolean checked;
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public Long getpId() {
+	public Integer getpId() {
 		return pId;
 	}
 
-	public void setpId(Long pId) {
+	public void setpId(Integer pId) {
 		this.pId = pId;
 	}
 

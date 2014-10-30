@@ -31,7 +31,7 @@ public class MenuTagBuilder implements TagBuilder {
 		// 获取所有可允许访问的菜单列表
 		List<Menu> menus = getAllowedAccessMenu();
 		// 循环迭代菜单列表，构成ID、List结构的Map
-		Map<Long, List<Menu>> menuMaps = buildMenuTreeMap(menus);
+		Map<Integer, List<Menu>> menuMaps = buildMenuTreeMap(menus);
 		// 根据Map构造符合左栏菜单显示的html
 		buildMenuTreeFolder(buffer, menuMaps, Menu.ROOT_MENU);
 		return buffer.toString();
@@ -43,14 +43,14 @@ public class MenuTagBuilder implements TagBuilder {
 	 * @param menus
 	 * @return
 	 */
-	private Map<Long, List<Menu>> buildMenuTreeMap(List<Menu> menus) {
-		Map<Long, List<Menu>> menuMap = new TreeMap<Long, List<Menu>>();
+	private Map<Integer, List<Menu>> buildMenuTreeMap(List<Menu> menus) {
+		Map<Integer, List<Menu>> menuMap = new TreeMap<Integer, List<Menu>>();
 		for (Menu menu : menus) {
 			/**
 			 * 判断是否有上一级菜单，如果有，则添加到上一级菜单的Map中去 如果没有上一级菜单，把该菜单作为根节点
 			 */
-			Long parentMenuId = menu.getLong("parent_menu") == null ? Menu.ROOT_MENU
-					: menu.getLong("parent_menu");
+			Integer parentMenuId = menu.getInt("parent_menu") == null ? Menu.ROOT_MENU
+					: menu.getInt("parent_menu");
 			if (!menuMap.containsKey(parentMenuId)) {
 				List<Menu> subMenus = new ArrayList<Menu>();
 				subMenus.add(menu);
@@ -82,13 +82,13 @@ public class MenuTagBuilder implements TagBuilder {
 	 * @param menuId
 	 */
 	private void buildMenuTreeFolder(StringBuffer buffer,
-			Map<Long, List<Menu>> menuMap, Long menuId) {
+			Map<Integer, List<Menu>> menuMap, Integer menuId) {
 		List<Menu> treeFolders = menuMap.get(menuId);
 		if (treeFolders == null) {
 			return;
 		}
 		for (Menu menu : treeFolders) {
-			List<Menu> treeNodes = menuMap.get(menu.getLong("id"));
+			List<Menu> treeNodes = menuMap.get(menu.getInt("id"));
 			if((treeNodes == null || treeNodes.isEmpty()) && StringUtils.isEmpty(menu.getStr("description"))) {
 				continue;
 			}

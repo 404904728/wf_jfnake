@@ -61,7 +61,7 @@ public class ShiroPrincipal implements Serializable {
 	public String getUsername() {
 		return this.user.get("username");
 	}
-	public Long getId() {
+	public Integer getId() {
 		return this.user.get("id");
 	}
 	/**
