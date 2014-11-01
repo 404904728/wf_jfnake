@@ -12,7 +12,7 @@
 	</head>
 
 	<body>
-	<form id="mainForm" action="${ctx}/config/dict" method="get">
+	<form id="mainForm" action="${ctx}/config/dictionary" method="get">
 		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNumber}"/>
 		<table width="100%" border="0" align="center" cellpadding="0"
 				class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
@@ -38,7 +38,7 @@
 			<tr>
 				<td align="left">
 					<shiro:hasPermission name="DICTEDIT">
-					<input type='button' onclick="addNew('${ctx}/config/dict/add')" class='button_70px' value='新建'/>
+					<input type='button' onclick="addNew('${ctx}/config/dictionary/add')" class='button_70px' value='新建'/>
 					</shiro:hasPermission>
 					<input type='submit' class='button_70px' value='查询'/>
 				</td>
@@ -67,12 +67,12 @@
 					</td>
 					<td class="td_list_2" align=left nowrap>
 						<shiro:hasPermission name="DICTDELETE">
-						<a href="${ctx}/config/dict/delete/${dictionary.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
+						<a href="${ctx}/config/dictionary/delete/${dictionary.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 						</shiro:hasPermission>
 						<shiro:hasPermission name="DICTEDIT">
-						<a href="${ctx}/config/dict/edit/${dictionary.id }" class="btnEdit" title="编辑">编辑</a>
+						<a href="${ctx}/config/dictionary/edit/${dictionary.id }" class="btnEdit" title="编辑">编辑</a>
 						</shiro:hasPermission>
-						<a href="${ctx}/config/dict/view/${dictionary.id }" class="btnView" title="查看">查看</a>
+						<a href="${ctx}/config/dictionary/view/${dictionary.id }" class="btnView" title="查看">查看</a>
 					</td>
 				</tr>
 			</c:forEach>

@@ -10,7 +10,7 @@
 	</head>
 
 	<body>
-		<form id="inputForm" action="${ctx }/config/dict/save" method="post">
+		<form id="inputForm" action="${ctx }/config/dictionary/save" method="post">
 			<table width="100%" border="0" align="center" cellpadding="0"
 					class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 				<tr>
