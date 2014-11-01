@@ -63,7 +63,7 @@ public class UserController extends Controller {
 		render("userView.jsp");
 	}
 	
-	@Before(UserValidator.class)
+	@Before({UserValidator.class, Tx.class})
 	public void save() {
 		Integer[] orderIndexs = getParaValuesToInt("orderIndexs");
 		User model = getModel(User.class);
@@ -79,7 +79,7 @@ public class UserController extends Controller {
 		redirect("/security/user");
 	}
 	
-	@Before(UserValidator.class)
+	@Before({UserValidator.class, Tx.class})
 	public void update() {
 		Integer[] orderIndexs = getParaValuesToInt("orderIndexs");
 		User model = getModel(User.class);

@@ -52,20 +52,30 @@ public class RoleController extends Controller {
 		render("roleView.jsp");
 	}
 	
-	@Before(RoleValidator.class)
+	@Before({RoleValidator.class, Tx.class})
 	public void save() {
 		Integer[] orderIndexs = getParaValuesToInt("orderIndexs");
 		Role model = getModel(Role.class);
 		model.save();
-		for(Integer orderIndex : orderIndexs) {
-			Role.dao.insertCascade(model.getInt("id"), orderIndex);
+		if(orderIndexs != null) {
+			for(Integer orderIndex : orderIndexs) {
+				Role.dao.insertCascade(model.getInt("id"), orderIndex);
+			}
 		}
 		redirect("/security/role");
 	}
 	
-	@Before(RoleValidator.class)
+	@Before({RoleValidator.class, Tx.class})
 	public void update() {
-		getModel(Role.class).update();
+		Integer[] orderIndexs = getParaValuesToInt("orderIndexs");
+		Role model = getModel(Role.class);
+		model.update();
+		Role.dao.deleteCascade(model.getInt("id"));
+		if(orderIndexs != null) {
+			for(Integer orderIndex : orderIndexs) {
+				Role.dao.insertCascade(model.getInt("id"), orderIndex);
+			}
+		}
 		redirect("/security/role");
 	}
 	

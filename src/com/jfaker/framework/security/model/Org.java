@@ -22,7 +22,7 @@ public class Org extends Model<Org> {
 	public static final Org dao = new Org();
 	
 	public Page<Org> paginate (int pageNumber, int pageSize, String name) {
-		String sql = "from sec_org o inner join sec_org op on o.parent_org=op.id ";
+		String sql = "from sec_org o left join sec_org op on o.parent_org=op.id ";
 		if(StringUtils.isNotEmpty(name)) {
 			sql += " where o.name like '%" + name + "%' ";
 		}

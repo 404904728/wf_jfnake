@@ -52,20 +52,30 @@ public class AuthorityController extends Controller {
 		render("authorityView.jsp");
 	}
 	
-	@Before(AuthorityValidator.class)
+	@Before({AuthorityValidator.class, Tx.class})
 	public void save() {
 		Integer[] orderIndexs = getParaValuesToInt("orderIndexs");
 		Authority model = getModel(Authority.class);
 		model.save();
-		for(Integer orderIndex : orderIndexs) {
-			Authority.dao.insertCascade(model.getInt("id"), orderIndex);
+		if(orderIndexs != null) {
+			for(Integer orderIndex : orderIndexs) {
+				Authority.dao.insertCascade(model.getInt("id"), orderIndex);
+			}
 		}
 		redirect("/security/authority");
 	}
 	
-	@Before(AuthorityValidator.class)
+	@Before({AuthorityValidator.class, Tx.class})
 	public void update() {
-		getModel(Authority.class).update();
+		Integer[] orderIndexs = getParaValuesToInt("orderIndexs");
+		Authority model = getModel(Authority.class);
+		model.update();
+		Authority.dao.deleteCascade(getParaToInt());
+		if(orderIndexs != null) {
+			for(Integer orderIndex : orderIndexs) {
+				Authority.dao.insertCascade(model.getInt("id"), orderIndex);
+			}
+		}
 		redirect("/security/authority");
 	}
 	

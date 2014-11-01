@@ -15,6 +15,8 @@ import org.snaker.engine.model.WorkModel;
 
 import com.jfaker.app.flow.model.Approval;
 import com.jfaker.framework.security.shiro.ShiroUtils;
+import com.jfinal.aop.Before;
+import com.jfinal.plugin.activerecord.tx.Tx;
 
 /**
  * 通用流程controller类，主要有以下方法：
@@ -58,6 +60,7 @@ public class FlowController extends SnakerController {
 	 * 适用于演示流程，或者是无业务字段的正式流程
 	 */
 	@SuppressWarnings("unchecked")
+	@Before(Tx.class)
 	public void process() {
 		Map<String, Object> params = new HashMap<String, Object>();
 		Enumeration<String> paraNames = getRequest().getParameterNames();
@@ -186,6 +189,7 @@ public class FlowController extends SnakerController {
 	 * 审批环节的提交处理
 	 * 其中审批表可根据具体审批的业务进行定制，此处仅仅是举例
 	 */
+	@Before(Tx.class)
 	public void doApproval() {
 		String orderId = getPara(PARA_ORDERID);
 		String taskId = getPara(PARA_TASKID);

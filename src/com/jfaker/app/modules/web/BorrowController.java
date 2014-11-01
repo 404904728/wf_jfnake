@@ -10,6 +10,8 @@ import org.snaker.engine.entity.Order;
 import com.jfaker.app.flow.web.SnakerController;
 import com.jfaker.app.modules.model.Borrow;
 import com.jfaker.framework.security.shiro.ShiroUtils;
+import com.jfinal.aop.Before;
+import com.jfinal.plugin.activerecord.tx.Tx;
 
 /**
  * 借款流程controller类
@@ -47,6 +49,7 @@ public class BorrowController extends SnakerController {
 	/**
 	 * 借款申请的提交处理
 	 */
+	@Before(Tx.class)
 	public void applySave() {
 		/** 流程数据构造开始 */
 		Map<String, Object> params = new HashMap<String, Object>();
