@@ -14,6 +14,7 @@ import com.jfaker.app.web.CommonController;
 import com.jfaker.framework.dict.model.Dict;
 import com.jfaker.framework.dict.model.DictItem;
 import com.jfaker.framework.dict.web.DictController;
+import com.jfaker.framework.form.model.Form;
 import com.jfaker.framework.form.web.FormController;
 import com.jfaker.framework.security.model.Authority;
 import com.jfaker.framework.security.model.Menu;
@@ -72,7 +73,7 @@ public class AppConfig extends JFinalConfig {
 		me.add("/security/menu", MenuController.class, "/security");
 		me.add("/security/tree", SecurityTreeController.class);
 		
-		me.add("/form", FormController.class, "/form");
+		me.add("/config/form", FormController.class, "/config");
 		
 		me.add("/config/dictionary", DictController.class, "/config");
 		
@@ -108,6 +109,8 @@ public class AppConfig extends JFinalConfig {
 		
 		arp.addMapping("conf_dictionary", Dict.class);
 		arp.addMapping("conf_dictitem", DictItem.class);
+		
+		arp.addMapping("df_form", Form.class);
 		
 		arp.addMapping("flow_approval", Approval.class);
 		arp.addMapping("flow_borrow", Borrow.class);
