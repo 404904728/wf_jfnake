@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
 import org.snaker.engine.entity.Order;
 
 import com.jfaker.app.flow.web.SnakerController;
 import com.jfaker.app.modules.model.Borrow;
 import com.jfaker.framework.security.shiro.ShiroUtils;
+import com.jfaker.framework.utils.DateUtils;
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.tx.Tx;
 
@@ -37,7 +37,7 @@ public class BorrowController extends SnakerController {
 		}
 		//根据taskId是否为空来标识当前请求的页面是否为活动任务的节点页面
 		if(StringUtils.isEmpty(orderId) || StringUtils.isNotEmpty(taskId)) {
-			setAttr("operateTime", new DateTime().toString("yyyy-MM-dd"));
+			setAttr("operateTime", DateUtils.getCurrentDay());
 			//如果实例id为空或者驳回情况下，返回apply.jsp
 			render("apply.jsp");
 		} else {
@@ -67,7 +67,7 @@ public class BorrowController extends SnakerController {
 			/** 业务数据处理开始*/
 			Borrow model = getModel(Borrow.class);
 			model.set("orderId", order.getId());
-			model.set("operateTime", new DateTime().toString("yyyy-MM-dd"));
+			model.set("operateTime", DateUtils.getCurrentDay());
 			model.set("operator", ShiroUtils.getFullname());
 			model.save();
 		} else {

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
 import org.snaker.engine.access.Page;
 import org.snaker.engine.access.QueryFilter;
 import org.snaker.engine.entity.HistoryOrder;
@@ -15,6 +14,7 @@ import org.snaker.engine.model.WorkModel;
 
 import com.jfaker.app.flow.model.Approval;
 import com.jfaker.framework.security.shiro.ShiroUtils;
+import com.jfaker.framework.utils.DateUtils;
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.tx.Tx;
 
@@ -195,7 +195,7 @@ public class FlowController extends SnakerController {
 		String taskId = getPara(PARA_TASKID);
 		String taskName = getPara(PARA_TASKNAME);
 		Approval model = getModel(Approval.class);
-		model.set("operateTime", new DateTime().toString("yyyy-MM-dd HH:mm:ss"));
+		model.set("operateTime", DateUtils.getCurrentTime());
 		model.set("operator", ShiroUtils.getUsername());
 		model.set("orderId", orderId);
 		model.set("taskId", taskId);
