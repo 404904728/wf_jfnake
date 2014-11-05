@@ -29,12 +29,12 @@ INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (106, '委托授权', '
 
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (301, '字典查询', '/config/dictionary', 31);
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (302, '字典查看', '/config/dictionary/view/**', NULL);
-INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (303, '字典编辑', '/config/dictionary/update/**;/config/dictionary/create/**', NULL);
+INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (303, '字典编辑', '/config/dictionary/update/**;/config/dictionary/save/**;/config/dictionary/add/**;/config/dictionary/edit/**', NULL);
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (304, '字典删除', '/config/dictionary/delete/**', NULL);
-INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (311, '表单查询', '/form/form', 32);
-INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (312, '表单查看', '/form/form/view/**', NULL);
-INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (313, '表单编辑', '/form/form/update/**;/form/form/create/**', NULL);
-INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (314, '表单删除', '/form/form/delete/**', NULL);
+INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (311, '表单查询', '/config/form', 32);
+INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (312, '表单查看', '/config/form/view/**', NULL);
+INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (313, '表单编辑', '/config/form/update/**;/config/form/save/**;/config/form/add/**;/config/form/edit/**', NULL);
+INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (314, '表单删除', '/config/form/delete/**', NULL);
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (321, '表查询', '/form/dbtable', 33);
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (322, '表查看', '/form/dbtable/view/**', NULL);
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (323, '表编辑', '/form/dbtable/update/**;/form/dbtable/create/**', NULL);
@@ -58,12 +58,12 @@ INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (423, '角色删除', '
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (424, '权限删除', '/security/authority/delete/**', NULL);
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (425, '资源删除', '/security/resource/delete/**', NULL);
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (426, '菜单删除', '/security/menu/delete/**', NULL);
-INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (431, '用户编辑', '/security/user/update/**;/security/user/create/**', NULL);
-INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (432, '部门编辑', '/security/org/update/**;/security/org/create/**', NULL);
-INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (433, '角色编辑', '/security/role/update/**;/security/role/create/**', NULL);
-INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (434, '权限编辑', '/security/authority/update/**;/security/authority/create/**', NULL);
-INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (435, '资源编辑', '/security/resource/update/**;/security/resource/create/**', NULL);
-INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (436, '菜单编辑', '/security/menu/update/**;/security/menu/create/**', NULL);
+INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (431, '用户编辑', '/security/user/update/**;/security/user/save/**;/security/user/add/**;/security/user/edit/**', NULL);
+INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (432, '部门编辑', '/security/org/update/**;/security/org/save/**;/security/org/add/**;/security/org/edit/**', NULL);
+INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (433, '角色编辑', '/security/role/update/**;/security/role/save/**;/security/role/add/**;/security/role/edit/**', NULL);
+INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (434, '权限编辑', '/security/authority/update/**;/security/authority/save/**;/security/authority/add/**;/security/authority/edit/**', NULL);
+INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (435, '资源编辑', '/security/resource/update/**;/security/resource/save/**;/security/resource/add/**;/security/resource/edit/**', NULL);
+INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (436, '菜单编辑', '/security/menu/update/**;/security/menu/save/**;/security/menu/add/**;/security/menu/edit/**', NULL);
 
 INSERT INTO sec_authority (ID, DESCRIPTION, NAME) VALUES (101, '待办任务', 'ACTIVETASK');
 INSERT INTO sec_authority (ID, DESCRIPTION, NAME) VALUES (102, '流程实例', 'ORDER');
