@@ -45,6 +45,15 @@
 					</td>
 				</tr>
 			</table>
+			<table align="center" border="0" cellpadding="0"
+				cellspacing="0">
+				<tr align="left">
+					<td colspan="1">
+						<input type="button" class="button_70px" name="reback" value="返回"
+							onclick="history.back()">
+					</td>
+				</tr>
+			</table>
 		</form>
 	</body>
 </html>

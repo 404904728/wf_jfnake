@@ -13,7 +13,7 @@
 
 	<body>
 	<form id="mainForm" action="${ctx}/config/form" method="get">
-		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNo}"/>
+		<input type="hidden" name="pageNo" id="pageNo" value="${page.pageNumber}"/>
 		<table width="100%" border="0" align="center" cellpadding="0"
 				class="table_all_border" cellspacing="0" style="margin-bottom: 0px;border-bottom: 0px">
 			<tr>
@@ -63,7 +63,7 @@
 					操作
 				</td>				
 			</tr>
-			<c:forEach items="${page.result}" var="form">
+			<c:forEach items="${page.list}" var="form">
 				<tr>
 					<td class="td_list_2" align=left nowrap>
 						${form.name}&nbsp;
@@ -78,16 +78,18 @@
 						${form.createTime}&nbsp;
 					</td>
 					<td class="td_list_2" align=left nowrap>
-						${form.type}&nbsp;
+						<frame:select name="form.type" type="select" configName="formType" displayType="1" value="${form.type}" />&nbsp;
 					</td>
 					<td class="td_list_2" align=left nowrap>
 						<a href="${ctx}/config/form/delete/${form.id }" class="btnDel" title="删除" onclick="return confirmDel();">删除</a>
 						<a href="${ctx}/config/form/edit/${form.id }" class="btnEdit" title="编辑">编辑</a>
+						<a href="${ctx}/config/form/designer/${form.id }" class="btnForm" title="设计">设计</a>
 						<a href="${ctx}/config/form/view/${form.id }" class="btnView" title="查看">查看</a>
+						<a href="${ctx}/config/form/use/${form.id }" class="btnView" title="查看">查看</a>
 					</td>
 				</tr>
 			</c:forEach>
-			<frame:page curPage="${page.pageNo}" totalPages="${page.totalPages }" totalRecords="${page.totalCount }"/>
+			<frame:page curPage="${page.pageNumber}" totalPages="${page.totalPage }" totalRecords="${page.totalRow }"/>
 		</table>
 	</form>
 	</body>

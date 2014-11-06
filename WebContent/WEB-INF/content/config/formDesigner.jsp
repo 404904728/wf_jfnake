@@ -7,7 +7,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="author" content="leipi.org">
     <link href="${ctx }/styles/bootstrap/2.2.2/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <!--[if lte IE 6]>
     <link rel="stylesheet" type="text/css" href="${ctx }/styles/bootstrap/2.2.2/css/bootstrap-ie6.css">
@@ -21,25 +20,27 @@
 
 <div class="container" style="padding-top: 5px; padding-left: 5px">
     <form method="post" id="saveform" name="saveform" action="/index.php?s=/index/parse.html">
-        <input type="hidden" name="fields" id="fields" value="0">
+        <input type="hidden" name="fields" id="fields" value="${form.fieldNum }">
         <div class="row">
             <div class="span2">
                 <ul class="nav nav-list">
-                    <li class="nav-header">两栏布局</li>
+                    <li class="nav-header">表单控件</li>
                     <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('text');" class="btn btn-link">文本框</a></li>
                     <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('textarea');" class="btn btn-link">多行文本</a></li>
                     <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('select');" class="btn btn-link">下拉菜单</a></li>
                     <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('radios');" class="btn btn-link">单选框</a></li>
                     <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('checkboxs');" class="btn btn-link">复选框</a></li>
+                    <!-- 
                     <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('macros');" class="btn btn-link">宏控件</a></li>
                     <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('progressbar');" class="btn btn-link">进度条</a></li>
                     <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('qrcode');" class="btn btn-link">二维码</a></li>
                     <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('more');" class="btn btn-link">一起参与...</a></li>
+                     -->
                 </ul>
             </div>
 
             <div class="span10">
-                <script id="myFormDesign" type="text/plain" style="width:100%;"></script>
+                <script id="formEditor" type="text/plain" style="width:100%;">${form.originalHtml}</script>
             </div>
         </div><!--end row-->
     </form>
@@ -52,7 +53,7 @@
 <script type="text/javascript" charset="utf-8" src="${ctx }/styles/ueditor/formdesign/leipi.formdesign.v4.js"></script>
 <!-- script start-->
 <script type="text/javascript">
-var leipiEditor = UE.getEditor('myFormDesign',{
+var formEditor = UE.getEditor('formEditor',{
     toolleipi:true,//是否显示，设计器的 toolbars
     textarea: 'design_content',
     //这里可以选择自己需要的工具按钮名称,此处仅选择如下五个
@@ -73,7 +74,7 @@ var leipiEditor = UE.getEditor('myFormDesign',{
 var leipiFormDesign = {
     /*执行控件*/
     exec : function (method) {
-        leipiEditor.execCommand(method);
+    	formEditor.execCommand(method);
     },
     /*
      Javascript 解析表单
@@ -237,6 +238,8 @@ var leipiFormDesign = {
                     var arr = new Object();
                     arr['name'] = name;
                     arr['leipiplugins'] = attr_arr_all['leipiplugins'];
+                    arr['title'] = attr_arr_all['title'];
+                    arr['orgtype'] = attr_arr_all['orgtype'];
                     add_fields[arr['name']] = arr;
                 }
                 template_data[pno] = attr_arr_all;
@@ -256,11 +259,11 @@ var leipiFormDesign = {
     },
     /*type  =  save 保存设计 versions 保存版本  close关闭 */
     fnCheckForm : function ( type ) {
-        if(leipiEditor.queryCommandState( 'source' ))
-            leipiEditor.execCommand('source');//切换到编辑模式才提交，否则有bug
+        if(formEditor.queryCommandState( 'source' ))
+            formEditor.execCommand('source');//切换到编辑模式才提交，否则有bug
 
-        if(leipiEditor.hasContents()){
-            leipiEditor.sync();/*同步内容*/
+        if(formEditor.hasContents()){
+            formEditor.sync();/*同步内容*/
 
             //--------------以下仅参考-----------------------------------------------------------------------------------------------------
             var type_value='',formid=0,fields=$("#fields").val(),formeditor='';
@@ -269,32 +272,23 @@ var leipiFormDesign = {
                 type_value = type;
             }
             //获取表单设计器里的内容
-            formeditor=leipiEditor.getContent();
+            formeditor=formEditor.getContent();
             //解析表单设计器控件
             var parse_form = this.parse_form(formeditor,fields);
+            alert(parse_form);
             //异步提交数据
             $.ajax({
                 type: 'POST',
-                url : '${ctx}/form/save',
+                url : '${ctx}/config/form/processor',
                 //dataType : 'json',
-                data : {'type' : type_value,'formid':formid,'parse_form':parse_form},
+                data : {'type' : type_value,'formid':'${form.id}','parse_form':parse_form},
                 success : function(data){
-/*                     if(confirm('查看js解析后，提交到服务器的数据，请临时允许弹窗'))
-                    {
-                        win_parse=window.open('','','width=800,height=600');
-                        //这里临时查看，所以替换一下，实际情况下不需要替换
-                        data  = data.replace(/<\/+textarea/,'&lt;textarea');
-                        win_parse.document.write('<textarea style="width:100%;height:100%">'+data+'</textarea>');
-                        win_parse.focus();
-                    } */
-					alert('success');
-                    /*
-                     if(data.success==1){
-                     alert('保存成功');
-                     $('#submitbtn').button('reset');
-                     }else{
-                     alert('保存失败！');
-                     }*/
+					if(data == true) {
+						alert('表单保存成功');
+						window.location.href='${ctx}/config/form';
+					} else {
+						alert('表单保存失败');
+					}
                 }
             });
 
@@ -306,11 +300,11 @@ var leipiFormDesign = {
     } ,
     /*预览表单*/
     fnReview : function (){
-        if(leipiEditor.queryCommandState( 'source' ))
-            leipiEditor.execCommand('source');/*切换到编辑模式才提交，否则部分浏览器有bug*/
+        if(formEditor.queryCommandState( 'source' ))
+            formEditor.execCommand('source');/*切换到编辑模式才提交，否则部分浏览器有bug*/
 
-        if(leipiEditor.hasContents()){
-            leipiEditor.sync();       /*同步内容*/
+        if(formEditor.hasContents()){
+            formEditor.sync();       /*同步内容*/
 
             alert("你点击了预览,请自行处理....");
             return false;
