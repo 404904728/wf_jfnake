@@ -14,6 +14,7 @@ import com.jfaker.app.web.CommonController;
 import com.jfaker.framework.dict.model.Dict;
 import com.jfaker.framework.dict.model.DictItem;
 import com.jfaker.framework.dict.web.DictController;
+import com.jfaker.framework.form.model.Field;
 import com.jfaker.framework.form.model.Form;
 import com.jfaker.framework.form.web.FormController;
 import com.jfaker.framework.security.model.Authority;
@@ -111,6 +112,7 @@ public class AppConfig extends JFinalConfig {
 		arp.addMapping("conf_dictitem", DictItem.class);
 		
 		arp.addMapping("df_form", Form.class);
+		arp.addMapping("df_field", Field.class);
 		
 		arp.addMapping("flow_approval", Approval.class);
 		arp.addMapping("flow_borrow", Borrow.class);
