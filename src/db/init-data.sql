@@ -35,10 +35,6 @@ INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (311, '表单查询', '
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (312, '表单查看', '/config/form/view/**', NULL);
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (313, '表单编辑', '/config/form/update/**;/config/form/save/**;/config/form/add/**;/config/form/edit/**', NULL);
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (314, '表单删除', '/config/form/delete/**', NULL);
-INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (321, '表查询', '/form/dbtable', 33);
-INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (322, '表查看', '/form/dbtable/view/**', NULL);
-INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (323, '表编辑', '/form/dbtable/update/**;/form/dbtable/create/**', NULL);
-INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (324, '表删除', '/form/dbtable/delete/**', NULL);
 
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (401, '用户查询', '/security/user', 41);
 INSERT INTO sec_resource (ID, NAME, SOURCE, MENU) VALUES (402, '部门查询', '/security/org', 42);
@@ -80,10 +76,6 @@ INSERT INTO sec_authority (ID, DESCRIPTION, NAME) VALUES (311, '表单查询', '
 INSERT INTO sec_authority (ID, DESCRIPTION, NAME) VALUES (312, '表单查看', 'FORMVIEW');
 INSERT INTO sec_authority (ID, DESCRIPTION, NAME) VALUES (313, '表单编辑', 'FORMEDIT');
 INSERT INTO sec_authority (ID, DESCRIPTION, NAME) VALUES (314, '表单删除', 'FORMDELETE');
-INSERT INTO sec_authority (ID, DESCRIPTION, NAME) VALUES (321, '表查询', 'DBTABLELIST');
-INSERT INTO sec_authority (ID, DESCRIPTION, NAME) VALUES (322, '表查看', 'DBTABLEVIEW');
-INSERT INTO sec_authority (ID, DESCRIPTION, NAME) VALUES (323, '表编辑', 'DBTABLEEDIT');
-INSERT INTO sec_authority (ID, DESCRIPTION, NAME) VALUES (324, '表删除', 'DBTABLEDELETE');
 
 INSERT INTO sec_authority (ID, DESCRIPTION, NAME) VALUES (401, '用户查询', 'USERLIST');
 INSERT INTO sec_authority (ID, DESCRIPTION, NAME) VALUES (402, '部门查询', 'ORGLIST');
@@ -125,10 +117,6 @@ INSERT INTO sec_authority_resource (AUTHORITY_ID, RESOURCE_ID) VALUES (311, 311)
 INSERT INTO sec_authority_resource (AUTHORITY_ID, RESOURCE_ID) VALUES (312, 312);
 INSERT INTO sec_authority_resource (AUTHORITY_ID, RESOURCE_ID) VALUES (313, 313);
 INSERT INTO sec_authority_resource (AUTHORITY_ID, RESOURCE_ID) VALUES (314, 314);
-INSERT INTO sec_authority_resource (AUTHORITY_ID, RESOURCE_ID) VALUES (321, 321);
-INSERT INTO sec_authority_resource (AUTHORITY_ID, RESOURCE_ID) VALUES (322, 322);
-INSERT INTO sec_authority_resource (AUTHORITY_ID, RESOURCE_ID) VALUES (323, 323);
-INSERT INTO sec_authority_resource (AUTHORITY_ID, RESOURCE_ID) VALUES (324, 324);
 
 INSERT INTO sec_authority_resource (AUTHORITY_ID, RESOURCE_ID) VALUES (401, 401);
 INSERT INTO sec_authority_resource (AUTHORITY_ID, RESOURCE_ID) VALUES (402, 402);
@@ -173,9 +161,6 @@ INSERT INTO sec_role_authority (ROLE_ID, AUTHORITY_ID) VALUES (1, 311);
 INSERT INTO sec_role_authority (ROLE_ID, AUTHORITY_ID) VALUES (1, 312);
 INSERT INTO sec_role_authority (ROLE_ID, AUTHORITY_ID) VALUES (1, 313);
 INSERT INTO sec_role_authority (ROLE_ID, AUTHORITY_ID) VALUES (1, 314);
-INSERT INTO sec_role_authority (ROLE_ID, AUTHORITY_ID) VALUES (1, 321);
-INSERT INTO sec_role_authority (ROLE_ID, AUTHORITY_ID) VALUES (1, 322);
-INSERT INTO sec_role_authority (ROLE_ID, AUTHORITY_ID) VALUES (1, 323);
 INSERT INTO sec_role_authority (ROLE_ID, AUTHORITY_ID) VALUES (1, 401);
 INSERT INTO sec_role_authority (ROLE_ID, AUTHORITY_ID) VALUES (1, 402);
 INSERT INTO sec_role_authority (ROLE_ID, AUTHORITY_ID) VALUES (1, 403);
@@ -246,11 +231,11 @@ INSERT INTO sec_role_user (USER_ID, ROLE_ID) VALUES (1, 1);
 INSERT INTO sec_role_user (USER_ID, ROLE_ID) VALUES (2, 2);
 INSERT INTO sec_role_user (USER_ID, ROLE_ID) VALUES (3, 2);
 
-INSERT INTO conf_dictionary (ID, DESCRIPTION, NAME, CN_NAME) VALUES (1, '', 'yesNo', '是否');
-INSERT INTO conf_dictionary (ID, DESCRIPTION, NAME, CN_NAME) VALUES (2, '', 'sex', '性别');
-INSERT INTO conf_dictionary (ID, DESCRIPTION, NAME, CN_NAME) VALUES (3, '', 'formType', '表单类型');
-INSERT INTO conf_dictionary (ID, DESCRIPTION, NAME, CN_NAME) VALUES (4, '', 'fieldType', '字段类型');
-INSERT INTO conf_dictionary (ID, DESCRIPTION, NAME, CN_NAME) VALUES (5, '', 'fieldDefault', '默认字段值');
+INSERT INTO conf_dictionary (ID, DESCRIPTION, NAME, CNNAME) VALUES (1, '', 'yesNo', '是否');
+INSERT INTO conf_dictionary (ID, DESCRIPTION, NAME, CNNAME) VALUES (2, '', 'sex', '性别');
+INSERT INTO conf_dictionary (ID, DESCRIPTION, NAME, CNNAME) VALUES (3, '', 'formType', '表单类型');
+INSERT INTO conf_dictionary (ID, DESCRIPTION, NAME, CNNAME) VALUES (4, '', 'fieldType', '字段类型');
+INSERT INTO conf_dictionary (ID, DESCRIPTION, NAME, CNNAME) VALUES (5, '', 'fieldDefault', '默认字段值');
 
 INSERT INTO conf_dictitem (ID, DESCRIPTION, NAME, ORDERBY, DICTIONARY, CODE) VALUES (11, '', '是', 1, 1, '1');
 INSERT INTO conf_dictitem (ID, DESCRIPTION, NAME, ORDERBY, DICTIONARY, CODE) VALUES (12, '', '否', 2, 1, '2');
