@@ -22,7 +22,7 @@
 	<body>
 	<div class="container">
 	<div class="row">
-		<form id="inputForm" action="${ctx }/config/form/submit" method="post">
+		<form id="inputForm" action="${ctx }/config/form/submit" method="post"  target="mainFrame">
 			<input type="hidden" name="form.id" id="id" value="${form.id }"/>
 			<input type="hidden" name="url" id="url" value="/config/form"/>
 			${form.originalHtml }

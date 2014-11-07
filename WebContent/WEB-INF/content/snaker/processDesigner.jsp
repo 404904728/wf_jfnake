@@ -27,7 +27,6 @@
 					basePath : "${ctx}/styles/js/snaker/",
                     ctxPath : "${ctx}",
 					restore : model,
-                    formPath : "forms/",
 					tools : {
 						save : {
 							onclick : function(data) {
