@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.jfaker.framework.utils.DateUtils;
 import com.jfinal.plugin.activerecord.Db;
@@ -16,6 +18,7 @@ public class Form extends Model<Form> {
 	 * 
 	 */
 	private static final long serialVersionUID = -8945469242429605208L;
+	private static final Logger log = LoggerFactory.getLogger(Form.class);
 	private static final String TABLE_PREFIX = "TBL_";
 	public static final Form dao = new Form();
 	
@@ -125,8 +128,8 @@ public class Form extends Model<Form> {
 		afterSql.append(")");
 		beforeSql.append(afterSql.toString());
 		String sql = beforeSql.toString();
-		System.out.println(sql);
-		System.out.println(datas);
+		log.info("dynamic sql is:" + sql);
+		log.info(datas.toString());
 		Db.update(sql, datas.toArray());
 	}
 	

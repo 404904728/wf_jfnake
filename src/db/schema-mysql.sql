@@ -261,7 +261,7 @@ CREATE TABLE df_form (
   creator VARCHAR(50) DEFAULT NULL,
   createTime VARCHAR(50) DEFAULT NULL,
   originalHtml TEXT,
-  parserHtml TEXT,
+  parseHtml TEXT,
   fieldNum INT DEFAULT 0
 );
 ALTER TABLE DF_FORM ADD UNIQUE (NAME);
