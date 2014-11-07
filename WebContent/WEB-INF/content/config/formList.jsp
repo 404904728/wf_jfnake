@@ -86,6 +86,7 @@
 						<a href="${ctx}/config/form/designer/${form.id }" class="btnForm" title="设计">设计</a>
 						<a href="${ctx}/config/form/view/${form.id }" class="btnView" title="查看">查看</a>
 						<a href="${ctx}/config/form/use/${form.id }" class="btnView" title="查看">查看</a>
+						<a href="${ctx}/config/field/${form.id }" class="btnView" title="查看">查看</a>
 					</td>
 				</tr>
 			</c:forEach>

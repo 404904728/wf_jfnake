@@ -16,6 +16,7 @@ import com.jfaker.framework.dict.model.DictItem;
 import com.jfaker.framework.dict.web.DictController;
 import com.jfaker.framework.form.model.Field;
 import com.jfaker.framework.form.model.Form;
+import com.jfaker.framework.form.web.FieldController;
 import com.jfaker.framework.form.web.FormController;
 import com.jfaker.framework.security.model.Authority;
 import com.jfaker.framework.security.model.Menu;
@@ -75,6 +76,7 @@ public class AppConfig extends JFinalConfig {
 		me.add("/security/tree", SecurityTreeController.class);
 		
 		me.add("/config/form", FormController.class, "/config");
+		me.add("/config/field", FieldController.class, "/config");
 		
 		me.add("/config/dictionary", DictController.class, "/config");
 		
