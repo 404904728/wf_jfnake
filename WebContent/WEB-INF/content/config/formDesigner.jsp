@@ -19,22 +19,22 @@
 <body>
 
 <div class="container" style="padding-top: 5px; padding-left: 5px">
-    <form method="post" id="saveform" name="saveform" action="/index.php?s=/index/parse.html">
+    <form method="post" id="saveform" name="saveform" action="">
         <input type="hidden" name="fields" id="fields" value="${form.fieldNum }">
         <div class="row">
             <div class="span2">
                 <ul class="nav nav-list">
                     <li class="nav-header">表单控件</li>
-                    <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('text');" class="btn btn-link">文本框</a></li>
-                    <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('textarea');" class="btn btn-link">多行文本</a></li>
-                    <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('select');" class="btn btn-link">下拉菜单</a></li>
-                    <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('radios');" class="btn btn-link">单选框</a></li>
-                    <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('checkboxs');" class="btn btn-link">复选框</a></li>
+                    <li><a href="javascript:void(0);" onclick="formDesign.exec('text');" class="btn btn-link">文本框</a></li>
+                    <li><a href="javascript:void(0);" onclick="formDesign.exec('textarea');" class="btn btn-link">多行文本</a></li>
+                    <li><a href="javascript:void(0);" onclick="formDesign.exec('select');" class="btn btn-link">下拉菜单</a></li>
+                    <li><a href="javascript:void(0);" onclick="formDesign.exec('radios');" class="btn btn-link">单选框</a></li>
+                    <li><a href="javascript:void(0);" onclick="formDesign.exec('checkboxs');" class="btn btn-link">复选框</a></li>
                     <!-- 
-                    <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('macros');" class="btn btn-link">宏控件</a></li>
-                    <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('progressbar');" class="btn btn-link">进度条</a></li>
-                    <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('qrcode');" class="btn btn-link">二维码</a></li>
-                    <li><a href="javascript:void(0);" onclick="leipiFormDesign.exec('more');" class="btn btn-link">一起参与...</a></li>
+                    <li><a href="javascript:void(0);" onclick="formDesign.exec('macros');" class="btn btn-link">宏控件</a></li>
+                    <li><a href="javascript:void(0);" onclick="formDesign.exec('progressbar');" class="btn btn-link">进度条</a></li>
+                    <li><a href="javascript:void(0);" onclick="formDesign.exec('qrcode');" class="btn btn-link">二维码</a></li>
+                    <li><a href="javascript:void(0);" onclick="formDesign.exec('more');" class="btn btn-link">一起参与...</a></li>
                      -->
                 </ul>
             </div>
@@ -50,7 +50,7 @@
 <script type="text/javascript" charset="utf-8" src="${ctx }/styles/ueditor/ueditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="${ctx }/styles/ueditor/ueditor.all.js"> </script>
 <script type="text/javascript" charset="utf-8" src="${ctx }/styles/ueditor/lang/zh-cn/zh-cn.js"></script>
-<script type="text/javascript" charset="utf-8" src="${ctx }/styles/ueditor/formdesign/leipi.formdesign.v4.js"></script>
+<script type="text/javascript" charset="utf-8" src="${ctx }/styles/ueditor/formdesign/formdesign.v4.js"></script>
 <!-- script start-->
 <script type="text/javascript">
 var formEditor = UE.getEditor('formEditor',{
@@ -71,7 +71,7 @@ var formEditor = UE.getEditor('formEditor',{
     //更多其他参数，请参考ueditor.config.js中的配置项
 });
 
-var leipiFormDesign = {
+var formDesign = {
     /*执行控件*/
     exec : function (method) {
     	formEditor.execCommand(method);
@@ -84,7 +84,7 @@ var leipiFormDesign = {
     parse_form:function(template,fields)
     {
         //正则  radios|checkboxs|select 匹配的边界 |--|  因为当使用 {} 时js报错
-        var preg =  /(\|-<span(((?!<span).)*leipiplugins=\"(radios|checkboxs|select)\".*?)>(.*?)<\/span>-\||<(img|input|textarea|select).*?(<\/select>|<\/textarea>|\/>))/gi,preg_attr =/(\w+)=\"(.?|.+?)\"/gi,preg_group =/<input.*?\/>/gi;
+        var preg =  /(\|-<span(((?!<span).)*(plugins|fieldname|fieldflow)=\"(radios|checkboxs|select)\".*?)>(.*?)<\/span>-\||<(img|input|textarea|select).*?(<\/select>|<\/textarea>|\/>))/gi,preg_attr =/(\w+)=\"(.?|.+?)\"/gi,preg_group =/<input.*?\/>/gi;
         if(!fields) fields = 0;
 
         var template_parse = template,template_data = new Array(),add_fields=new Object(),checkboxs=0;
@@ -107,7 +107,7 @@ var leipiFormDesign = {
             plugin.replace(preg_attr, function(str0,attr,val) {
                 if(attr=='name')
                 {
-                    if(val=='leipiNewField')
+                    if(val=='NEWFIELD')
                     {
                         is_new=true;
                         fields++;
@@ -140,14 +140,14 @@ var leipiFormDesign = {
                 attr_arr_all['name'] = '';
                 attr_arr_all['value'] = '';
 
-                attr_arr_all['content'] = '<span leipiplugins="checkboxs"  title="'+attr_arr_all['title']+'">';
+                attr_arr_all['content'] = '<span plugins="checkboxs"  title="'+attr_arr_all['title']+'">';
                 var dot_name ='', dot_value = '';
                 p5.replace(preg_group, function(parse_group) {
                     var is_new=false,option = new Object();
                     parse_group.replace(preg_attr, function(str0,k,val) {
                         if(k=='name')
                         {
-                            if(val=='leipiNewField')
+                        	if(val=='NEWFIELD')
                             {
                                 is_new=true;
                                 fields++;
@@ -177,7 +177,7 @@ var leipiFormDesign = {
                     {
                         var arr = new Object();
                         arr['name'] = option['name'];
-                        arr['leipiplugins'] = attr_arr_all['leipiplugins'];
+                        arr['plugins'] = attr_arr_all['plugins'];
                         add_fields[option['name']] = arr;
 
                     }
@@ -201,7 +201,7 @@ var leipiFormDesign = {
                     plugin = plugin.replace('|-','');
                     plugin = plugin.replace('-|','');
                     attr_arr_all['value'] = '';
-                    attr_arr_all['content'] = '<span leipiplugins="radios" name="'+attr_arr_all['name']+'" title="'+attr_arr_all['title']+'">';
+                    attr_arr_all['content'] = '<span plugins="radios" name="'+attr_arr_all['name']+'" title="'+attr_arr_all['title']+'">';
                     var dot='';
                     p5.replace(preg_group, function(parse_group) {
                         var option = new Object();
@@ -225,7 +225,7 @@ var leipiFormDesign = {
 
                 }else
                 {
-                    attr_arr_all['content'] = is_new ? plugin.replace(/leipiNewField/,name) : plugin;
+                    attr_arr_all['content'] = is_new ? plugin.replace(/NEWFIELD/,name) : plugin;
                 }
                 //attr_arr_all['itemid'] = fields;
                 //attr_arr_all['tag'] = tag;
@@ -237,9 +237,11 @@ var leipiFormDesign = {
                 {
                     var arr = new Object();
                     arr['name'] = name;
-                    arr['leipiplugins'] = attr_arr_all['leipiplugins'];
+                    arr['plugins'] = attr_arr_all['plugins'];
                     arr['title'] = attr_arr_all['title'];
                     arr['orgtype'] = attr_arr_all['orgtype'];
+                    arr['fieldname'] = attr_arr_all['fieldname'];
+                    arr['fieldflow'] = attr_arr_all['fieldflow'];
                     add_fields[arr['name']] = arr;
                 }
                 template_data[pno] = attr_arr_all;
@@ -248,10 +250,12 @@ var leipiFormDesign = {
             }
             pno++;
         })
+        var view = template.replace(/{\|-/g,'');
+        view = view.replace(/-\|}/g,'');
         var parse_form = new Object({
             'fields':fields,//总字段数
             'template':template,//完整html
-            'parse':template_parse,//控件替换为{data_1}的html
+            'parse':view,
             'data':template_data,//控件属性
             'add_fields':add_fields//新增控件
         });
@@ -275,7 +279,7 @@ var leipiFormDesign = {
             formeditor=formEditor.getContent();
             //解析表单设计器控件
             var parse_form = this.parse_form(formeditor,fields);
-            alert(parse_form);
+            //alert(parse_form);
             //异步提交数据
             $.ajax({
                 type: 'POST',
@@ -315,7 +319,7 @@ var leipiFormDesign = {
             document.saveform.target="mywin";
             window.open('','mywin',"menubar=0,toolbar=0,status=0,resizable=1,left=0,top=0,scrollbars=1,width=" +(screen.availWidth-10) + ",height=" + (screen.availHeight-50) + "\"");
 
-            document.saveform.action="/index.php?s=/index/preview.html";
+            document.saveform.action="";
             document.saveform.submit(); //提交表单
         } else {
             alert('表单内容不能为空！');
