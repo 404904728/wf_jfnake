@@ -83,8 +83,8 @@ var formDesign = {
      */
     parse_form:function(template,fields)
     {
-        //正则  radios|checkboxs|select 匹配的边界 |--|  因为当使用 {} 时js报错
-        var preg =  /(\|-<span(((?!<span).)*(plugins|fieldname|fieldflow)=\"(radios|checkboxs|select)\".*?)>(.*?)<\/span>-\||<(img|input|textarea|select).*?(<\/select>|<\/textarea>|\/>))/gi,preg_attr =/(\w+)=\"(.?|.+?)\"/gi,preg_group =/<input.*?\/>/gi;
+        //正则  radios|checkboxs|select 匹配的边界 |--|  因为当使用 {} 时js报错 (plugins|fieldname|fieldflow)
+        var preg =  /(\|-<span(((?!<span).)*plugins=\"(radios|checkboxs|select)\".*?)>(.*?)<\/span>-\||<(img|input|textarea|select).*?(<\/select>|<\/textarea>|\/>))/gi,preg_attr =/(\w+)=\"(.?|.+?)\"/gi,preg_group =/<input.*?\/>/gi;
         if(!fields) fields = 0;
 
         var template_parse = template,template_data = new Array(),add_fields=new Object(),checkboxs=0;
