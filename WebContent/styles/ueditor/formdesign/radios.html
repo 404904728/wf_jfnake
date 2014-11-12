@@ -4,7 +4,6 @@
     <title>复选框</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
-    <meta name="generator" content="www.leipi.org" />
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <!--[if lte IE 6]>
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
@@ -122,10 +121,10 @@ function fnAddComboTr(gName,obj)
 }
 function fnAdd() {
     var dName = $G('hidname').value;
-    if(!dName) dName = 'leipiNewField';
+    if(!dName) dName = 'NEWFIELD';
     fnAddComboTr(dName,{
         "checked":false,
-        "name":'leipiNewField',
+        "name":'NEWFIELD',
         "value":''
     });
 }
@@ -159,11 +158,19 @@ function fnParseOptions(gName,gChecked)
     <input id="hidname"  type="hidden"/>
     <table class="table table-bordered table-striped">
      <tr>
-        <th><span>控件名称</span><span class="label label-important">*</span></th>
+        <th><span>字段名称</span><span class="label label-important">*</span></th>
+        <th><span>字段标题</span><span class="label label-important">*</span> </th>
+    </tr>
+    <tr>
+        <td><input type="text" id="fieldname" placeholder="必填项"></td>
+        <td><input type="text" id="orgname" placeholder="必填项"></td>
+    </tr>
+     <tr>
+        <th><span>流程变量</span> </th>
         <th><span>排列方式</span></th>
     </tr>
     <tr>
-        <td><input id="orgname" placeholder="必填项" type="text"/> </td>
+        <td><label class="checkbox inline"><input id="fieldflow" type="checkbox"/> 流程变量</label></td>
         <td>
             <label class="radio" title="选项一 选项二"><input id="orgchecked0" checked="checked" name="checked" type="radio"> 横排 </label>
             <label class="radio" title="选项一&#10;选项二"><input id="orgchecked1" name="checked" type="radio" > 竖排 </label>
@@ -204,7 +211,13 @@ window.onload = function() {
         oNode = UE.plugins[thePlugins].editdom;
         var gTitle=oNode.getAttribute('title').replace(/&quot;/g,"\"");
         var gName=oNode.getAttribute('name').replace(/&quot;/g,"\"");
+        var gFlow=oNode.getAttribute('fieldflow');
         $G('orgname').value = gTitle;
+        $G('fieldname').value = oNode.getAttribute('fieldname');
+        if (gFlow == '1')
+        {
+            $G('fieldflow').checked = true;
+        }
         $G('hidname').value = gName;
         var checked = oNode.getAttribute('orgchecked');
         checked=='orgchecked1' ? $G('orgchecked1').checked = true : $G('orgchecked0').checked = true;
@@ -229,26 +242,31 @@ dialog.oncancel = function () {
     }
 };
 dialog.onok = function (){
-    if( $G('orgname').value == '') {
+    if($G('fieldname').value==''){
+        alert('请输入字段名称');
+        return false;
+    }
+	if( $G('orgname').value == '') {
         alert('控件名称不能为空');
         return false;
     }
-    var gTitle=$G('orgname').value.replace(/\"/g,"&quot;");
+    var gTitle=$G('orgname').value.replace(/\"/g,"&quot;"),gName=$G('fieldname').value;
 
     var gChecked = 'orgchecked0';
+    var gFlow = '0';
     if ($G('orgchecked1').checked) gChecked = 'orgchecked1';
-        
+    if ($G('fieldflow').checked ) gFlow = '1';
 
     if( !oNode ) {
         try {
-            var options = fnParseOptions("leipiNewField",gChecked);
+            var options = fnParseOptions("NEWFIELD",gChecked);
             if(!options)
             {
                 alert('请添加选项');
                 return false;
             }
             //{|- 使用边界，防止用户删除了span标签
-            var html = '{|-<span leipiplugins="radios" title="'+gTitle+'" name="leipiNewField">';
+            var html = '{|-<span plugins="radios" title="'+gTitle+'" name="NEWFIELD" fieldname="' + gName + '" fieldflow="' + gFlow + '">';
                 html +=options;
                 html +='</span>-|}';
             editor.execCommand('insertHtml',html);
@@ -257,7 +275,7 @@ dialog.onok = function (){
             try {
                 editor.execCommand('error');
             } catch ( e ) {
-                alert('控件异常，请到 [雷劈网] 反馈或寻求帮助！');
+                alert('控件异常，请联系技术支持');
             }
             return false;
         }
@@ -265,6 +283,8 @@ dialog.onok = function (){
         var gName=oNode.getAttribute('name').replace(/&quot;/g,"\"");
         oNode.setAttribute('title',gTitle);
         oNode.setAttribute('orgchecked',gChecked);
+        oNode.setAttribute('fieldname',gName);
+        oNode.setAttribute('fieldflow',gFlow);
         oNode.innerHTML = fnParseOptions(gName,gChecked);
         delete UE.plugins[thePlugins].editdom; 
         return true;

@@ -4,7 +4,6 @@
     <title>下拉菜单</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
-    <meta name="generator" content="www.leipi.org" />
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     <!--[if lte IE 6]>
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
@@ -163,11 +162,19 @@ function fnSetAttribute( element, attName, attValue ) {
 <div class="content">
     <table class="table table-bordered table-striped table-hover">
      <tr>
-        <th><span>控件名称</span><span class="label label-important">*</span></th>
+        <th><span>字段名称</span><span class="label label-important">*</span></th>
+        <th><span>字段标题</span><span class="label label-important">*</span> </th>
+    </tr>
+    <tr>
+        <td><input type="text" id="fieldname" placeholder="必填项"></td>
+        <td><input type="text" id="orgname" placeholder="必填项"></td>
+    </tr>
+     <tr>
+        <th><span>流程变量</span></th>
         <th><span>控件样式</span> </th>
     </tr>
     <tr>
-        <td><input id="orgname" placeholder="必填项" type="text"/></td>
+        <td><label class="checkbox inline"><input id="fieldflow" type="checkbox"/> 流程变量</label></td>
         <td> 宽：<input id="orgwidth" type="text" value="150" class="input-small span1"/> px&nbsp;&nbsp;&nbsp;&nbsp;高：<input id="orgsize" type="text" class="input-small span1" value="1"/> 行</td>
     </tr>
     <tr style="display: none;">
@@ -216,12 +223,18 @@ window.onload = function() {
     
     if( UE.plugins[thePlugins].editdom ){
         oNode = UE.plugins[thePlugins].editdom;
-        var gTitle=oNode.getAttribute('title').replace(/&quot;/g,"\""),gWidth=oNode.getAttribute('orgwidth'),gSize=oNode.getAttribute('size');
+        var gTitle=oNode.getAttribute('title').replace(/&quot;/g,"\""),gName=oNode.getAttribute('fieldname'),gFlow=oNode.getAttribute('fieldflow'),gWidth=oNode.getAttribute('orgwidth'),gSize=oNode.getAttribute('size');
         gTitle = gTitle==null ? '' : gTitle;
+        gName = gName==null ? '' : gName;
         $G('orgvalue').innerHTML = oNode.value;
         $G('orgname').value = gTitle;
         $G('orgsize').value = gSize;
         $G('orgwidth').value = gWidth;
+        $G('fieldname').value = gName;
+        if (gFlow == '1')
+        {
+            $G('fieldflow').checked = true;
+        }
         for ( var i = 0 ; i < oNode.options.length ; i++ ) {
             var sText    = oNode.options[i].value ;
             fnAddComboOption( oListText, sText, sText ) ;
@@ -235,8 +248,12 @@ dialog.oncancel = function () {
     }
 };
 dialog.onok = function (){
-    if( $G('orgname').value == '') {
-        alert('控件名称不能为空');
+    if($G('fieldname').value==''){
+        alert('请输入字段名称');
+        return false;
+    }
+    if($G('orgname').value==''){
+        alert('请输入控件名称');
         return false;
     }
     if( oListText.options.length == 0 ) {
@@ -252,10 +269,16 @@ dialog.onok = function (){
     if( !oNode ) {
         try {
             //oNode = document.createElement("select"); 
-            oNode = createElement('select','leipiNewField');
+            oNode = createElement('select','NEWFIELD');
             oNode.setAttribute('title',$G('orgname').value);
-            oNode.setAttribute('leipiPlugins',thePlugins );
+            oNode.setAttribute('plugins',thePlugins );
             oNode.setAttribute('size',gSize);
+            oNode.setAttribute('fieldname',$G('fieldname').value);
+            if ( $G('fieldflow').checked ) {
+                oNode.setAttribute('fieldflow',1);
+            } else {
+                oNode.setAttribute('fieldflow',0);
+            }
             if ( $G('orgwidth').value!= '' ) {
                 oNode.style.width =  $G('orgwidth').value+ 'px';
                 //oNode.setAttribute('style','width:'+ $G('orgwidth').value + 'px;');
@@ -278,19 +301,25 @@ dialog.onok = function (){
                 }
             }
             //firefox要利用span
-            editor.execCommand('insertHtml','{|-<span leipiplugins="select">'+oNode.outerHTML+'&nbsp;&nbsp;</span>-|}');
+            editor.execCommand('insertHtml','{|-<span plugins="select">'+oNode.outerHTML+'&nbsp;&nbsp;</span>-|}');
             return true ;
         } catch ( e ) {
             try {
                 editor.execCommand('error');
             } catch ( e ) {
-                alert('控件异常，请到 [雷劈网] 反馈或寻求帮助！');
+                alert('控件异常，请联系技术支持');
             }
             return false;
         }
     } else {
         oNode.setAttribute('title', $G('orgname').value); 
+        oNode.setAttribute('fieldname',$G('fieldname').value);
         oNode.setAttribute('size',gSize);
+        if ( $G('fieldflow').checked ) {
+            oNode.setAttribute('fieldflow',1);
+        } else {
+            oNode.setAttribute('fieldflow',0);
+        }
         if( gWidth != '' ) {
 			oNode.style.width = gWidth + 'px';
 			oNode.setAttribute('orgwidth',gWidth );
