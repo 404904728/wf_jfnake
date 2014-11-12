@@ -7,5 +7,6 @@ public class Field extends Model<Field> {
 	 * 
 	 */
 	private static final long serialVersionUID = -4586203764519670303L;
+	public static final String FLOW = "1";
 	public static final Field dao = new Field();
 }

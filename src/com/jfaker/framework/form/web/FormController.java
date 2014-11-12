@@ -1,15 +1,21 @@
 package com.jfaker.framework.form.web;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.snaker.engine.helper.JsonHelper;
 
+import com.jfaker.app.flow.web.SnakerController;
+import com.jfaker.framework.form.model.Field;
 import com.jfaker.framework.form.model.Form;
 import com.jfaker.framework.security.shiro.ShiroUtils;
 import com.jfaker.framework.utils.DateUtils;
-import com.jfinal.core.Controller;
+import com.jfinal.aop.Before;
+import com.jfinal.plugin.activerecord.tx.Tx;
 
-public class FormController extends Controller {
+public class FormController extends SnakerController {
 	public void index() {
 		String name = getPara("name");
 		setAttr("page", Form.dao.paginate(getParaToInt("pageNo", 1), 10, name));
@@ -57,9 +63,18 @@ public class FormController extends Controller {
 			model = Form.dao.findById(getParaToInt("formid"));
 			Map<String, Object> map = JsonHelper.fromJson(getPara("parse_form"), Map.class);
 			Map<String, Object> datas = (Map<String, Object>)map.get("add_fields");
-			Form.dao.process(model, datas);
-			model.set("originalHtml", map.get("template"));
-			model.set("parseHtml", map.get("parse"));
+			System.out.println(datas);
+			Map<String, String> nameMap = Form.dao.process(model, datas);
+			String template = (String)map.get("template");
+			String parseHtml = (String)map.get("parse");
+			if(!nameMap.isEmpty()) {
+				for(Map.Entry<String, String> entry : nameMap.entrySet()) {
+					template = template.replaceAll(entry.getKey(), entry.getValue());
+					parseHtml = parseHtml.replaceAll(entry.getKey(), entry.getValue());
+				}
+			}
+			model.set("originalHtml", template);
+			model.set("parseHtml", parseHtml);
 			model.update();
 			renderJson(Boolean.TRUE);
 		} catch(Exception e) {
@@ -74,14 +89,62 @@ public class FormController extends Controller {
 	}
 	
 	public void use() {
-		setAttr("form", Form.dao.findById(getParaToInt()));
-		render("formUse.jsp");
+		Form model = Form.dao.findById(getParaToInt());
+		setAttr("form", model);
+		keepPara();
+		String orderId = getPara(PARA_ORDERID);
+		String taskId = getPara(PARA_TASKID);
+		if(StringUtils.isEmpty(orderId) || StringUtils.isNotEmpty(taskId)) {
+			render("formUse.jsp");
+		} else {
+			setAttr("result", Form.dao.getDataByOrderId(model, orderId));
+			render("formUseView.jsp");
+		}
 	}
 	
+	@Before(Tx.class)
 	public void submit() {
-		Form model = Form.dao.findById(getParaToInt("form.id"));
+		String processId = getPara(PARA_PROCESSID);
+		String orderId = getPara(PARA_ORDERID);
+		String taskId = getPara(PARA_TASKID);
+		int formId = getParaToInt("formId");
+		List<Field> fields = Field.dao.find("select * from df_field where formId=?", formId);
+		Map<String, Object> params = new HashMap<String, Object>();
+		for(Field field : fields) {
+			if(Field.FLOW.equals(field.getStr("flow"))) {
+				String name = field.getStr("name");
+				String type = field.getStr("type");
+				String paraValue = getPara(name);
+				Object value = null;
+				if("text".equalsIgnoreCase(type)) {
+					value = paraValue;
+				} else if("int".equalsIgnoreCase(type)) {
+					value = getParaToInt(name, 0);
+				} else if("float".equalsIgnoreCase(type)) {
+					if(paraValue == null || "".equals(paraValue)) {
+						value = 0.0;
+					} else {
+						try {
+							value = Double.parseDouble(getPara(name));
+						} catch(Exception e) {
+							value = 0.0;
+						}
+					}
+				} else {
+					value = paraValue;
+				}
+				params.put(name, value);
+			}
+		}
+		if (StringUtils.isEmpty(orderId) && StringUtils.isEmpty(taskId)) {
+			orderId = startAndExecute(processId, ShiroUtils.getUsername(), params).getId();
+		} else {
+			execute(taskId, ShiroUtils.getUsername(), params);
+		}
+		Form model = Form.dao.findById(formId);
 		Map<String, String[]> paraMap = getParaMap();
-		Form.dao.submit(model, paraMap);
-		redirect(getPara("url"));
+		Form.dao.submit(model, fields, paraMap, orderId, taskId);
+		//redirect(getPara("url"));
+		redirectActiveTask();
 	}
 }

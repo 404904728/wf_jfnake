@@ -1,6 +1,7 @@
 package com.jfaker.framework.form.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import com.jfaker.framework.utils.DateUtils;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
 
 public class Form extends Model<Form> {
 	/**
@@ -32,7 +34,8 @@ public class Form extends Model<Form> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void process(Form model, Map<String, Object> datas) {
+	public Map<String, String> process(Form model, Map<String, Object> datas) {
+		Map<String, String> nameMap = new HashMap<String, String>();
 		if(datas == null) {
 			throw new NullPointerException();
 		}
@@ -41,13 +44,15 @@ public class Form extends Model<Form> {
 		for(Map.Entry<String, Object> entry : datas.entrySet()) {
 			Map<String, String> fieldInfo = (Map<String, String>)entry.getValue();
 			Field field = new Field();
-			field.set("name", entry.getKey());
+			field.set("name", fieldInfo.get("fieldname"));
 			field.set("title", fieldInfo.get("title"));
-			field.set("leipiplugins", fieldInfo.get("leipiplugins"));
+			field.set("plugins", fieldInfo.get("plugins"));
+			field.set("flow", fieldInfo.get("fieldflow"));
 			field.set("tableName", tableName);
 			field.set("formId", model.get("id"));
 			field.set("type", fieldInfo.get("orgtype"));
 			fields.add(field);
+			nameMap.put(entry.getKey(), fieldInfo.get("fieldname"));
 		}
 		model.set("fieldNum", model.getInt("fieldNum") + fields.size());
 		String check = "select count(*) from " + tableName + " where id = 1";
@@ -59,57 +64,79 @@ public class Form extends Model<Form> {
 		}
 		StringBuilder sql = new StringBuilder();
 		try {
+			List<String> fieldNames = Db.query("select name from df_field where tableName=?", tableName);
 			if(!isExists) {
 				sql.append("CREATE TABLE ").append(tableName).append(" (");
 				sql.append("ID INT NOT NULL AUTO_INCREMENT,");
 				for(Field field : fields) {
 					sql.append(field.getStr("name"));
-					sql.append(" ").append(fieldSQL(field.getStr("leipiplugins"))).append(",");
+					sql.append(" ").append(fieldSQL(field)).append(",");
 				}
+
 				sql.append("FORMID INT NOT NULL,");
 				sql.append("UPDATETIME VARCHAR(20),");
+				sql.append("ORDERID VARCHAR(50),");
+				sql.append("TASKID  VARCHAR(50),");
 				sql.append("PRIMARY KEY (ID)");
 				sql.append(") ENGINE=InnoDB DEFAULT CHARSET=utf8;");
 				Db.update(sql.toString());
 			} else {
-				List<String> fieldNames = Db.query("select name from df_field where tableName=?", tableName);
 				if(fields.size() > 0) {
 					for(Field field : fields) {
 						if(!fieldNames.contains(field.getStr("name"))) {
-							Db.update("ALTER TABLE " + tableName + " ADD COLUMN " + field.getStr("name") + fieldSQL(field.getStr("leipiplugins")));
+							Db.update("ALTER TABLE " + tableName + " ADD COLUMN " + field.getStr("name") + fieldSQL(field));
 						}
 					}
 				}
 			}
 			
 			for(Field field : fields) {
-				field.save();
+				if(!fieldNames.contains(field.getStr("name"))) {
+					field.save();
+				}
 			}
 		} catch(Exception e) {
 			throw new RuntimeException(e);
 		}
+		return nameMap;
 	}
 	
-	public void submit(Form model, Map<String, String[]> paraMap) {
+	public List<Record> getDataByOrderId(Form model, String orderId) {
 		String tableName = getTableName(model);
 		List<String> fieldNames = Db.query("select name from df_field where tableName=?", tableName);
+		StringBuilder sql = new StringBuilder("select FORMID, UPDATETIME, ORDERID, TASKID ");
+		if(fieldNames != null && fieldNames.size() > 0) {
+			for(String fieldName : fieldNames) {
+				sql.append(",").append(fieldName);
+			}
+		}
+		sql.append(" from ");
+		sql.append(tableName);
+		sql.append(" where orderId = ?");
+		return Db.find(sql.toString(), orderId);
+	}
+	
+	public void submit(Form model, List<Field> fields, Map<String, String[]> paraMap, String orderId, String taskId) {
+		String tableName = getTableName(model);
 		StringBuilder beforeSql = new StringBuilder();
 		StringBuilder afterSql = new StringBuilder();
 		beforeSql.append("INSERT INTO ").append(tableName);
-		beforeSql.append(" (FORMID, UPDATETIME ");
-		afterSql.append(") values (?,?");
+		beforeSql.append(" (FORMID, UPDATETIME, ORDERID, TASKID ");
+		afterSql.append(") values (?,?,?,?");
 		List<Object> datas = new ArrayList<Object>();
 		datas.add(model.getInt("id"));
 		datas.add(DateUtils.getCurrentTime());
-		if(fieldNames != null) {
+		datas.add(orderId);
+		datas.add(taskId);
+		if(fields != null) {
 			StringBuilder fieldSql = new StringBuilder();
 			StringBuilder valueSql = new StringBuilder();
-			for(String fieldName : fieldNames) {
-				String[] data = paraMap.get(fieldName);
+			for(Field field : fields) {
+				String[] data = paraMap.get(field.get("name"));
 				if(data == null) {
 					continue;
 				}
-				fieldSql.append(",").append(fieldName);
+				fieldSql.append(",").append(field.get("name"));
 				valueSql.append(",?");
 				if(data.length == 1) {
 					datas.add(data[0]);
@@ -133,21 +160,28 @@ public class Form extends Model<Form> {
 		Db.update(sql, datas.toArray());
 	}
 	
-	public static void main(String[] a) {
-		System.out.println(ArrayUtils.toString(new String[]{"aaa","bbb","ccc"}));
-	}
-	
 	private String getTableName(Form model) {
 		return TABLE_PREFIX + model.getStr("name");
 	}
 	
-	private String fieldSQL(String leipiplugins) {
-        if(leipiplugins.equalsIgnoreCase("textarea") 
-        		|| leipiplugins.equalsIgnoreCase("listctrl")) {
+	private String fieldSQL(Field field) {
+		String plugins = field.getStr("plugins");
+        if(plugins.equalsIgnoreCase("textarea") 
+        		|| plugins.equalsIgnoreCase("listctrl")) {
             return " TEXT";
-        }
-        else if(leipiplugins.equalsIgnoreCase("checkboxs")) {
-            return " TINYINT(1) NOT NULL DEFAULT 0";
+        } else if(plugins.equalsIgnoreCase("text")) {
+        	String type = field.getStr("type");
+        	if("text".equals(type)) {
+        		return " VARCHAR(255) NOT NULL DEFAULT ''";
+        	} else if("int".equals(type)) {
+        		return " INT NOT NULL DEFAULT 0";
+        	} else if("float".equals(type)) {
+        		return " FLOAT ";
+        	} else {
+        		return " VARCHAR(255) NOT NULL DEFAULT ''";
+        	}
+        } else if(plugins.equalsIgnoreCase("radios")) {
+            return " INT NOT NULL DEFAULT 0";
         } else {
             return " VARCHAR(255) NOT NULL DEFAULT ''";
         }
