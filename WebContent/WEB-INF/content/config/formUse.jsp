@@ -27,7 +27,7 @@
 			<input type="hidden" name="processId" value="${processId }" />
 			<input type="hidden" name="orderId" value="${orderId }" />
 			<input type="hidden" name="taskId" value="${taskId }" />
-			${form.originalHtml }
+			${form.parseHtml }
 		</form>
 	</div>
 	<div class="row">
