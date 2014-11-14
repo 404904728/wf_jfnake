@@ -705,10 +705,11 @@
                 });
                 var dragMove = function(dx, dy){
                     var x = (_ox+dx), y=(_oy+dy);
-                    _this.moveTo(x,y)};
+                    _this.moveTo(x,y)
+                };
                 var dragStart = function(){
-                    if(_t=="big"){_ox=_n.attr("_dotList")+_o.attr.bigDot.width/2;_oy=_n.attr("_ox")+_o.attr.bigDot.height/2}
-                    if(_t=="small"){_ox=_n.attr("_dotList")+_o.attr.smallDot.width/2;_oy=_n.attr("_ox")+_o.attr.smallDot.height/2}
+                    if(_t=="big"){_ox=_n.attr("x")+_o.attr.bigDot.width/2;_oy=_n.attr("y")+_o.attr.bigDot.height/2}
+                    if(_t=="small"){_ox=_n.attr("x")+_o.attr.smallDot.width/2;_oy=_n.attr("y")+_o.attr.smallDot.height/2}
                 };
                 var dragUp = function(){}
             }
@@ -721,9 +722,53 @@
             this.moveTo=function(Q,T){
                 this.pos({x:Q,y:T});
                 switch(_t){
-                    case"from":if(_rt&&_rt.right()&&_rt.right().type()=="to"){_rt.right().pos(designer.util.connPoint(_to.getBBox(),_pos))}if(_rt&&_rt.right()){_rt.pos(designer.util.center(_pos,_rt.right().pos()))}break;
-                    case"big":if(_rt&&_rt.right()&&_rt.right().type()=="to"){_rt.right().pos(designer.util.connPoint(_to.getBBox(),_pos))}if(_lt&&_lt.left()&&_lt.left().type()=="from"){_lt.left().pos(designer.util.connPoint(_from.getBBox(),_pos))}if(_rt&&_rt.right()){_rt.pos(designer.util.center(_pos,_rt.right().pos()))}if(_lt&&_lt.left()){_lt.pos(designer.util.center(_pos,_lt.left().pos()))}var S={x:_pos.x,y:_pos.y};if(designer.util.isLine(_lt.left().pos(),S,_rt.right().pos())){_t="small";_n.attr(_o.attr.smallDot);this.pos(S);var P=_lt;_lt.left().right(_lt.right());_lt=_lt.left();P.remove();var R=_rt;_rt.right().left(_rt.left());_rt=_rt.right();R.remove()}break;
-                    case"small":if(_lt&&_rt&&!designer.util.isLine(_lt.pos(),{x:_pos.x,y:_pos.y},_rt.pos())){_t="big";_n.attr(_o.attr.bigDot);var P=new dot("small",designer.util.center(_lt.pos(),_pos),_lt,_lt.right());_lt.right(P);_lt=P;var R=new dot("small",designer.util.center(_rt.pos(),_pos),_rt.left(),_rt);_rt.left(R);_rt=R}break;
+                    case"from":
+                    	if(_rt&&_rt.right()&&_rt.right().type()=="to"){
+                    		_rt.right().pos(designer.util.connPoint(_to.getBBox(),_pos))
+                    	}
+                    	if(_rt&&_rt.right()){
+                    		_rt.pos(designer.util.center(_pos,_rt.right().pos()))
+                    	}
+                    	break;
+                    case"big":
+                    	if(_rt&&_rt.right()&&_rt.right().type()=="to"){
+                    		_rt.right().pos(designer.util.connPoint(_to.getBBox(),_pos))
+                    	}
+                    	if(_lt&&_lt.left()&&_lt.left().type()=="from"){
+                    		_lt.left().pos(designer.util.connPoint(_from.getBBox(),_pos))
+                    	}
+                    	if(_rt&&_rt.right()){
+                    		_rt.pos(designer.util.center(_pos,_rt.right().pos()))
+                    	}
+                    	if(_lt&&_lt.left()){
+                    		_lt.pos(designer.util.center(_pos,_lt.left().pos()))
+                    	}
+                    	var S={x:_pos.x,y:_pos.y};
+                    	if(designer.util.isLine(_lt.left().pos(),S,_rt.right().pos())){
+                    		_t="small";
+                    		_n.attr(_o.attr.smallDot);
+                    		this.pos(S);
+                    		var P=_lt;
+                    		_lt.left().right(_lt.right());
+                    		_lt=_lt.left();P.remove();
+                    		var R=_rt;
+                    		_rt.right().left(_rt.left());
+                    		_rt=_rt.right();
+                    		R.remove()
+                    	}
+                    	break;
+                    case"small":
+                    	if(_lt&&_rt&&!designer.util.isLine(_lt.pos(),{x:_pos.x,y:_pos.y},_rt.pos())){
+                    		_t="big";
+                    		_n.attr(_o.attr.bigDot);
+                    		var P=new dot("small",designer.util.center(_lt.pos(),_pos),_lt,_lt.right());
+                    		_lt.right(P);
+                    		_lt=P;
+                    		var R=new dot("small",designer.util.center(_rt.pos(),_pos),_rt.left(),_rt);
+                    		_rt.left(R);
+                    		_rt=R
+                    	}
+                    	break;
                     case"to":if(_lt&&_lt.left()&&_lt.left().type()=="from"){_lt.left().pos(designer.util.connPoint(_from.getBBox(),_pos))}if(_lt&&_lt.left()){_lt.pos(designer.util.center(_pos,_lt.left().pos()))}break
                 }
                 refreshpath()
@@ -832,10 +877,10 @@
                 if(!designer.config.editable){return}
                 _text.attr({x:_ox+r,y:_oy+o})
             },
-            function(){_ox=_text.attr("_dotList");_oy=_text.attr("_ox")},
+            function(){_ox=_text.attr("x");_oy=_text.attr("y")},
             function(){
                 var o=_dotList.midDot().pos();
-                _textPos ={x:_text.attr("_dotList")-o.x,y:_text.attr("_ox")-o.y}
+                _textPos ={x:_text.attr("x")-o.x,y:_text.attr("y")-o.y}
             });
         refreshpath();
         snaker([_path.node,_arrow.node]).bind("click",function(){
@@ -916,7 +961,7 @@
             var hx = Math.round(_textPos .x);
             var r="<transition offset=\""+hx+","+Math.round(_textPos .y)+"\" to=\""+_to.getName()+"\" ";
             var dots=_dotList.toXml();
-            if(dots!="") r+=" _id=\""+_dotList.toXml()+"\" ";
+            if(dots!="") r+=" g=\""+_dotList.toXml()+"\" ";
             for(var o in _o.props){
                 if(o=="name"&&_o.props[o].value==""){
                     r+=o+"=\""+_id+"\" ";
