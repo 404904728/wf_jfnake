@@ -1,3 +1,19 @@
+/*
+ *  Copyright 2014-2015 snakerflow.com
+ *  *
+ *  * Licensed under the Apache License, Version 2.0 (the "License");
+ *  * you may not use this file except in compliance with the License.
+ *  * You may obtain a copy of the License at
+ *  *
+ *  *     http://www.apache.org/licenses/LICENSE-2.0
+ *  *
+ *  * Unless required by applicable law or agreed to in writing, software
+ *  * distributed under the License is distributed on an "AS IS" BASIS,
+ *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  * See the License for the specific language governing permissions and
+ *  * limitations under the License.
+ *
+ */
 package com.jfaker.framework.form.model;
 
 import java.util.ArrayList;
@@ -6,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,6 +32,11 @@ import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
 
+/**
+ * 表单模型
+ * @author yuqs
+ * @since 1.0
+ */
 public class Form extends Model<Form> {
 	/**
 	 * 
@@ -83,7 +105,8 @@ public class Form extends Model<Form> {
 			} else {
 				if(fields.size() > 0) {
 					for(Field field : fields) {
-						if(!fieldNames.contains(field.getStr("name"))) {
+						if(StringUtils.isNotEmpty(field.getStr("name")) && 
+								!fieldNames.contains(field.getStr("name"))) {
 							Db.update("ALTER TABLE " + tableName + " ADD COLUMN " + field.getStr("name") + fieldSQL(field));
 						}
 					}
@@ -96,12 +119,28 @@ public class Form extends Model<Form> {
 				}
 			}
 		} catch(Exception e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
 		}
 		return nameMap;
 	}
 	
-	public List<Record> getDataByOrderId(Form model, String orderId) {
+	public Record getDataByOrderId(Form model, String orderId) {
+		String tableName = getTableName(model);
+		List<String> fieldNames = Db.query("select name from df_field where tableName=?", tableName);
+		StringBuilder sql = new StringBuilder("select FORMID, UPDATETIME, ORDERID, TASKID ");
+		if(fieldNames != null && fieldNames.size() > 0) {
+			for(String fieldName : fieldNames) {
+				sql.append(",").append(fieldName);
+			}
+		}
+		sql.append(" from ");
+		sql.append(tableName);
+		sql.append(" where orderId = ? order by UPDATETIME");
+		return Db.findFirst(sql.toString(), orderId);
+	}
+	
+	public List<Record> getDatasByOrderId(Form model, String orderId) {
 		String tableName = getTableName(model);
 		List<String> fieldNames = Db.query("select name from df_field where tableName=?", tableName);
 		StringBuilder sql = new StringBuilder("select FORMID, UPDATETIME, ORDERID, TASKID ");
@@ -181,7 +220,7 @@ public class Form extends Model<Form> {
         		return " VARCHAR(255) NOT NULL DEFAULT ''";
         	}
         } else if(plugins.equalsIgnoreCase("radios")) {
-            return " INT NOT NULL DEFAULT 0";
+            return " VARCHAR(255) NOT NULL DEFAULT ''";
         } else {
             return " VARCHAR(255) NOT NULL DEFAULT ''";
         }

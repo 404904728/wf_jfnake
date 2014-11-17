@@ -1,7 +1,18 @@
-/**
- * Copyright (c) 2005-2012 springside.org.cn
+/*
+ *  Copyright 2014-2015 snakerflow.com
+ *  *
+ *  * Licensed under the Apache License, Version 2.0 (the "License");
+ *  * you may not use this file except in compliance with the License.
+ *  * You may obtain a copy of the License at
+ *  *
+ *  *     http://www.apache.org/licenses/LICENSE-2.0
+ *  *
+ *  * Unless required by applicable law or agreed to in writing, software
+ *  * distributed under the License is distributed on an "AS IS" BASIS,
+ *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  * See the License for the specific language governing permissions and
+ *  * limitations under the License.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
  */
 package com.jfaker.framework.utils;
 
@@ -12,11 +23,9 @@ import java.security.MessageDigest;
 import java.security.SecureRandom;
 
 /**
- * 支持SHA-1/MD5消息摘要的工具类.
- * 
- * 返回ByteSource，可进一步被编码为Hex, Base64或UrlSafeBase64
- * 
- * @author calvin
+ * SHA-1/MD5消息摘要的工具类.
+ * @author yuqs
+ * @since 1.0
  */
 public class Digests {
 
@@ -65,7 +74,6 @@ public class Digests {
 
 	/**
 	 * 生成随机的Byte[]作为salt.
-	 * 
 	 * @param numBytes byte数组的大小
 	 */
 	public static byte[] generateSalt(int numBytes) {

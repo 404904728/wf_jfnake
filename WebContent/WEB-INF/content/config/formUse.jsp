@@ -31,7 +31,7 @@
 		</form>
 	</div>
 	<div class="row">
-		<p style="text-align: center;">
+		<p style="text-align: left;">
 			<button type="submit" id="submit" value="save" class="btn btn-success">确定保存</button>
 		</p>
 	</div>

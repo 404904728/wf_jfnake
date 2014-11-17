@@ -171,15 +171,16 @@ var formDesign = {
                     attr_arr_all['options'].push(option);
                     if(!option['checked']) option['checked'] = '';
                     var checked = option['checked'] ? 'checked="checked"' : '';
-                    attr_arr_all['content'] +='<input type="checkbox" name="'+option['name']+'" value="'+option['value']+'"  '+checked+'/>'+option['value']+'&nbsp;';
+                    attr_arr_all['content'] +='<input type="checkbox" name="'+option['name']+'" value="'+option['value']+'" fieldname="' + attr_arr_all['fieldname'] + option['fieldname'] + '" fieldflow="' + attr_arr_all['fieldflow'] + '" '+checked+'/>'+option['value']+'&nbsp;';
 
                     if(is_new)
                     {
                         var arr = new Object();
                         arr['name'] = option['name'];
                         arr['plugins'] = attr_arr_all['plugins'];
+                        arr['fieldname'] = attr_arr_all['fieldname'] + option['fieldname'];
+                        arr['fieldflow'] = attr_arr_all['fieldflow'];
                         add_fields[option['name']] = arr;
-
                     }
 
                 });

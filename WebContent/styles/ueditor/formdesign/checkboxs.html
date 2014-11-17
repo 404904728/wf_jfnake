@@ -139,7 +139,7 @@ function fnParseOptions(gChecked)
             if(!inputs[1].value) continue;
             var sChecked = '';
             if(inputs[0].checked) sChecked = 'checked="checked"';
-            html += '<input name="'+inputs[1].name+'" value="'+inputs[1].value+'" '+sChecked+' type="checkbox"/>'+inputs[1].value+'&nbsp;';
+            html += '<input name="'+inputs[1].name+'" value="'+inputs[1].value+'" '+sChecked+' type="checkbox" fieldname="_' + i + '"/>'+inputs[1].value+'&nbsp;';
             if(gChecked=='orgchecked1')//竖排
                 html+='<br/>';
         }

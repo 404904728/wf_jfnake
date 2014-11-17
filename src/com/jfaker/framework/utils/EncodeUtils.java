@@ -1,9 +1,18 @@
-/**
- * Copyright (c) 2005-2010 springside.org.cn
+/*
+ *  Copyright 2014-2015 snakerflow.com
+ *  *
+ *  * Licensed under the Apache License, Version 2.0 (the "License");
+ *  * you may not use this file except in compliance with the License.
+ *  * You may obtain a copy of the License at
+ *  *
+ *  *     http://www.apache.org/licenses/LICENSE-2.0
+ *  *
+ *  * Unless required by applicable law or agreed to in writing, software
+ *  * distributed under the License is distributed on an "AS IS" BASIS,
+ *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  * See the License for the specific language governing permissions and
+ *  * limitations under the License.
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * 
- * $Id: EncodeUtils.java 1211 2010-09-10 16:20:45Z calvinxiu $
  */
 package com.jfaker.framework.utils;
 
@@ -12,16 +21,13 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang.StringEscapeUtils;
 
 /**
- * 各种格式的编码加码工具类.
- * 
- * 集成Commons-Codec,Commons-Lang及JDK提供的编解码方法.
- * 
- * @author calvin
+ * 编码解码工具类.
+ * @author yuqs
+ * @since 1.0
  */
 public class EncodeUtils {
 
@@ -43,27 +49,6 @@ public class EncodeUtils {
 		} catch (DecoderException e) {
 			throw new IllegalStateException("Hex Decoder exception", e);
 		}
-	}
-
-	/**
-	 * Base64编码.
-	 */
-	public static String base64Encode(byte[] input) {
-		return new String(Base64.encodeBase64(input));
-	}
-
-	/**
-	 * Base64编码, URL安全(将Base64中的URL非法字符如+,/=转为其他字符, 见RFC3548).
-	 */
-	public static String base64UrlSafeEncode(byte[] input) {
-		return Base64.encodeBase64URLSafeString(input);
-	}
-
-	/**
-	 * Base64解码.
-	 */
-	public static byte[] base64Decode(String input) {
-		return Base64.decodeBase64(input);
 	}
 
 	/**

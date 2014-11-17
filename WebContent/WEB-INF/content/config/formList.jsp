@@ -90,8 +90,7 @@
 						<a href="${ctx}/config/form/edit/${form.id }" class="btnEdit" title="编辑">编辑</a>
 						<a href="${ctx}/config/form/designer/${form.id }" class="btnForm" title="设计">设计</a>
 						<a href="${ctx}/config/form/view/${form.id }" class="btnView" title="查看">查看</a>
-						<a href="${ctx}/config/form/use/${form.id }" class="btnView" title="查看">查看</a>
-						<a href="${ctx}/config/field/${form.id }" class="btnView" title="查看">查看</a>
+						<a href="${ctx}/config/form/use/${form.id }" class="btnFormEdit" title="录入数据">录入数据</a>
 						</c:when>
                         <c:otherwise>
                         <a href="javascript:void(0)" class="btnSelect" onclick="confirmForm('${form.id}')" title="选择">选择</a>

@@ -1,3 +1,19 @@
+/*
+ *  Copyright 2014-2015 snakerflow.com
+ *  *
+ *  * Licensed under the Apache License, Version 2.0 (the "License");
+ *  * you may not use this file except in compliance with the License.
+ *  * You may obtain a copy of the License at
+ *  *
+ *  *     http://www.apache.org/licenses/LICENSE-2.0
+ *  *
+ *  * Unless required by applicable law or agreed to in writing, software
+ *  * distributed under the License is distributed on an "AS IS" BASIS,
+ *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  * See the License for the specific language governing permissions and
+ *  * limitations under the License.
+ *
+ */
 package com.jfaker.app.flow.web;
 
 import java.io.FileInputStream;
@@ -27,7 +43,7 @@ import com.jfinal.upload.UploadFile;
 /**
  * 流程定义
  * @author yuqs
- * @since 0.1
+ * @since 1.0
  */
 public class ProcessController extends SnakerController {
 	/**
@@ -170,11 +186,17 @@ public class ProcessController extends SnakerController {
 		renderJson(true);
 	}
 	
+	/**
+	 * 通用的流程启动
+	 */
 	public void processStart() {
 		startInstanceByName(getPara("processName"), null, ShiroUtils.getUsername(), null);
 		redirect("/snaker/process");
 	}
 	
+	/**
+	 * 流程图展现需要的json数据
+	 */
 	public void json() {
 		String processId = getPara(PARA_PROCESSID);
 		String orderId = getPara(PARA_ORDERID);
@@ -197,6 +219,9 @@ public class ProcessController extends SnakerController {
 		renderJson(jsonMap);
 	}
 	
+	/**
+	 * 显示流程图与历史任务记录
+	 */
 	public void display() {
 		keepPara();
 		String orderId = getPara(PARA_ORDERID);
@@ -207,6 +232,9 @@ public class ProcessController extends SnakerController {
 		render("processView.jsp");
 	}
 	
+	/**
+	 * 显示独立的流程图
+	 */
 	public void diagram() {
 		keepPara();
 		render("diagram.jsp");

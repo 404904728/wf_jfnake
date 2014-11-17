@@ -41,13 +41,13 @@
 					<div class="control-group">
 						<label class="control-label" for="username">账号：</label>
 						<div class="controls">
-							<input type="text" class="" id="username" name="user.username" value="${user.username }" autocomplete="off"/>
+							<input type="text" class="" id="username" name="user.username" value="admin" autocomplete="off"/>
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="password">密码：</label>
 						<div class="controls">
-							<input type="password" class="" id="password" name="user.password" value=""/>
+							<input type="password" class="" id="password" name="user.password" value="123456"/>
 						</div>
 					</div>
 				</fieldset>

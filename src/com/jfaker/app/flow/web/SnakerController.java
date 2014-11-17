@@ -1,3 +1,19 @@
+/*
+ *  Copyright 2014-2015 snakerflow.com
+ *  *
+ *  * Licensed under the Apache License, Version 2.0 (the "License");
+ *  * you may not use this file except in compliance with the License.
+ *  * You may obtain a copy of the License at
+ *  *
+ *  *     http://www.apache.org/licenses/LICENSE-2.0
+ *  *
+ *  * Unless required by applicable law or agreed to in writing, software
+ *  * distributed under the License is distributed on an "AS IS" BASIS,
+ *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  * See the License for the specific language governing permissions and
+ *  * limitations under the License.
+ *
+ */
 package com.jfaker.app.flow.web;
 
 import java.util.ArrayList;
@@ -19,6 +35,11 @@ import org.snaker.jfinal.plugin.SnakerPlugin;
 
 import com.jfinal.core.Controller;
 
+/**
+ * 流程控制器父类，主要提供常用的流程api
+ * @author yuqs
+ * @since 1.0
+ */
 public class SnakerController extends Controller {
 	public static final String PARA_PROCESSID = "processId";
 	public static final String PARA_ORDERID = "orderId";
@@ -29,16 +50,31 @@ public class SnakerController extends Controller {
 	public static final String PARA_NODENAME = "nodeName";
 	public static final String PARA_CCOPERATOR = "ccOperator";
 	public static final String URL_ACTIVETASK = "/snaker/task/active";
+	/**
+	 * 通过插件获取流程引擎入口
+	 */
 	protected SnakerEngine engine = SnakerPlugin.getEngine();
+	
+	/**
+	 * 初始化请假、借款流程示例
+	 */
 	public void initFlows() {
 		engine.process().deploy(StreamHelper.getStreamFromClasspath("flows/leave.snaker"));
 		engine.process().deploy(StreamHelper.getStreamFromClasspath("flows/borrow.snaker"));
 	}
 	
+	/**
+	 * 重定向至待办任务列表
+	 */
 	public void redirectActiveTask() {
 		redirect(URL_ACTIVETASK);
 	}
 	
+	/**
+	 * 根据orderId、taskName获取其任务的变量数据
+	 * @param orderId
+	 * @param taskName
+	 */
 	protected void flowData(String orderId, String taskName) {
 		if (StringUtils.isNotEmpty(orderId) && StringUtils.isNotEmpty(taskName)) {
 			List<HistoryTask> histTasks = engine.query()
@@ -54,10 +90,18 @@ public class SnakerController extends Controller {
 		}
 	}
 	
+	/**
+	 * 获取引擎
+	 * @return
+	 */
 	public SnakerEngine getEngine() {
 		return engine;
 	}
 	
+	/**
+	 * 获取所有流程定义的名称
+	 * @return
+	 */
 	public List<String> getAllProcessNames() {
 		List<Process> list = engine.process().getProcesss(new QueryFilter());
 		List<String> names = new ArrayList<String>();

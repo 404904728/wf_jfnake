@@ -1,3 +1,19 @@
+/*
+ *  Copyright 2014-2015 snakerflow.com
+ *  *
+ *  * Licensed under the Apache License, Version 2.0 (the "License");
+ *  * you may not use this file except in compliance with the License.
+ *  * You may obtain a copy of the License at
+ *  *
+ *  *     http://www.apache.org/licenses/LICENSE-2.0
+ *  *
+ *  * Unless required by applicable law or agreed to in writing, software
+ *  * distributed under the License is distributed on an "AS IS" BASIS,
+ *  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  * See the License for the specific language governing permissions and
+ *  * limitations under the License.
+ *
+ */
 package com.jfaker.framework.form.web;
 
 import java.util.HashMap;
@@ -15,6 +31,11 @@ import com.jfaker.framework.utils.DateUtils;
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.tx.Tx;
 
+/**
+ * 表单管理controller
+ * @author yuqs
+ * @since 1.0
+ */
 public class FormController extends SnakerController {
 	public void index() {
 		String name = getPara("name");
@@ -63,7 +84,6 @@ public class FormController extends SnakerController {
 			model = Form.dao.findById(getParaToInt("formid"));
 			Map<String, Object> map = JsonHelper.fromJson(getPara("parse_form"), Map.class);
 			Map<String, Object> datas = (Map<String, Object>)map.get("add_fields");
-			System.out.println(datas);
 			Map<String, String> nameMap = Form.dao.process(model, datas);
 			String template = (String)map.get("template");
 			String parseHtml = (String)map.get("parse");
@@ -97,9 +117,15 @@ public class FormController extends SnakerController {
 		if(StringUtils.isEmpty(orderId) || StringUtils.isNotEmpty(taskId)) {
 			render("formUse.jsp");
 		} else {
-			setAttr("result", Form.dao.getDataByOrderId(model, orderId));
+			//setAttr("result", Form.dao.getDataByOrderId(model, orderId));
 			render("formUseView.jsp");
 		}
+	}
+	
+	public void formData() {
+		String orderId = getPara(PARA_ORDERID);
+		Form model = Form.dao.findById(getParaToInt("formId"));
+		renderJson(Form.dao.getDataByOrderId(model, orderId));
 	}
 	
 	@Before(Tx.class)
@@ -136,15 +162,23 @@ public class FormController extends SnakerController {
 				params.put(name, value);
 			}
 		}
-		if (StringUtils.isEmpty(orderId) && StringUtils.isEmpty(taskId)) {
-			orderId = startAndExecute(processId, ShiroUtils.getUsername(), params).getId();
-		} else {
-			execute(taskId, ShiroUtils.getUsername(), params);
+
+		if(StringUtils.isNotEmpty(processId)) {
+			if (StringUtils.isEmpty(orderId) && StringUtils.isEmpty(taskId)) {
+				orderId = startAndExecute(processId, ShiroUtils.getUsername(), params).getId();
+			} else {
+				execute(taskId, ShiroUtils.getUsername(), params);
+			}
 		}
+
 		Form model = Form.dao.findById(formId);
 		Map<String, String[]> paraMap = getParaMap();
 		Form.dao.submit(model, fields, paraMap, orderId, taskId);
 		//redirect(getPara("url"));
-		redirectActiveTask();
+		if(StringUtils.isNotEmpty(processId)) {
+			redirectActiveTask();
+		} else {
+			redirect("/config/form");
+		}
 	}
 }
