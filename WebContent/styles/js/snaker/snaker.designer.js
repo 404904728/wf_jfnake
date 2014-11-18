@@ -178,7 +178,8 @@
                     return false;
                 },
                 success: function(data){
-                    tipDIV.innerHTML="<div style='width:180px; height:20px;border: 1px solid #d2dde2;'><a href='javascript:void(0)' onclick='addTaskActor(\"" + name + "\");' class='btnAdd'></a><a href='javascript:void(0)' class='btnClock'></a><a href='javascript:void(0)' onclick='document.body.removeChild(document.getElementById(\"tipDIV\"))' class='btnDel'></a></div><div style='width:180px; height:40px;border: 1px solid #d2dde2;'><div id='currentActorDIV' style='width:180px; height:20px;'>参与者:" + data.actors + "</div><div id='arrivalDIV' style='width:180px; height:20px;'>抵达时间:" + data.createTime + "</div></div>";
+                    //tipDIV.innerHTML="<div style='width:180px; height:20px;border: 1px solid #d2dde2;'><a href='javascript:void(0)' onclick='addTaskActor(\"" + name + "\");' class='btnAdd'></a><a href='javascript:void(0)' class='btnClock'></a><a href='javascript:void(0)' onclick='document.body.removeChild(document.getElementById(\"tipDIV\"))' class='btnDel'></a></div><div style='width:180px; height:40px;border: 1px solid #d2dde2;'><div id='currentActorDIV' style='width:180px; height:20px;'>参与者:" + data.actors + "</div><div id='arrivalDIV' style='width:180px; height:20px;'>抵达时间:" + data.createTime + "</div></div>";
+                	tipDIV.innerHTML="<div style='width:180px; height:20px;border: 1px solid #d2dde2;'><a href='javascript:void(0)' onclick='document.body.removeChild(document.getElementById(\"tipDIV\"))' class='btnDel'></a></div><div style='width:180px; height:40px;border: 1px solid #d2dde2;'><div id='currentActorDIV' style='width:180px; height:20px;'>参与者:" + data.actors + "</div><div id='arrivalDIV' style='width:180px; height:20px;'>抵达时间:" + data.createTime + "</div></div>";
                     document.body.appendChild(tipDIV);
                 }
             });

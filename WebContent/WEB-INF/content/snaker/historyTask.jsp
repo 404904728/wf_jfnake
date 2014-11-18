@@ -41,10 +41,6 @@
 				<td align=center width=20% class="td_list_1" nowrap>
 					任务创建时间
 				</td>
-				
-				<td align=center width=10% class="td_list_1" nowrap>
-					操作
-				</td>				
 			</tr>
 			<c:forEach items="${page.result}" var="item">
 				<tr>
@@ -62,9 +58,6 @@
 					</td>
 					<td class="td_list_2" align=left nowrap>
 						${item.taskCreateTime}&nbsp;
-					</td>
-					<td class="td_list_2" align=left nowrap>
-						<a href="${ctx}/snaker/task/undo?taskId=${item.taskId} " class="btnUndo" title="撤回">撤回</a>
 					</td>
 				</tr>
 			</c:forEach>

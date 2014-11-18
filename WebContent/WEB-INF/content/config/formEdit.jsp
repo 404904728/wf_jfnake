@@ -29,6 +29,7 @@
 					</td>
 					<td class="td_table_2">
 						<input type="text" class="input_240" id="name" name="form.name" value="${form.name }"/>
+						<font color="red">字母A~Z或a~z</font>
 					</td>
 					<td class="td_table_1">
 						<span>表单类别：</span>

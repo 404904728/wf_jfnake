@@ -4,7 +4,7 @@
 <html lang="en">
 	<head>
     	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    	<title>Snaker</title>
+    	<title>JFaker</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<link href="${ctx}/styles/bootstrap/2.2.2/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
 		<link href="${ctx}/styles/css/login.css" type="text/css" rel="stylesheet" />
@@ -23,7 +23,7 @@
 				<a class="btn btn-navbar" data-toggle="collapse"
 					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
 					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="./">Snaker</a>
+				</a> <a class="brand" href="./">JFaker</a>
 				<div class="nav-collapse">
 				</div>
 			</div>

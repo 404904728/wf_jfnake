@@ -38,12 +38,20 @@
 				</tr>
 				<tr>
 					<td class="td_table_1"><span>部门经理：</span></td>
-					<td class="td_table_2">
+					<td class="td_table_2" colspan="3">
 						<input type="text" class="input_240" name="S_approveDept.operator" value="${operator }" />
 					</td>
+				</tr>
+				<tr>
 					<td class="td_table_1"><span>总经理：</span></td>
-					<td class="td_table_2">
+					<td class="td_table_2" colspan="3">
 						<input type="text" class="input_240" name="S_approveBoss.operator" value="${operator }" />
+					</td>
+				</tr>
+				<tr>
+					<td class="td_table_1"><span><font color="red">注意：</font></span></td>
+					<td class="td_table_2" colspan="3">
+						<font color="red">部门经理、总经理文本框只是用于演示，你可以根据当前用户获取部门经理、总经理标识在后台设置变量<br>也可以直接在文本框中输入系统已经存在的用户[如：snaker、test]作为测试</font>
 					</td>
 				</tr>
 			</table>

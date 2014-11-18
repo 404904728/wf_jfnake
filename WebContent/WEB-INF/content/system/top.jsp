@@ -10,7 +10,7 @@
 </head>
 <body>
 <div id="header">
-  <div class="logo"><img src="${ctx }/styles/images/snaker.png" alt="Snaker"/></div>
+  <div class="logo"><img src="${ctx }/styles/images/logo.png" alt="Snaker"/></div>
     <ul class="qj">
       <li style="width: 100px;"><span><shiro:principal/></span></li>
       <li></li>
