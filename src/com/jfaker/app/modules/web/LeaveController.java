@@ -18,7 +18,7 @@ package com.jfaker.app.modules.web;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.jfaker.app.flow.web.SnakerController;
+import com.jfaker.framework.flow.web.SnakerController;
 import com.jfaker.framework.security.shiro.ShiroUtils;
 
 /**

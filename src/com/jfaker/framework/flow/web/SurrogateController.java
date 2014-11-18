@@ -14,7 +14,7 @@
  *  * limitations under the License.
  *
  */
-package com.jfaker.app.flow.web;
+package com.jfaker.framework.flow.web;
 
 import org.snaker.engine.access.Page;
 import org.snaker.engine.access.QueryFilter;

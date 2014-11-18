@@ -14,21 +14,25 @@
  *  * limitations under the License.
  *
  */
-package com.jfaker.app.flow;
+package com.jfaker.framework.flow.model;
 
 import java.util.List;
 
-import org.snaker.engine.impl.GeneralAccessStrategy;
-
-import com.jfaker.framework.security.shiro.ShiroUtils;
+import com.jfinal.plugin.activerecord.Model;
 
 /**
- * 自定义访问策略，根据操作人获取其所有组集合（部门、角色、权限）
+ * 审批表单模型
  * @author yuqs
  * @since 1.0
  */
-public class CustomAccessStrategy extends GeneralAccessStrategy {
-	protected List<String> ensureGroup(String operator) {
-		return ShiroUtils.getGroups();
+public class Approval extends Model<Approval> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2386449387832849587L;
+	public static final Approval dao = new Approval();
+	
+	public List<Approval> findByFlow(String orderId, String taskName) {
+		return Approval.dao.find("select * from flow_approval where orderId = ? and taskName = ?", orderId, taskName);
 	}
 }

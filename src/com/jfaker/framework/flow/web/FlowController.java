@@ -14,7 +14,7 @@
  *  * limitations under the License.
  *
  */
-package com.jfaker.app.flow.web;
+package com.jfaker.framework.flow.web;
 
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -28,7 +28,7 @@ import org.snaker.engine.entity.HistoryOrder;
 import org.snaker.engine.entity.Process;
 import org.snaker.engine.model.WorkModel;
 
-import com.jfaker.app.flow.model.Approval;
+import com.jfaker.framework.flow.model.Approval;
 import com.jfaker.framework.security.shiro.ShiroUtils;
 import com.jfaker.framework.utils.DateUtils;
 import com.jfinal.aop.Before;

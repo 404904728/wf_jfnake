@@ -14,7 +14,7 @@
  *  * limitations under the License.
  *
  */
-package com.jfaker.framework.dict.model;
+package com.jfaker.framework.config.model;
 
 import java.util.Collections;
 import java.util.List;

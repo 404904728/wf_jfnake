@@ -14,10 +14,10 @@
  *  * limitations under the License.
  *
  */
-package com.jfaker.framework.dict.web;
+package com.jfaker.framework.config.web;
 
-import com.jfaker.framework.dict.model.Dict;
-import com.jfaker.framework.dict.model.DictItem;
+import com.jfaker.framework.config.model.Dict;
+import com.jfaker.framework.config.model.DictItem;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.tx.Tx;
@@ -53,7 +53,7 @@ public class DictController extends Controller {
 		render("dictEdit.jsp");
 	}
 	
-	@Before({DictValidator.class, Tx.class })
+	@Before(Tx.class)
 	public void save() {
 		Dict model = getModel(Dict.class);
 		model.save();
@@ -71,7 +71,7 @@ public class DictController extends Controller {
 		redirect("/security/dict");
 	}
 	
-	@Before({DictValidator.class, Tx.class})
+	@Before(Tx.class)
 	public void update() {
 		Dict model = getModel(Dict.class);
 		model.update();

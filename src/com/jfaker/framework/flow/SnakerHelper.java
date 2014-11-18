@@ -14,7 +14,7 @@
  *  * limitations under the License.
  *
  */
-package com.jfaker.app.flow;
+package com.jfaker.framework.flow;
 
 import java.beans.PropertyDescriptor;
 import java.util.ArrayList;

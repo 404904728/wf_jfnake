@@ -14,20 +14,22 @@
  *  * limitations under the License.
  *
  */
-package com.jfaker.framework.form.model;
+package com.jfaker.framework.config.web;
 
-import com.jfinal.plugin.activerecord.Model;
+import com.jfaker.framework.config.model.Field;
+import com.jfaker.framework.config.model.Form;
+import com.jfinal.core.Controller;
 
 /**
- * 字段模型
+ * FieldController
  * @author yuqs
  * @since 1.0
  */
-public class Field extends Model<Field> {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4586203764519670303L;
-	public static final String FLOW = "1";
-	public static final Field dao = new Field();
+public class FieldController extends Controller {
+	public void index() {
+		int formId = getParaToInt();
+		setAttr("form", Form.dao.findById(formId));
+		setAttr("fields", Field.dao.find("select * from df_field where formId=?", formId));
+		render("fieldList.jsp");
+	}
 }

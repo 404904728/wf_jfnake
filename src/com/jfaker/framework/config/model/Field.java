@@ -14,25 +14,20 @@
  *  * limitations under the License.
  *
  */
-package com.jfaker.app.flow.model;
-
-import java.util.List;
+package com.jfaker.framework.config.model;
 
 import com.jfinal.plugin.activerecord.Model;
 
 /**
- * 审批表单模型
+ * 字段模型
  * @author yuqs
  * @since 1.0
  */
-public class Approval extends Model<Approval> {
+public class Field extends Model<Field> {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2386449387832849587L;
-	public static final Approval dao = new Approval();
-	
-	public List<Approval> findByFlow(String orderId, String taskName) {
-		return Approval.dao.find("select * from flow_approval where orderId = ? and taskName = ?", orderId, taskName);
-	}
+	private static final long serialVersionUID = -4586203764519670303L;
+	public static final String FLOW = "1";
+	public static final Field dao = new Field();
 }

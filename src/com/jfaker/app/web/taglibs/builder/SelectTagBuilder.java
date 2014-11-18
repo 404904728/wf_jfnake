@@ -26,7 +26,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.jfaker.framework.dict.model.Dict;
+import com.jfaker.framework.config.model.Dict;
 import com.jfaker.framework.web.TagBuilder;
 import com.jfaker.framework.web.TagDTO;
 

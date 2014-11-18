@@ -14,7 +14,7 @@
  *  * limitations under the License.
  *
  */
-package com.jfaker.framework.form.model;
+package com.jfaker.framework.config.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;

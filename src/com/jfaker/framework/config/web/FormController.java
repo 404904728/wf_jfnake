@@ -14,7 +14,7 @@
  *  * limitations under the License.
  *
  */
-package com.jfaker.framework.form.web;
+package com.jfaker.framework.config.web;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,9 +23,9 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.snaker.engine.helper.JsonHelper;
 
-import com.jfaker.app.flow.web.SnakerController;
-import com.jfaker.framework.form.model.Field;
-import com.jfaker.framework.form.model.Form;
+import com.jfaker.framework.flow.web.SnakerController;
+import com.jfaker.framework.config.model.Field;
+import com.jfaker.framework.config.model.Form;
 import com.jfaker.framework.security.shiro.ShiroUtils;
 import com.jfaker.framework.utils.DateUtils;
 import com.jfinal.aop.Before;
@@ -167,7 +167,29 @@ public class FormController extends SnakerController {
 			if (StringUtils.isEmpty(orderId) && StringUtils.isEmpty(taskId)) {
 				orderId = startAndExecute(processId, ShiroUtils.getUsername(), params).getId();
 			} else {
-				execute(taskId, ShiroUtils.getUsername(), params);
+				int method = getParaToInt(PARA_METHOD, 0);
+				String nextOperator = getPara(PARA_NEXTOPERATOR);
+				switch(method) {
+				case 0://任务执行
+					execute(taskId, ShiroUtils.getUsername(), params);
+					break;
+				case -1://驳回、任意跳转
+					executeAndJump(taskId, ShiroUtils.getUsername(), params, getPara(PARA_NODENAME));
+					break;
+				case 1://转办
+					if(StringUtils.isNotEmpty(nextOperator)) {
+						transferMajor(taskId, ShiroUtils.getUsername(), nextOperator.split(","));
+					}
+					break;
+				case 2://协办
+					if(StringUtils.isNotEmpty(nextOperator)) {
+						transferAidant(taskId, ShiroUtils.getUsername(), nextOperator.split(","));
+					}
+					break;
+				default:
+					execute(taskId, ShiroUtils.getUsername(), params);
+					break;
+				}
 			}
 		}
 

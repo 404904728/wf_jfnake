@@ -6,5 +6,5 @@
 	<bean class="org.snaker.engine.access.dialect.MySqlDialect" />
 	<bean class="org.snaker.engine.impl.JuelExpression" />
 	
-	<bean class="com.jfaker.app.flow.CustomAccessStrategy"/>
+	<bean class="com.jfaker.framework.flow.CustomAccessStrategy"/>
 </config>

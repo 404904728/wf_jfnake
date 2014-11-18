@@ -22,7 +22,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.snaker.engine.entity.Order;
 
-import com.jfaker.app.flow.web.SnakerController;
+import com.jfaker.framework.flow.web.SnakerController;
 import com.jfaker.app.modules.model.Borrow;
 import com.jfaker.framework.security.shiro.ShiroUtils;
 import com.jfaker.framework.utils.DateUtils;

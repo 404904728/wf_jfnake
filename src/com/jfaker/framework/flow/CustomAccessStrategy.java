@@ -14,22 +14,21 @@
  *  * limitations under the License.
  *
  */
-package com.jfaker.framework.form.web;
+package com.jfaker.framework.flow;
 
-import com.jfaker.framework.form.model.Field;
-import com.jfaker.framework.form.model.Form;
-import com.jfinal.core.Controller;
+import java.util.List;
+
+import org.snaker.engine.impl.GeneralAccessStrategy;
+
+import com.jfaker.framework.security.shiro.ShiroUtils;
 
 /**
- * FieldController
+ * 自定义访问策略，根据操作人获取其所有组集合（部门、角色、权限）
  * @author yuqs
  * @since 1.0
  */
-public class FieldController extends Controller {
-	public void index() {
-		int formId = getParaToInt();
-		setAttr("form", Form.dao.findById(formId));
-		setAttr("fields", Field.dao.find("select * from df_field where formId=?", formId));
-		render("fieldList.jsp");
+public class CustomAccessStrategy extends GeneralAccessStrategy {
+	protected List<String> ensureGroup(String operator) {
+		return ShiroUtils.getGroups();
 	}
 }

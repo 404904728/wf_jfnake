@@ -14,7 +14,7 @@
  *  * limitations under the License.
  *
  */
-package com.jfaker.app.flow.web;
+package com.jfaker.framework.flow.web;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -36,7 +36,7 @@ import org.snaker.engine.helper.StreamHelper;
 import org.snaker.engine.helper.StringHelper;
 import org.snaker.engine.model.ProcessModel;
 
-import com.jfaker.app.flow.SnakerHelper;
+import com.jfaker.framework.flow.SnakerHelper;
 import com.jfaker.framework.security.shiro.ShiroUtils;
 import com.jfinal.upload.UploadFile;
 
