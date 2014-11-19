@@ -19,7 +19,7 @@ package com.jfaker.framework.web;
 /**
  * 标签构建接口
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public interface TagBuilder {
 	/**

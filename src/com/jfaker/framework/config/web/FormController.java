@@ -34,7 +34,7 @@ import com.jfinal.plugin.activerecord.tx.Tx;
 /**
  * 表单管理controller
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class FormController extends SnakerController {
 	public void index() {

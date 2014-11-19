@@ -24,7 +24,7 @@ import com.jfinal.core.Controller;
 /**
  * MenuController
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class MenuController extends Controller {
 	public void index() {

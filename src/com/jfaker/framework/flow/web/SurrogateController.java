@@ -23,7 +23,7 @@ import org.snaker.engine.entity.Surrogate;
 /**
  * 委托授权
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class SurrogateController extends SnakerController {
 	public void index() {

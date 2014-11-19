@@ -17,6 +17,6 @@
 /**
  * jfinal+snaker=jfaker
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 package com.jfaker;

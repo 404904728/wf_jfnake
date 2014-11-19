@@ -30,7 +30,7 @@ import com.jfinal.plugin.IPlugin;
 /**
  * 支持Shiro的插件
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class ShiroPlugin implements IPlugin {
 	private static Logger log = LoggerFactory.getLogger(ShiroPlugin.class);

@@ -24,7 +24,7 @@ import com.jfinal.core.Controller;
 /**
  * ResourceController
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class ResourceController extends Controller {
 	public void index() {

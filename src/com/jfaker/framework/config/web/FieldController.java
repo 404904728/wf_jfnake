@@ -23,7 +23,7 @@ import com.jfinal.core.Controller;
 /**
  * FieldController
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class FieldController extends Controller {
 	public void index() {

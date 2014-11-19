@@ -23,7 +23,7 @@ import org.apache.shiro.web.filter.mgt.PathMatchingFilterChainResolver;
 /**
  * 自定义shiro的初始化web环境
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class ShiroIniWebEnvironment extends IniWebEnvironment {
 	public void init() {

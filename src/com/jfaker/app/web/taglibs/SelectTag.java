@@ -27,7 +27,7 @@ import com.jfaker.framework.web.TagDTO;
 /**
  * 自定义选择标签。根据选择的configName从缓存中获取配置列表，产生具体的select、radio或checkbox类型的控件
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class SelectTag extends TagSupport {
 

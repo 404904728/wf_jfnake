@@ -27,7 +27,7 @@ import com.jfinal.plugin.activerecord.Page;
 /**
  * 权限模型
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class Authority extends Model<Authority> {
 	/**

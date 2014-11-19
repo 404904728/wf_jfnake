@@ -25,7 +25,7 @@ import java.security.SecureRandom;
 /**
  * SHA-1/MD5消息摘要的工具类.
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class Digests {
 

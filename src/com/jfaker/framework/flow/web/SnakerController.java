@@ -38,7 +38,7 @@ import com.jfinal.core.Controller;
 /**
  * 流程控制器父类，主要提供常用的流程api
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class SnakerController extends Controller {
 	public static final String PARA_PROCESSID = "processId";

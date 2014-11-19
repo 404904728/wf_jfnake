@@ -26,7 +26,7 @@ import com.jfinal.plugin.activerecord.Page;
 /**
  * 菜单模型
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class Menu extends Model<Menu> {
 	/**

@@ -36,7 +36,7 @@ import com.jfinal.plugin.activerecord.tx.Tx;
  *     借款申请业务数据以flow_borrow表保存，通过orderId来关联
  *     审批环节数据以通用的审批表flow_approval表保存，通过orderId、taskName关联
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class BorrowController extends SnakerController {
 	/**

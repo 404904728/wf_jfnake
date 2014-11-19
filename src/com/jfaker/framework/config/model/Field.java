@@ -21,7 +21,7 @@ import com.jfinal.plugin.activerecord.Model;
 /**
  * 字段模型
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class Field extends Model<Field> {
 	/**

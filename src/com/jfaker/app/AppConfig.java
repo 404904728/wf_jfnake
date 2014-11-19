@@ -62,7 +62,7 @@ import com.jfinal.render.ViewType;
 /**
  * 应用总配置
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class AppConfig extends JFinalConfig {
 	/**

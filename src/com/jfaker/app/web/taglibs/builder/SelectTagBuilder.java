@@ -33,7 +33,7 @@ import com.jfaker.framework.web.TagDTO;
 /**
  * 选择控件构建器（支持select、radio、checkbox选择控件）
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class SelectTagBuilder implements TagBuilder {
 	private static final Logger log = LoggerFactory.getLogger(SelectTagBuilder.class);

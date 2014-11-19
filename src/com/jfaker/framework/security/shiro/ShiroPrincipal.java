@@ -25,7 +25,7 @@ import com.jfaker.framework.security.model.User;
 /**
  * 自定义认证主体
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class ShiroPrincipal implements Serializable {
 	/**

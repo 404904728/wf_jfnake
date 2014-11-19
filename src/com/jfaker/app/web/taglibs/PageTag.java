@@ -27,7 +27,7 @@ import com.jfaker.framework.web.TagDTO;
 /**
  * 自定义查询分页标签。查询统计涉及到分页的界面，只要通过page标签，即可显示分页的常用操作
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class PageTag extends TagSupport 
 {

@@ -19,7 +19,7 @@ package com.jfaker.framework.security.model;
 /**
  * 适应ztree的数据对象
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class TreeNode {
 	private Integer id;

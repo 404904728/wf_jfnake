@@ -41,7 +41,7 @@ import org.snaker.engine.model.TransitionModel;
 /**
  * Snaker的帮助类
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class SnakerHelper {
 	private static Map<Class<? extends NodeModel>, String> mapper = new HashMap<Class<? extends NodeModel>, String>();

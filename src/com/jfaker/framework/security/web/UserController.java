@@ -37,7 +37,7 @@ import com.jfinal.plugin.activerecord.tx.Tx;
 /**
  * UserController
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class UserController extends Controller {
 	public void index() {

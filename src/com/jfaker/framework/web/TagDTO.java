@@ -25,7 +25,7 @@ import javax.servlet.ServletContext;
 /**
  * 自定义标签的数据传输对象（这里的传输并非网络、分页之间的传输，而是自定义标签与具体标签处理类的对象传输）
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class TagDTO implements Serializable {
 	/**

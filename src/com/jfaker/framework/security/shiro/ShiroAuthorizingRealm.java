@@ -41,7 +41,7 @@ import com.jfaker.framework.utils.EncodeUtils;
 /**
  * shiro的认证授权域
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class ShiroAuthorizingRealm extends AuthorizingRealm {
 	private static Logger log = LoggerFactory.getLogger(ShiroAuthorizingRealm.class);

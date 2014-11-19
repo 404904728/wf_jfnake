@@ -27,7 +27,7 @@ import com.jfinal.plugin.activerecord.Page;
 /**
  * 角色模型
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class Role extends Model<Role> {
 	/**

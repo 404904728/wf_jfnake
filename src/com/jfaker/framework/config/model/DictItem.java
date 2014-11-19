@@ -24,7 +24,7 @@ import com.jfinal.plugin.activerecord.Model;
 /**
  * 字典项模型
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class DictItem extends Model<DictItem> {
 	/**

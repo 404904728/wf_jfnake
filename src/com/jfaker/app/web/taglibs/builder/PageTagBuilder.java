@@ -24,7 +24,7 @@ import com.jfaker.framework.web.TagDTO;
 /**
  * 自定义分页标签处理类
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class PageTagBuilder implements TagBuilder {
 	public static PageTagBuilder builder = new PageTagBuilder();

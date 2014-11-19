@@ -21,7 +21,7 @@ import org.joda.time.DateTime;
 /**
  * 
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class DateUtils {
 	private static final String DATE_FORMAT_DEFAULT = "yyyy-MM-dd HH:mm:ss";

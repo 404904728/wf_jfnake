@@ -35,7 +35,7 @@ import com.jfinal.plugin.activerecord.Record;
 /**
  * 表单模型
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class Form extends Model<Form> {
 	/**

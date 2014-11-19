@@ -33,7 +33,7 @@ import com.jfaker.framework.web.TagDTO;
 /**
  * 自定义菜单标签处理类。 根据当前认证实体获取允许访问的所有菜单，并输出特定导航菜单的html
  * @author yuqs
- * @since 1.0
+ * @since 0.1
  */
 public class MenuTagBuilder implements TagBuilder {
 	public static MenuTagBuilder builder = new MenuTagBuilder();
