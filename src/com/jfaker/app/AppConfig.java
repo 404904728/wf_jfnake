@@ -69,7 +69,7 @@ public class AppConfig extends JFinalConfig {
 	 * 配置常量
 	 */
 	public void configConstant(Constants me) {
-		loadPropertyFile("a_little_config.txt");
+		loadPropertyFile("jfinal.properties");
 		me.setDevMode(getPropertyToBoolean("devMode", false));
 //	    me.setError404View("/common/404.jsp");
 //	    me.setError500View("/common/500.jsp");

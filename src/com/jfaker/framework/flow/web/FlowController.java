@@ -26,7 +26,7 @@ import org.snaker.engine.access.Page;
 import org.snaker.engine.access.QueryFilter;
 import org.snaker.engine.entity.HistoryOrder;
 import org.snaker.engine.entity.Process;
-import org.snaker.engine.model.WorkModel;
+import org.snaker.engine.model.TaskModel;
 
 import com.jfaker.framework.flow.model.Approval;
 import com.jfaker.framework.security.shiro.ShiroUtils;
@@ -181,9 +181,11 @@ public class FlowController extends SnakerController {
 	public void node() {
 		String processId = getPara(PARA_PROCESSID);
 		Process process = engine.process().getProcessById(processId);
-		List<WorkModel> models = process.getModel().getWorkModels();
+		List<TaskModel> models = process.getModel().getModels(TaskModel.class);
 		renderJson(models);
 	}
+	
+	
 	
 	/**
 	 * 由于审批类流程在各业务系统中经常出现，至此本方法是统一审批的url
