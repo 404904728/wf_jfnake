@@ -75,7 +75,6 @@ public class FlowController extends SnakerController {
 	 * 执行规则根据method的值决定，值分别为:0执行,-1驳回或跳转,1转主办,2转协办
 	 * 适用于演示流程，或者是无业务字段的正式流程
 	 */
-	@SuppressWarnings("unchecked")
 	@Before(Tx.class)
 	public void process() {
 		Map<String, Object> params = new HashMap<String, Object>();
@@ -147,7 +146,7 @@ public class FlowController extends SnakerController {
 		}
 		String ccOperator = getPara(PARA_CCOPERATOR);
 		if(StringUtils.isNotEmpty(ccOperator)) {
-			engine.order().createCCOrder(orderId, ccOperator.split(","));
+			engine.order().createCCOrder(orderId, ShiroUtils.getUsername(), ccOperator.split(","));
 		}
 		redirectActiveTask();
 	}

@@ -239,4 +239,8 @@ public class ProcessController extends SnakerController {
 		keepPara();
 		render("diagram.jsp");
 	}
+	
+	public void validate() {
+		render("processValidate.jsp");
+	}
 }
