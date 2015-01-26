@@ -200,10 +200,6 @@ public class ProcessController extends SnakerController {
 	public void json() {
 		String processId = getPara(PARA_PROCESSID);
 		String orderId = getPara(PARA_ORDERID);
-		List<Task> tasks = null;
-		if(StringUtils.isNotEmpty(orderId)) {
-			tasks = engine.query().getActiveTasks(new QueryFilter().setOrderId(orderId));
-		}
 		Process process = engine.process().getProcessById(processId);
 		AssertHelper.notNull(process);
 		ProcessModel model = process.getModel();
@@ -211,11 +207,12 @@ public class ProcessController extends SnakerController {
 		if(model != null) {
 			jsonMap.put("process", SnakerHelper.getModelJson(model));
 		}
-		
-		//{"activeRects":{"rects":[{"paths":[],"name":"任务3"},{"paths":[],"name":"任务4"},{"paths":[],"name":"任务2"}]},"historyRects":{"rects":[{"paths":["TO 任务1"],"name":"开始"},{"paths":["TO 分支"],"name":"任务1"},{"paths":["TO 任务3","TO 任务4","TO 任务2"],"name":"分支"}]}}
-		if(tasks != null && !tasks.isEmpty()) {
-			jsonMap.put("active", SnakerHelper.getActiveJson(tasks));
+		if(StringUtils.isNotEmpty(orderId)) {
+			List<Task> tasks = engine.query().getActiveTasks(new QueryFilter().setOrderId(orderId));
+			List<HistoryTask> historyTasks = engine.query().getHistoryTasks(new QueryFilter().setOrderId(orderId));
+			jsonMap.put("state", SnakerHelper.getStateJson(model, tasks, historyTasks));
 		}
+		//{"historyRects":{"rects":[{"paths":["TO 任务1"],"name":"开始"},{"paths":["TO 分支"],"name":"任务1"},{"paths":["TO 任务3","TO 任务4","TO 任务2"],"name":"分支"}]}}
 		renderJson(jsonMap);
 	}
 	
