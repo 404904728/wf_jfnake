@@ -76,7 +76,7 @@ public class DictController extends Controller {
 		Dict model = getModel(Dict.class);
 		model.update();
 		
-		DictItem.dao.deleteByDictId(model.getInt("id"));
+		DictItem.dao.deleteByDictId(model.getBigDecimal("id").intValue());
 		String[] itemNames = getParaValues("itemNames");
 		Integer[] orderbys = getParaValuesToInt("orderbys");
 		String[] codes = getParaValues("codes");

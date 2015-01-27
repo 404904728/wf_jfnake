@@ -59,7 +59,7 @@ public class UserController extends Controller {
 		List<Role> rs = User.dao.getRoles(getParaToInt());
 		for(Role role : roles) {
 			for(Role r : rs) {
-				if(role.getInt("id").intValue() == r.getInt("id").intValue())
+				if(role.getBigDecimal("id").intValue() == r.getBigDecimal("id").intValue())
 				{
 					role.put("selected", 1);
 				}
@@ -89,7 +89,7 @@ public class UserController extends Controller {
 		model.save();
 		if(orderIndexs != null) {
 			for(Integer orderIndex : orderIndexs) {
-				User.dao.insertCascade(model.getInt("id"), orderIndex);
+				User.dao.insertCascade(model.getBigDecimal("id").intValue(), orderIndex);
 			}
 		}
 		redirect("/security/user");
@@ -103,10 +103,10 @@ public class UserController extends Controller {
 			model.entryptPassword(model);
 		}
 		model.update();
-		User.dao.deleteCascade(model.getInt("id"));
+		User.dao.deleteCascade(model.getBigDecimal("id").intValue());
 		if(orderIndexs != null) {
 			for(Integer orderIndex : orderIndexs) {
-				User.dao.insertCascade(model.getInt("id"), orderIndex);
+				User.dao.insertCascade(model.getBigDecimal("id").intValue(), orderIndex);
 			}
 		}
 		redirect("/security/user");

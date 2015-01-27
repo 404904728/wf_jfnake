@@ -78,7 +78,7 @@ public class ShiroPrincipal implements Serializable {
 		return this.user.get("username");
 	}
 	public Integer getId() {
-		return this.user.get("id");
+		return this.user.getBigDecimal("id").intValue();
 	}
 	/**
 	 * <shiro:principal/>标签显示中文名称

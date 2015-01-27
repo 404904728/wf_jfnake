@@ -55,7 +55,7 @@ public class User extends Model<User> {
 			from.append(" and u.fullname=? ");
 			params.add(fullname);
 		}
-		from.append(" order by id desc");
+		from.append(" order by u.id desc");
 		return paginate(pageNumber, pageSize, "select u.*,o.name as orgName", from.toString(), params.toArray());
 	}
 	

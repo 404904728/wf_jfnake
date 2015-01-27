@@ -40,7 +40,7 @@ public class Resource extends Model<Resource> {
 		if(StringUtils.isNotEmpty(name)) {
 			sql += " where r.name like '%" + name + "%' ";
 		}
-		sql += " order by id desc";
+		sql += " order by r.id desc";
 		return paginate(pageNumber, pageSize, "select r.*,m.name as menuName", sql);
 	}
 	

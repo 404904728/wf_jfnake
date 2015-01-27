@@ -117,8 +117,8 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
 		log.info("用户【" + username + "】登录成功");
 		byte[] salt = EncodeUtils.hexDecode(user.getStr("salt"));
 		ShiroPrincipal subject = new ShiroPrincipal(user);
-		List<String> authorities = User.dao.getAuthoritiesName(user.getInt("id"));
-		List<String> rolelist = User.dao.getRolesName(user.getInt("id"));
+		List<String> authorities = User.dao.getAuthoritiesName(user.getBigDecimal("id").intValue());
+		List<String> rolelist = User.dao.getRolesName(user.getBigDecimal("id").intValue());
 		subject.setAuthorities(authorities);
 		subject.setRoles(rolelist);
 		subject.setAuthorized(true);

@@ -42,7 +42,7 @@ public class Org extends Model<Org> {
 		if(StringUtils.isNotEmpty(name)) {
 			sql += " where o.name like '%" + name + "%' ";
 		}
-		sql += " order by id desc";
+		sql += " order by o.id desc";
 		return paginate(pageNumber, pageSize, "select o.*,op.name as parentName", sql);
 	}
 	

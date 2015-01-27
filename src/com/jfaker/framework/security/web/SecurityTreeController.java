@@ -36,8 +36,8 @@ public class SecurityTreeController extends Controller {
 		TreeNode node = null;
 		for(Org org : orgs) {
 			node = new TreeNode();
-			node.setId(org.getInt("id"));
-			Integer parentOrg = org.getInt("parent_org");
+			node.setId(org.getBigDecimal("id").intValue());
+			Integer parentOrg = org.getBigDecimal("parent_org").intValue();
 			node.setpId(parentOrg == null ? Org.ROOT_ORG_ID : parentOrg);
 			node.setName(org.getStr("name"));
 			if(parentOrg == null) {
@@ -54,8 +54,8 @@ public class SecurityTreeController extends Controller {
 		TreeNode node = null;
 		for(Org org : orgs) {
 			node = new TreeNode();
-			node.setId(org.getInt("id"));
-			Integer parentOrg = org.getInt("parent_org");
+			node.setId(org.getBigDecimal("id").intValue());
+			Integer parentOrg = org.getBigDecimal("parent_org").intValue();
 			node.setpId(parentOrg == null ? Org.ROOT_ORG_ID : parentOrg);
 			node.setName(org.getStr("name"));
 			if(parentOrg == null) {
@@ -67,8 +67,8 @@ public class SecurityTreeController extends Controller {
 		List<User> users = User.dao.getByOrg(getParaToInt("parentId"));
 		for(User user : users) {
 			node = new TreeNode();
-			node.setId(user.getInt("id"));
-			Integer parentOrg = user.getInt("org");
+			node.setId(user.getBigDecimal("id").intValue());
+			Integer parentOrg = user.getBigDecimal("org").intValue();
 			node.setpId(parentOrg == null ? Org.ROOT_ORG_ID : parentOrg);
 			node.setName(user.getStr("fullname"));
 			trees.add(node);

@@ -48,7 +48,7 @@ public class AuthorityController extends Controller {
 		List<Resource> resss = Authority.dao.getResources(getParaToInt());
 		for(Resource res : resources) {
 			for(Resource selRes : resss) {
-				if(res.getInt("id").intValue() == selRes.getInt("id").intValue())
+				if(res.getBigDecimal("id").intValue() == selRes.getBigDecimal("id").intValue())
 				{
 					res.put("selected", 1);
 				}
@@ -75,7 +75,7 @@ public class AuthorityController extends Controller {
 		model.save();
 		if(orderIndexs != null) {
 			for(Integer orderIndex : orderIndexs) {
-				Authority.dao.insertCascade(model.getInt("id"), orderIndex);
+				Authority.dao.insertCascade(model.getBigDecimal("id").intValue(), orderIndex);
 			}
 		}
 		redirect("/security/authority");
@@ -89,7 +89,7 @@ public class AuthorityController extends Controller {
 		Authority.dao.deleteCascade(getParaToInt());
 		if(orderIndexs != null) {
 			for(Integer orderIndex : orderIndexs) {
-				Authority.dao.insertCascade(model.getInt("id"), orderIndex);
+				Authority.dao.insertCascade(model.getBigDecimal("id").intValue(), orderIndex);
 			}
 		}
 		redirect("/security/authority");

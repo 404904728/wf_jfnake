@@ -52,7 +52,7 @@ public class ShiroUtils {
 	 */
 	public static Integer getOrgId() {
 		User user = getUser();
-		Integer org = user.getInt("org");
+		Integer org = user.getBigDecimal("org").intValue();
 		if(user != null && org != null) return org;
 		return -1;
 	}

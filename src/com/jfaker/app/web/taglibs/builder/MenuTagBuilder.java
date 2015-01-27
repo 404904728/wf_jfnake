@@ -65,8 +65,8 @@ public class MenuTagBuilder implements TagBuilder {
 			/**
 			 * 判断是否有上一级菜单，如果有，则添加到上一级菜单的Map中去 如果没有上一级菜单，把该菜单作为根节点
 			 */
-			Integer parentMenuId = menu.getInt("parent_menu") == null ? Menu.ROOT_MENU
-					: menu.getInt("parent_menu");
+			Integer parentMenuId = menu.getBigDecimal("parent_menu") == null ? Menu.ROOT_MENU
+					: menu.getBigDecimal("parent_menu").intValue();
 			if (!menuMap.containsKey(parentMenuId)) {
 				List<Menu> subMenus = new ArrayList<Menu>();
 				subMenus.add(menu);
@@ -104,7 +104,7 @@ public class MenuTagBuilder implements TagBuilder {
 			return;
 		}
 		for (Menu menu : treeFolders) {
-			List<Menu> treeNodes = menuMap.get(menu.getInt("id"));
+			List<Menu> treeNodes = menuMap.get(menu.getBigDecimal("id").intValue());
 			if((treeNodes == null || treeNodes.isEmpty()) && StringUtils.isEmpty(menu.getStr("description"))) {
 				continue;
 			}

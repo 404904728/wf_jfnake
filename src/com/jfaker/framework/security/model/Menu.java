@@ -41,7 +41,7 @@ public class Menu extends Model<Menu> {
 		if(StringUtils.isNotEmpty(name)) {
 			sql += " where m.name like '%" + name + "%' ";
 		}
-		sql += " order by id desc";
+		sql += " order by m.id desc";
 		return paginate(pageNumber, pageSize, "select m.*,pm.name as parentName", sql);
 	}
 	

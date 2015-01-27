@@ -48,7 +48,7 @@ public class RoleController extends Controller {
 		List<Authority> auths = Role.dao.getAuthorities(getParaToInt());
 		for(Authority auth : authorities) {
 			for(Authority sels : auths) {
-				if(auth.getInt("id").intValue() == sels.getInt("id").intValue())
+				if(auth.getBigDecimal("id").intValue() == sels.getBigDecimal("id").intValue())
 				{
 					auth.put("selected", 1);
 				}
@@ -75,7 +75,7 @@ public class RoleController extends Controller {
 		model.save();
 		if(orderIndexs != null) {
 			for(Integer orderIndex : orderIndexs) {
-				Role.dao.insertCascade(model.getInt("id"), orderIndex);
+				Role.dao.insertCascade(model.getBigDecimal("id").intValue(), orderIndex);
 			}
 		}
 		redirect("/security/role");
@@ -86,10 +86,10 @@ public class RoleController extends Controller {
 		Integer[] orderIndexs = getParaValuesToInt("orderIndexs");
 		Role model = getModel(Role.class);
 		model.update();
-		Role.dao.deleteCascade(model.getInt("id"));
+		Role.dao.deleteCascade(model.getBigDecimal("id").intValue());
 		if(orderIndexs != null) {
 			for(Integer orderIndex : orderIndexs) {
-				Role.dao.insertCascade(model.getInt("id"), orderIndex);
+				Role.dao.insertCascade(model.getBigDecimal("id").intValue(), orderIndex);
 			}
 		}
 		redirect("/security/role");

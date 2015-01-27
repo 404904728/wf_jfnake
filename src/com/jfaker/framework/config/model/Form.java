@@ -76,7 +76,7 @@ public class Form extends Model<Form> {
 			fields.add(field);
 			nameMap.put(entry.getKey(), fieldInfo.get("fieldname"));
 		}
-		model.set("fieldNum", model.getInt("fieldNum") + fields.size());
+		model.set("fieldNum", model.getBigDecimal("fieldNum").intValue() + fields.size());
 		String check = "select count(*) from " + tableName + " where id = 1";
 		boolean isExists = true;
 		try {
@@ -163,7 +163,7 @@ public class Form extends Model<Form> {
 		beforeSql.append(" (FORMID, UPDATETIME, ORDERID, TASKID ");
 		afterSql.append(") values (?,?,?,?");
 		List<Object> datas = new ArrayList<Object>();
-		datas.add(model.getInt("id"));
+		datas.add(model.getBigDecimal("id").intValue());
 		datas.add(DateUtils.getCurrentTime());
 		datas.add(orderId);
 		datas.add(taskId);
